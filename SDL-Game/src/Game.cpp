@@ -23,7 +23,7 @@ void Game::Run()
 	while (m_bGameIsRunning)
 	{
 		PollStatus status = m_EventManager.PollEvents();
-		if (status == PollStatus::QUIT)
+		if (status == PollStatus::eQUIT)
 		{
 			m_bGameIsRunning = false;
 			return;

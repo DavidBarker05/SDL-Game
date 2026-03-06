@@ -2,6 +2,7 @@
 
 int main()
 {
-	Game game("Title", 640, 480);
+	Game game;
+	game.Init("Title", 640, 480);
 	game.Run();
 }

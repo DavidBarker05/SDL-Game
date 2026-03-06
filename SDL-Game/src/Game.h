@@ -1,21 +1,22 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
+
 #include "InputManager.h"
+#include "GameRenderer.h"
 
 class Game
 {
-	struct SDL_Window* m_Window;
-	struct SDL_Renderer* m_Renderer;
-
-	bool m_GameIsRunning;
-
-	InputManager m_InputManager;
-
 public:
-	Game(const char* title, int width, int height);
+	Game();
 	~Game();
 
+	void Init(const char* title, int width, int height);
 	void Run();
 
 private:
-	void RenderGame();
+	bool m_GameIsRunning;
+
+	GameRenderer m_GameRenderer;
+	InputManager m_InputManager;
 };
+#endif // !GAME_H

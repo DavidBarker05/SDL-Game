@@ -1,13 +1,24 @@
-#pragma once
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
-#include <cstdint>
+#include <SDL2/SDL_stdinc.h>
+
+enum class PollStatus : Uint8
+{
+	ALL_EVENTS_POLLED,
+	QUIT
+};
 
 class InputManager
 {
 public:
-	void ProcessEvent(const union SDL_Event& event);
+	void Init();
+
+	PollStatus PollEvents();
 
 private:
-	void DoKeyDown(int32_t keyCode);
-	void DoKeyUp(int32_t keyCode);
+	
+	void DoKeyDown(Uint32 keyCode);
+	void DoKeyUp(Uint32 keyCode);
 };
+#endif // !INPUTMANAGER_H

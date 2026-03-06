@@ -1,12 +1,7 @@
 #include "Game.h"
 #include <SDL2/SDL.h>
 
-#define SDL_INIT_FLAGS SDL_INIT_VIDEO | SDL_INIT_EVENTS
-
-Game::Game()
-{
-	m_GameIsRunning = false;
-}
+Game::Game() : m_GameIsRunning(false), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {

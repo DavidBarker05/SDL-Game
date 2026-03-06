@@ -6,7 +6,7 @@
 
 Vector2::Vector2() : x(0.0f), y(0.0f) { }
 
-explicit Vector2::Vector2(float x1, float y1) : x(x1), y(y1) { }
+Vector2::Vector2(float x1, float y1) : x(x1), y(y1) { }
 
 Vector2::Vector2(const Vector2& other) : x(other.x), y(other.y) { }
 

@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <SDL2/SDL.h>
 
-Game::Game() : m_bGameIsRunning(FALSE), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(FALSE), m_DeltaTime(0.0f), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {

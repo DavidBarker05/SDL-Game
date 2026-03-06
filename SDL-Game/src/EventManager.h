@@ -1,9 +1,9 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
-#include <SDL2/SDL_stdinc.h>
+#include "DataTypes.h"
 
-enum class PollStatus : Uint8
+enum class PollStatus : UINT8
 {
 	eALL_EVENTS_POLLED,
 	eQUIT
@@ -18,7 +18,7 @@ public:
 
 private:
 	
-	void DoKeyDown(Uint32 keyCode);
-	void DoKeyUp(Uint32 keyCode);
+	void DoKeyDown(UINT32 keyCode);
+	void DoKeyUp(UINT32 keyCode);
 };
 #endif // !EVENTMANAGER_H

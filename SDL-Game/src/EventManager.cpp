@@ -29,7 +29,7 @@ PollStatus EventManager::PollEvents()
 	return PollStatus::eALL_EVENTS_POLLED;
 }
 
-void EventManager::DoKeyDown(Uint32 keyCode)
+void EventManager::DoKeyDown(UINT32 keyCode)
 {
 	switch (keyCode)
 	{
@@ -38,7 +38,7 @@ void EventManager::DoKeyDown(Uint32 keyCode)
 	}
 }
 
-void EventManager::DoKeyUp(Uint32 keyCode)
+void EventManager::DoKeyUp(UINT32 keyCode)
 {
 	switch (keyCode)
 	{

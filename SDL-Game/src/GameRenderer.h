@@ -1,7 +1,7 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include <SDL2/SDL_stdinc.h>
+#include "DataTypes.h"
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_render.h>
 
@@ -11,8 +11,8 @@ public:
 	void Init();
 	void Destroy();
 
-	void CreateWindow(const char* title, int width, int height, Uint32 flags);
-	void CreateRenderer(int index, Uint32 flags);
+	void CreateWindow(CSTRING title, INT16 width, INT16 height, UINT32 flags);
+	void CreateRenderer(INT16 index, UINT32 flags);
 
 	void Render();
 

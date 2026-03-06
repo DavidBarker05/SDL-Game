@@ -39,7 +39,7 @@ struct Vector2
 		else if (index == 1) return y;
 		else throw new std::out_of_range("Index out of range. Index needs to be 0 for x or 1 for y");
 	}
-	float& operator[](SIZE_T index)
+	FLOAT32& operator[](SIZE_T index)
 	{
 		if (index == 0) return x;
 		else if (index == 1) return y;

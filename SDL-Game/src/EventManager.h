@@ -5,8 +5,8 @@
 
 enum class PollStatus : Uint8
 {
-	ALL_EVENTS_POLLED,
-	QUIT
+	eALL_EVENTS_POLLED,
+	eQUIT
 };
 
 class EventManager

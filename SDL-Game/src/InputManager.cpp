@@ -14,7 +14,7 @@ PollStatus EventManager::PollEvents()
 		switch (event.type)
 		{
 			case SDL_QUIT:
-				return PollStatus::QUIT;
+				return PollStatus::eQUIT;
 				break;
 			case SDL_KEYDOWN:
 				DoKeyDown(event.key.keysym.sym);
@@ -26,7 +26,7 @@ PollStatus EventManager::PollEvents()
 				break;
 		}
 	}
-	return PollStatus::ALL_EVENTS_POLLED;
+	return PollStatus::eALL_EVENTS_POLLED;
 }
 
 void EventManager::DoKeyDown(Uint32 keyCode)

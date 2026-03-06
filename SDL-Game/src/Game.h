@@ -14,7 +14,7 @@ public:
 	void Run();
 
 private:
-	bool m_GameIsRunning;
+	bool m_bGameIsRunning;
 
 	GameRenderer m_GameRenderer;
 	EventManager m_EventManager;

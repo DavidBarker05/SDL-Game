@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <SDL2/SDL.h>
 
-Game::Game() : m_GameIsRunning(false), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(false), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {
@@ -19,13 +19,13 @@ void Game::Init(const char* title, int width, int height)
 
 void Game::Run()
 {
-	m_GameIsRunning = true;
-	while (m_GameIsRunning)
+	m_bGameIsRunning = true;
+	while (m_bGameIsRunning)
 	{
 		PollStatus status = m_EventManager.PollEvents();
 		if (status == PollStatus::QUIT)
 		{
-			m_GameIsRunning = false;
+			m_bGameIsRunning = false;
 			return;
 		}
 		m_GameRenderer.Render();

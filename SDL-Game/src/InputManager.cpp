@@ -1,12 +1,12 @@
-#include "InputManager.h"
+#include "EventManager.h"
 #include "SDL2/SDL.h"
 
-void InputManager::Init()
+void EventManager::Init()
 {
 	SDL_Init(SDL_INIT_EVENTS);
 }
 
-PollStatus InputManager::PollEvents()
+PollStatus EventManager::PollEvents()
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
@@ -29,7 +29,7 @@ PollStatus InputManager::PollEvents()
 	return PollStatus::ALL_EVENTS_POLLED;
 }
 
-void InputManager::DoKeyDown(Uint32 keyCode)
+void EventManager::DoKeyDown(Uint32 keyCode)
 {
 	switch (keyCode)
 	{
@@ -38,7 +38,7 @@ void InputManager::DoKeyDown(Uint32 keyCode)
 	}
 }
 
-void InputManager::DoKeyUp(Uint32 keyCode)
+void EventManager::DoKeyUp(Uint32 keyCode)
 {
 	switch (keyCode)
 	{

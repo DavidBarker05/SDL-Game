@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "InputManager.h"
+#include "EventManager.h"
 #include "GameRenderer.h"
 
 class Game
@@ -17,6 +17,6 @@ private:
 	bool m_GameIsRunning;
 
 	GameRenderer m_GameRenderer;
-	InputManager m_InputManager;
+	EventManager m_EventManager;
 };
 #endif // !GAME_H

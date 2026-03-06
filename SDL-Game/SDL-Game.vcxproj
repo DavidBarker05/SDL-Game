@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameRenderer.h" />
-    <ClInclude Include="src\InputManager.h" />
+    <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Vector2.h" />
   </ItemGroup>

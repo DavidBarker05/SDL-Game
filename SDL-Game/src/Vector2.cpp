@@ -61,12 +61,6 @@ FLOAT32 Vector2::Dot(const Vector2& a, const Vector2& b) { return a.x * b.x + a.
 
 FLOAT32 Vector2::Cross(const Vector2& a, const Vector2& b) { return (a.x * b.y) - (a.y * b.x); }
 
-FLOAT32 Vector2::SqrDistance(const Vector2& a, const Vector2& b)
-{
-	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
-}
+FLOAT32 Vector2::SqrDistance(const Vector2& a, const Vector2& b) { return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); }
 
-FLOAT32 Vector2::Distance(const Vector2& a, const Vector2& b)
-{
-	return Math::Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
+FLOAT32 Vector2::Distance(const Vector2& a, const Vector2& b) { return Math::Sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }

@@ -94,6 +94,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\GameRenderer.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -102,7 +103,9 @@
     <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\DataTypes.h" />
+    <ClInclude Include="src\EventListener.h" />
     <ClInclude Include="src\GameRenderer.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />

@@ -1,5 +1,6 @@
 #include "EventManager.h"
 #include "SDL2/SDL.h"
+#include <algorithm>
 
 void EventManager::Init()
 {
@@ -11,38 +12,21 @@ PollStatus EventManager::PollEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		switch (event.type)
-		{
-			case SDL_QUIT:
-				return PollStatus::eQUIT;
-				break;
-			case SDL_KEYDOWN:
-				DoKeyDown(event.key.keysym.sym);
-				break;
-			case SDL_KEYUP:
-				DoKeyUp(event.key.keysym.sym);
-				break;
-			default:
-				break;
-		}
+		if (event.type == SDL_QUIT) return PollStatus::eQUIT;
+		m_InputManager.HandleEvent(event);
+		for (auto it = m_EventListeners.rbegin(); it < m_EventListeners.rend(); ++it)
+			it->HandleEvent(event);
 	}
 	return PollStatus::eALL_EVENTS_POLLED;
 }
 
-void EventManager::DoKeyDown(UINT32 keyCode)
+void EventManager::SubscribeToEvents(const EventListener& listener)
 {
-	switch (keyCode)
-	{
-		default:
-			break;
-	}
+	if (std::find(m_EventListeners.begin(), m_EventListeners.end(), listener) != m_EventListeners.end())
+		m_EventListeners.emplace_back();
 }
 
-void EventManager::DoKeyUp(UINT32 keyCode)
+void EventManager::UnsubscribeFromEvents(const EventListener& listener)
 {
-	switch (keyCode)
-	{
-		default:
-			break;
-	}
+	m_EventListeners.erase(std::remove(m_EventListeners.begin(), m_EventListeners.end(), listener), m_EventListeners.end());
 }

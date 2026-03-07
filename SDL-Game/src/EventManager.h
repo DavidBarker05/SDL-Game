@@ -2,6 +2,9 @@
 #define EVENTMANAGER_H
 
 #include "DataTypes.h"
+#include "EventListener.h"
+#include "InputManager.h"
+#include <vector>
 
 enum class PollStatus : UINT8
 {
@@ -16,9 +19,11 @@ public:
 
 	PollStatus PollEvents();
 
+	void SubscribeToEvents(const EventListener& listener);
+	void UnsubscribeFromEvents(const EventListener& listener);
+
 private:
-	
-	void DoKeyDown(UINT32 keyCode);
-	void DoKeyUp(UINT32 keyCode);
+	InputManager m_InputManager;
+	std::vector<EventListener> m_EventListeners;
 };
 #endif // !EVENTMANAGER_H

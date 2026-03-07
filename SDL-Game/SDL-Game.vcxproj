@@ -98,6 +98,7 @@
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MinimalMath.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="src\GameRenderer.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\MinimalMath.h" />
     <ClInclude Include="src\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

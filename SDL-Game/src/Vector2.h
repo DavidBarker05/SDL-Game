@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR2_H
+#define VECTOR2_H
 
 #include "DataTypes.h"
 #include <stdexcept>
@@ -21,8 +22,6 @@ struct Vector2
 	Vector2 Rotated(FLOAT32 degrees) const;
 	Vector2& Rotate(FLOAT32 degrees);
 
-	static FLOAT32 Dot(const Vector2& a, const Vector2& b);
-	static FLOAT32 Cross(const Vector2& a, const Vector2& b);
 
 	FLOAT32 Get(SIZE_T index) const;
 	FLOAT32& Get(SIZE_T index);
@@ -71,5 +70,11 @@ struct Vector2
 		y /= scale;
 		return *this;
 	}
-};
 
+	static FLOAT32 Dot(const Vector2& a, const Vector2& b);
+	static FLOAT32 Cross(const Vector2& a, const Vector2& b);
+
+	static FLOAT32 SqrDistance(const Vector2& a, const Vector2& b);
+	static FLOAT32 Distance(const Vector2& a, const Vector2& b);
+};
+#endif // !VECTOR2_H

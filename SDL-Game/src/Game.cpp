@@ -22,12 +22,15 @@ void Game::Run()
 	m_bGameIsRunning = TRUE;
 	while (m_bGameIsRunning)
 	{
+		static INT64 lastTick = 0i64;
 		PollStatus status = m_EventManager.PollEvents();
 		if (status == PollStatus::eQUIT)
 		{
 			m_bGameIsRunning = FALSE;
 			return;
 		}
+		m_DeltaTime = (SDL_GetTicks64() - lastTick) / 1000.0f;
+		lastTick = SDL_GetTicks64();
 		m_GameRenderer.Render();
 	}
 }

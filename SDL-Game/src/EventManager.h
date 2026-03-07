@@ -5,7 +5,7 @@
 #include "EventListener.h"
 #include "InputManager.h"
 #include <vector>
-#include <unordered_map>
+#include <memory>
 
 enum class PollStatus : UINT8
 {
@@ -25,11 +25,14 @@ public:
 
 	PollStatus PollEvents();
 
-	void SubscribeToEvents(EventListener& listener);
-	void UnsubscribeFromEvents(EventListener& listener);
+	void SubscribeListenerToEvents(std::weak_ptr<EventListener> pListener);
+	void SubscribeListenerToEvents(std::shared_ptr<EventListener> pListener);
+
+	void UnsubscribeListenerFromEvents(std::weak_ptr<EventListener> pListener);
+	void UnsubscribeListenerFromEvents(std::shared_ptr<EventListener> pListener);
 
 private:
 	InputManager m_InputManager;
-	std::vector<EventListener> m_EventListeners;
+	std::vector<std::weak_ptr<EventListener>> m_pEventListeners;
 };
 #endif // !EVENTMANAGER_H

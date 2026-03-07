@@ -1,4 +1,5 @@
 #ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
 #include "EventListener.h"
 #include "DataTypes.h"

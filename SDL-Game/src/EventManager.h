@@ -5,11 +5,17 @@
 #include "EventListener.h"
 #include "InputManager.h"
 #include <vector>
+#include <unordered_map>
 
 enum class PollStatus : UINT8
 {
 	eALL_EVENTS_POLLED,
 	eQUIT
+};
+
+enum class CustomEvent : UINT64
+{
+
 };
 
 class EventManager
@@ -19,8 +25,8 @@ public:
 
 	PollStatus PollEvents();
 
-	void SubscribeToEvents(const EventListener& listener);
-	void UnsubscribeFromEvents(const EventListener& listener);
+	void SubscribeToEvents(EventListener& listener);
+	void UnsubscribeFromEvents(EventListener& listener);
 
 private:
 	InputManager m_InputManager;

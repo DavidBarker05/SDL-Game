@@ -20,13 +20,13 @@ PollStatus EventManager::PollEvents()
 	return PollStatus::eALL_EVENTS_POLLED;
 }
 
-void EventManager::SubscribeToEvents(const EventListener& listener)
+void EventManager::SubscribeToEvents(EventListener& listener)
 {
 	if (std::find(m_EventListeners.begin(), m_EventListeners.end(), listener) != m_EventListeners.end())
-		m_EventListeners.emplace_back();
+		m_EventListeners.emplace_back(&listener);
 }
 
-void EventManager::UnsubscribeFromEvents(const EventListener& listener)
+void EventManager::UnsubscribeFromEvents(EventListener& listener)
 {
 	m_EventListeners.erase(std::remove(m_EventListeners.begin(), m_EventListeners.end(), listener), m_EventListeners.end());
 }

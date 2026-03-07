@@ -11,7 +11,7 @@ public:
 	Game();
 	~Game();
 
-	void Init(CSTRING title, INT16 width, INT16 height);
+	void Init();
 	void Run();
 
 private:

@@ -11,9 +11,6 @@ public:
 	void Init();
 	void Destroy();
 
-	void CreateWindow(CSTRING title, INT16 width, INT16 height, UINT32 flags);
-	void CreateRenderer(INT16 index, UINT32 flags);
-
 	void Render();
 
 private:

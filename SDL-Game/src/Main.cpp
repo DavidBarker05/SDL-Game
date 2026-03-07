@@ -3,6 +3,6 @@
 int main()
 {
 	Game game;
-	game.Init("Title", 640, 480);
+	game.Init();
 	game.Run();
 }

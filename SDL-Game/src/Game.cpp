@@ -9,11 +9,9 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::Init(CSTRING title, INT16 width, INT16 height)
+void Game::Init()
 {
 	m_GameRenderer.Init();
-	m_GameRenderer.CreateWindow(title, width, height, 0);
-	m_GameRenderer.CreateRenderer(-1, 0);
 	m_EventManager.Init();
 }
 

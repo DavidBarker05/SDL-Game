@@ -24,8 +24,13 @@ void GameRenderer::Destroy()
 
 void GameRenderer::Render()
 {
+	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
 	SDL_RenderClear(m_pRenderer);
 	// Render everything below here
+
+	SDL_Rect r = { 10, 10, 50, 50 };
+	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(m_pRenderer, &r);
 
 	// Render everything above here
 	SDL_RenderPresent(m_pRenderer);

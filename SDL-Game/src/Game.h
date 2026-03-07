@@ -14,6 +14,9 @@ public:
 	void Init();
 	void Run();
 
+	const GameRenderer& GetGameRenderer();
+	const EventManager& GetEventManager();
+
 private:
 	bool m_bGameIsRunning;
 	FLOAT32 m_DeltaTime;

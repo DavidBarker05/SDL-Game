@@ -1,7 +1,6 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include "DataTypes.h"
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_render.h>
 

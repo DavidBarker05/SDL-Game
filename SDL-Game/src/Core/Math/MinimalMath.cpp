@@ -2,9 +2,13 @@
 #include <cmath> // Written here so that other files don't have to inclue cmath
 #include <stdexcept>
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4244)
+#endif // _MSC_VER
+
 FLOAT32 Math::Sqrt(FLOAT32 num) { return std::sqrt(num); }
 
-FLOAT32 Math::InvSqrt(FLOAT32 num) { return 1.0 / std::sqrt(num); }
+FLOAT32 Math::InvSqrt(FLOAT32 num) { return 1.0f / std::sqrt(num); }
 
 FLOAT32 Math::Pow(FLOAT32 base, FLOAT32 exponent) { return std::pow(base, exponent); }
 

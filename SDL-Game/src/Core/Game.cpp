@@ -12,11 +12,23 @@ Game::~Game()
 
 Player* player;
 
-void Game::Init()
+bool Game::Init()
 {
-	m_GameRenderer.Init();
-	m_EventManager.Init();
+#ifdef _DELAY_WINDOW
+	SDL_Delay(100); // Delay the window for a few milliseconds so that it appears on top of vs console
+#endif // _DELAY_WINDOW
+	if (!m_GameRenderer.Init())
+	{
+		// Log error
+		return false;
+	}
+	if (!m_EventManager.Init())
+	{
+		// Log error
+		return false;
+	}
 	player = new Player(this);
+	return true;
 }
 
 

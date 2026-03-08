@@ -9,7 +9,7 @@ class Player;
 class GameRenderer
 {
 public:
-	void Init();
+	bool Init();
 	void Destroy();
 
 	void Render();

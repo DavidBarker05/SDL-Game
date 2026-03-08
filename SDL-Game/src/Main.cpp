@@ -3,6 +3,5 @@
 int main()
 {
 	Game game;
-	game.Init();
-	game.Start();
+	if (game.Init()) game.Start();
 }

@@ -13,7 +13,7 @@ enum class PollStatus : UINT8
 class EventManager
 {
 public:
-	void Init();
+	bool Init();
 
 	PollStatus PollEvents();
 

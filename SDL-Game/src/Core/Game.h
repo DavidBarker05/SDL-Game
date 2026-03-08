@@ -11,7 +11,7 @@ public:
 	Game();
 	~Game();
 
-	void Init();
+	bool Init();
 	void Start();
 
 	GameRenderer& GetGameRenderer();

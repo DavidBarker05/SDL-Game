@@ -1,9 +1,9 @@
 #include "EventManager.h"
 #include "SDL2/SDL.h"
 
-void EventManager::Init()
+bool EventManager::Init()
 {
-	SDL_Init(SDL_INIT_EVENTS);
+	return !SDL_Init(SDL_INIT_EVENTS);
 }
 
 PollStatus EventManager::PollEvents()

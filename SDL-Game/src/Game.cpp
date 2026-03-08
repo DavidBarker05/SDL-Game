@@ -1,39 +1,55 @@
 #include "Game.h"
+#include "GameRenderer.h"
+#include "EventManager.h"
 #include <SDL2/SDL.h>
+#include "Player.h"
 
-Game::Game() : m_bGameIsRunning(FALSE), m_DeltaTime(0.0f), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(FALSE), m_DeltaTime(0.0f), m_upGameRenderer(std::make_unique<GameRenderer>()), m_upEventManager(std::make_unique<EventManager>()) { }
 
 Game::~Game()
 {
-	m_GameRenderer.Destroy();
+	m_upGameRenderer->Destroy();
 	SDL_Quit();
 }
 
+Player* player;
+
 void Game::Init()
 {
-	m_GameRenderer.Init();
-	m_EventManager.Init();
+	m_upGameRenderer->Init();
+	m_upEventManager->Init();
+	player = new Player(this);
 }
 
-void Game::Run()
+
+void Game::Start()
 {
 	m_bGameIsRunning = TRUE;
-	static INT64 lastTick = 0i64;
-	while (m_bGameIsRunning)
-	{
-		PollStatus status = m_EventManager.PollEvents();
-		if (status == PollStatus::eQUIT)
-		{
-			m_bGameIsRunning = FALSE;
-			return;
-		}
-		m_GameRenderer.Render();
-		INT64 currentTick = SDL_GetTicks64();
-		m_DeltaTime = (currentTick - lastTick) / 1000.0f;
-		lastTick = currentTick;
-	}
+	player->Start();
+	while (m_bGameIsRunning) Tick();
 }
 
-const GameRenderer& Game::GetGameRenderer() { return m_GameRenderer; }
+GameRenderer* Game::GetGameRenderer() { return m_upGameRenderer.get(); }
 
-const EventManager& Game::GetEventManager() { return m_EventManager; }
+EventManager* Game::GetEventManager() { return m_upEventManager.get(); }
+
+void Game::Tick()
+{
+	UpdateDeltaTime();
+	PollStatus status = m_upEventManager->PollEvents();
+	if (status == PollStatus::eQUIT)
+	{
+		m_bGameIsRunning = FALSE;
+		return;
+	}
+	player->Tick(m_DeltaTime);
+	m_upGameRenderer->Render();
+}
+
+void Game::UpdateDeltaTime()
+{
+	static UINT64 lastTick = 0i64;
+	UINT64 currentTick = SDL_GetTicks64();
+	m_DeltaTime = (currentTick - lastTick) / 1000.0;
+	lastTick = currentTick;
+}

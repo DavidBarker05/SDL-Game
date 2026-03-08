@@ -1,7 +1,6 @@
 #define _USE_MATH_DEFINES
 
 #include "Vector2.h"
-#include <utility>
 #include "MinimalMath.h"
 
 Vector2::Vector2() : x(0.0f), y(0.0f) { }

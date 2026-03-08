@@ -4,6 +4,8 @@
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_render.h>
 
+class Player;
+
 class GameRenderer
 {
 public:
@@ -12,8 +14,12 @@ public:
 
 	void Render();
 
+	void SetPlayer(Player* pPlayer);
+
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
+
+	Player* m_pPlayer;
 };
 #endif // !GAMERENDERER_H

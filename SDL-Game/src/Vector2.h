@@ -2,6 +2,7 @@
 #define VECTOR2_H
 
 #include "DataTypes.h"
+#include <utility>
 #include <stdexcept>
 
 struct Vector2
@@ -25,6 +26,19 @@ struct Vector2
 
 	FLOAT32 Get(SIZE_T index) const;
 	FLOAT32& Get(SIZE_T index);
+
+	Vector2& operator=(const Vector2& other)
+	{
+		x = other.x;
+		y = other.y;
+		return *this;
+	}
+	Vector2& operator=(Vector2&& other) noexcept
+	{
+		x = std::exchange(other.x, 0.0f);
+		y = std::exchange(other.y, 0.0f);
+		return *this;
+	}
 
 	Vector2 operator+(const Vector2& other) const { return Vector2(x + other.x, y + other.y); }
 	Vector2 operator-(const Vector2& other) const { return Vector2(x - other.x, y - other.y); }

@@ -5,6 +5,7 @@
 void EventManager::Init()
 {
 	SDL_Init(SDL_INIT_EVENTS);
+	m_upInputManager = std::make_unique<InputManager>();
 }
 
 PollStatus EventManager::PollEvents()
@@ -13,32 +14,34 @@ PollStatus EventManager::PollEvents()
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT) return PollStatus::eQUIT;
-		m_InputManager.HandleEvent(event);
-		std::vector<std::weak_ptr<EventListener>>::iterator it = m_pEventListeners.begin();
-		while (it != m_pEventListeners.end())
+		m_upInputManager->HandleEvent(event);
+		std::vector<std::weak_ptr<EventListener>>::iterator it = m_wpEventListeners.begin();
+		while (it != m_wpEventListeners.end())
 		{
 			if (std::shared_ptr<EventListener> pListener = (*it).lock())
 			{
 				pListener->HandleEvent(event);
 				++it;
 			}
-			else it = m_pEventListeners.erase(it);
+			else it = m_wpEventListeners.erase(it);
 		}
 	}
 	return PollStatus::eALL_EVENTS_POLLED;
 }
 
-void EventManager::SubscribeListenerToEvents(std::weak_ptr<EventListener> pListener)
+void EventManager::SubscribeListenerToEvents(std::weak_ptr<EventListener> wpListener)
 {
-	if (std::find_if(m_pEventListeners.begin(), m_pEventListeners.end(), [pListener](std::weak_ptr<EventListener> pOther) -> bool { return pListener.owner_before(pOther); }) == m_pEventListeners.end());
-		m_pEventListeners.emplace_back(pListener);
+	if (std::find_if(m_wpEventListeners.begin(), m_wpEventListeners.end(), [wpListener](std::weak_ptr<EventListener> wpOther) -> bool { return wpListener.owner_before(wpOther); }) == m_wpEventListeners.end());
+		m_wpEventListeners.emplace_back(wpListener);
 }
 
-void EventManager::SubscribeListenerToEvents(std::shared_ptr<EventListener> pListener) { SubscribeListenerToEvents(std::weak_ptr<EventListener>(pListener)); }
+void EventManager::SubscribeListenerToEvents(std::shared_ptr<EventListener> spListener) { SubscribeListenerToEvents(std::weak_ptr<EventListener>(spListener)); }
 
-void EventManager::UnsubscribeListenerFromEvents(std::weak_ptr<EventListener> pListener)
+void EventManager::UnsubscribeListenerFromEvents(std::weak_ptr<EventListener> wpListener)
 {
-	m_pEventListeners.erase(std::remove_if(m_pEventListeners.begin(), m_pEventListeners.end(), [pListener](std::weak_ptr<EventListener> pOther) -> bool { return pListener.owner_before(pOther); }), m_pEventListeners.end());
+	m_wpEventListeners.erase(std::remove_if(m_wpEventListeners.begin(), m_wpEventListeners.end(), [wpListener](std::weak_ptr<EventListener> wpOther) -> bool { return wpListener.owner_before(wpOther); }), m_wpEventListeners.end());
 }
 
-void EventManager::UnsubscribeListenerFromEvents(std::shared_ptr<EventListener> pListener) { UnsubscribeListenerFromEvents(std::weak_ptr<EventListener>(pListener)); }
+void EventManager::UnsubscribeListenerFromEvents(std::shared_ptr<EventListener> spListener) { UnsubscribeListenerFromEvents(std::weak_ptr<EventListener>(spListener)); }
+
+InputManager* EventManager::GetInputManager() { return m_upInputManager.get(); }

@@ -1,5 +1,6 @@
 #include "GameRenderer.h"
 #include <SDL2/SDL.h>
+#include "Player.h"
 
 #define DEFAULT_WINDOW_TITLE  "Title"
 #define DEFAULT_WINDOW_WIDTH  640
@@ -27,11 +28,18 @@ void GameRenderer::Render()
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
 	SDL_RenderClear(m_pRenderer);
 	// Render everything below here
-
-	SDL_Rect r = { 10, 10, 50, 50 };
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(m_pRenderer, &r);
+	
+	if (m_pPlayer)
+	{
+		m_pPlayer->Render(m_pRenderer);
+		m_pPlayer = NULL;
+	}
 
 	// Render everything above here
 	SDL_RenderPresent(m_pRenderer);
+}
+
+void GameRenderer::SetPlayer(Player* pPlayer)
+{
+	m_pPlayer = pPlayer;
 }

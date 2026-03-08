@@ -4,6 +4,8 @@
 #include "../Core/DataTypes.h"
 #include "InputManager.h"
 
+class Scene;
+
 enum class PollStatus : UINT8
 {
 	eALL_EVENTS_POLLED,
@@ -19,7 +21,11 @@ public:
 
 	InputManager& GetInputManager();
 
+	void SetScene(Scene* pScene);
+
 private:
 	InputManager m_InputManager;
+
+	Scene* m_pScene;
 };
 #endif // !EVENTMANAGER_H

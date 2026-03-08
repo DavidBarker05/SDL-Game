@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <SDL2/SDL.h>
 #include "../Player.h"
+#include "../Scene.h"
 
 Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0f), m_LastFrameTime(0.0f), m_DeltaTime(0.0f), m_GameRenderer(), m_EventManager() { }
 
@@ -10,7 +11,8 @@ Game::~Game()
 	SDL_Quit();
 }
 
-Player* player;
+Scene* pScene;
+Player* pPlayer;
 
 bool Game::Init()
 {
@@ -27,7 +29,11 @@ bool Game::Init()
 		// Log error
 		return false;
 	}
-	player = new Player(this);
+	pScene = new Scene();
+	pPlayer = new Player();
+	pScene->AddEntity(pPlayer);
+	m_GameRenderer.SetScene(pScene);
+	m_EventManager.SetScene(pScene);
 	return true;
 }
 
@@ -35,7 +41,6 @@ bool Game::Init()
 void Game::Start()
 {
 	m_bGameIsRunning = TRUE;
-	player->Start();
 	while (m_bGameIsRunning) Tick();
 }
 
@@ -60,7 +65,7 @@ void Game::Tick()
 		m_bGameIsRunning = FALSE;
 		return;
 	}
-	player->Tick(m_DeltaTime);
+	pScene->Tick(m_DeltaTime);
 	m_GameRenderer.Render();
 	m_LastFrameTime = m_CurrentFrameTime;
 }

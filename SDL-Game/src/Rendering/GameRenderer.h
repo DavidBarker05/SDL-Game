@@ -4,7 +4,7 @@
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_render.h>
 
-class Player;
+class Scene;
 
 class GameRenderer
 {
@@ -14,12 +14,12 @@ public:
 
 	void Render();
 
-	void SetPlayer(Player* pPlayer);
+	void SetScene(Scene* pScene);
 
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
-	Player* m_pPlayer;
+	Scene* m_pScene;
 };
 #endif // !GAMERENDERER_H

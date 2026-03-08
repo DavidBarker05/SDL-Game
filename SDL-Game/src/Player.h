@@ -4,22 +4,24 @@
 #include "Core/DataTypes.h"
 #include "Math/Vector2.h"
 #include <SDL2/SDL_render.h>
+#include "Entity.h"
+#include "Events/InputListener.h"
 
 class Game;
 
-class Player
+class Player : public Entity, public InputListener
 {
 public:
-	Player(Game* pGame);
+	typedef Entity Super;
 
-	void Start();
-	void Tick(FLOAT32 deltaTime);
-	void Render(SDL_Renderer* pRenderer);
+	Player();
+
+	virtual void HandleInput(InputManager* pInputManager) override;
+
+	virtual void Tick(FLOAT32 deltaTime) override;
+	virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
-	Game* m_pGame;
-
-	Vector2 m_Position;
 	Vector2 m_Velocity;
 };
 #endif // !PLAYER_H

@@ -1,5 +1,6 @@
 #include "EventManager.h"
 #include "SDL2/SDL.h"
+#include "../Scene.h"
 
 bool EventManager::Init()
 {
@@ -13,8 +14,15 @@ PollStatus EventManager::PollEvents()
 	{
 		if (event.type == SDL_QUIT) return PollStatus::eQUIT;
 		m_InputManager.HandleEvent(event);
+		m_pScene->HandleInput(&m_InputManager);
+		m_pScene->HandleEvent(event);
 	}
 	return PollStatus::eALL_EVENTS_POLLED;
 }
 
 InputManager& EventManager::GetInputManager() { return m_InputManager; }
+
+void EventManager::SetScene(Scene* pScene)
+{
+	m_pScene = pScene;
+}

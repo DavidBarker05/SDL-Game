@@ -1,10 +1,8 @@
 #include "Player.h"
 #include "InputManager.h"
-#include "SDL2/SDL_log.h"
 
-Player::Player() : m_Velocity()
+Player::Player() : Super(NULL, VEC2D(0.0f, 0.0f), VEC2D(25.0f, 25.0f)), m_Velocity()
 {
-	Super();
 }
 
 void Player::HandleInput(InputManager* pInputManager)
@@ -15,11 +13,12 @@ void Player::HandleInput(InputManager* pInputManager)
 void Player::Tick(FLOAT32 deltaTime)
 {
 	Super::Tick(deltaTime);
-	SDL_Log("%f", deltaTime); // lol this messes with the performance which stabalises to around 4000fps so it actually fixes the jitter issue
+	//SDL_Log("%f", m_HalfExtents.x);
+	//SDL_Log("%f", deltaTime); // lol this messes with the performance which stabalises to around 4000fps so it actually fixes the jitter issue
 	m_Position += m_Velocity * deltaTime;
 }
 
-void Player::Render(SDL_Renderer* pRenderer)
+void Player::Render(P_RENDERER pRenderer)
 {
 	Super::Render(pRenderer);
 }

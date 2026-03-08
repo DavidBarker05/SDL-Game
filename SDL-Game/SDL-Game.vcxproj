@@ -61,14 +61,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DELAY_WINDOW;_WIN_64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(ProjectDir)src\Core;$(ProjectDir)src\Events;$(ProjectDir)src\Math;$(ProjectDir)src\Rendering</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(SolutionDir)vendor\box2d\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Events;$(ProjectDir)src\Math;$(ProjectDir)src\Rendering</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib;$(SolutionDir)vendor\box2d\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)vendor\SDL2\lib\SDL2.dll" "$(OutDir)"</Command>
@@ -96,6 +96,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\PhysicsEntity.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\Entity.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -105,9 +106,11 @@
     <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\MinimalMath.cpp" />
-    <ClCompile Include="src\Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Core\Functions.h" />
+    <ClInclude Include="src\Core\PhysicsEntity.h" />
     <ClInclude Include="src\Events\InputListener.h" />
     <ClInclude Include="src\Core\Scene.h" />
     <ClInclude Include="src\Core\Entity.h" />
@@ -119,7 +122,6 @@
     <ClInclude Include="src\Events\EventManager.h" />
     <ClInclude Include="src\Core\Game.h" />
     <ClInclude Include="src\Math\MinimalMath.h" />
-    <ClInclude Include="src\Math\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

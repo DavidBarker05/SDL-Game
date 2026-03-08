@@ -1,8 +1,7 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL_render.h>
+#include "Core.h"
 
 class Scene;
 
@@ -17,8 +16,8 @@ public:
 	void SetScene(Scene* pScene);
 
 private:
-	SDL_Window* m_pWindow;
-	SDL_Renderer* m_pRenderer;
+	P_WINDOW m_pWindow;
+	P_RENDERER m_pRenderer;
 
 	Scene* m_pScene;
 };

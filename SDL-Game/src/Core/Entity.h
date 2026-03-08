@@ -1,21 +1,20 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "DataTypes.h"
-#include "Vector2.h"
-#include <SDL2/SDL_render.h>
+#include "Core.h"
 
 class Entity
 {
 public:
-	Entity();
+	Entity(P_TEX2D pTexture = NULL, VEC2D position = VEC2D(0.0f, 0.0f), VEC2D halfExtents = VEC2D(0.0f, 0.0f));
 
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(SDL_Renderer* pRenderer);
+	virtual void Render(P_RENDERER pRenderer);
 
 protected:
-	SDL_Texture* m_Texture;
+	P_TEX2D m_pTexture;
 
-	Vector2 m_Position;
+	VEC2D m_HalfExtents;
+	VEC2D m_Position;
 };
 #endif // !ENTITY_H

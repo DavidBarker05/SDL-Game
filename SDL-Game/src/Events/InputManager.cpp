@@ -1,7 +1,6 @@
 #include "InputManager.h"
-#include <SDL2/SDL_events.h>
 
-void InputManager::HandleEvent(const SDL_Event& event)
+void InputManager::HandleEvent(const EVENT& event)
 {
 	switch (event.type)
 	{
@@ -16,7 +15,7 @@ void InputManager::HandleEvent(const SDL_Event& event)
 	}
 }
 
-Vector2 InputManager::GetMoveInput()
+VEC2D InputManager::GetMoveInput()
 {
 	const UINT8* keys = SDL_GetKeyboardState(NULL);
 	UINT8 up = keys[SDL_SCANCODE_W] | keys[SDL_SCANCODE_UP];
@@ -27,7 +26,6 @@ Vector2 InputManager::GetMoveInput()
 	FLOAT32 x = right && !left ? 1.0f : (left && !right ? -1.0f : 0.0f);
 	m_MoveInput.y = y;
 	m_MoveInput.x = x;
-	//m_MoveInput.Normalise();
 	return m_MoveInput;
 }
 

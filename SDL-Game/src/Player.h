@@ -1,9 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "DataTypes.h"
-#include "Vector2.h"
-#include <SDL2/SDL_render.h>
+#include "Core.h"
 #include "Entity.h"
 #include "InputListener.h"
 
@@ -19,9 +17,9 @@ public:
 	virtual void HandleInput(InputManager* pInputManager) override;
 
 	virtual void Tick(FLOAT32 deltaTime) override;
-	virtual void Render(SDL_Renderer* pRenderer) override;
+	virtual void Render(P_RENDERER pRenderer) override;
 
 private:
-	Vector2 m_Velocity;
+	VEC2D m_Velocity;
 };
 #endif // !PLAYER_H

@@ -1,5 +1,4 @@
 #include "EventManager.h"
-#include "SDL2/SDL.h"
 #include "Scene.h"
 
 bool EventManager::Init()
@@ -9,7 +8,7 @@ bool EventManager::Init()
 
 PollStatus EventManager::PollEvents()
 {
-	SDL_Event event;
+	EVENT event;
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT) return PollStatus::eQUIT;

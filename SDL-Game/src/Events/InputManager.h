@@ -1,20 +1,19 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include "DataTypes.h"
+#include "Core.h"
 #include "EventListener.h"
-#include "Vector2.h"
 
 class InputManager : public EventListener
 {
 public:
-	virtual void HandleEvent(const SDL_Event& event) override;
+	virtual void HandleEvent(const EVENT& event) override;
 
-	Vector2 GetMoveInput();
+	VEC2D GetMoveInput();
 
 private:
 	void DoKeyDown(UINT32 keyCode);
 	void DoKeyUp(UINT32 keyCode);
-	Vector2 m_MoveInput;
+	VEC2D m_MoveInput;
 };
 #endif // !INPUTMANAGER_H

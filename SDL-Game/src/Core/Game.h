@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "DataTypes.h"
+#include "Core.h"
 #include "GameRenderer.h"
 #include "EventManager.h"
 
@@ -21,9 +21,11 @@ private:
 	void Tick();
 
 	bool m_bGameIsRunning;
-	FLOAT32 m_CurrentFrameTime;
-	FLOAT32 m_LastFrameTime;
-	FLOAT32 m_DeltaTime;
+	FLOAT64 m_CurrentFrameTime;
+	FLOAT64 m_LastFrameTime;
+	FLOAT64 m_DeltaTime;
+	FLOAT64 m_FixedTickRate;
+	FLOAT64 m_FixedDeltaTime;
 
 	GameRenderer m_GameRenderer;
 	EventManager m_EventManager;

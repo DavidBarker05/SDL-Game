@@ -24,7 +24,7 @@ private:
 	void UpdateDeltaTime();
 
 	bool m_bGameIsRunning;
-	FLOAT32 m_DeltaTime;
+	FLOAT64 m_DeltaTime;
 
 	std::unique_ptr<GameRenderer> m_upGameRenderer;
 	std::unique_ptr<EventManager> m_upEventManager;

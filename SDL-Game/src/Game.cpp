@@ -49,7 +49,7 @@ void Game::Tick()
 void Game::UpdateDeltaTime()
 {
 	static UINT64 lastTick = 0i64;
-	UINT64 currentTick = SDL_GetTicks64();
-	m_DeltaTime = (currentTick - lastTick) / 1000.0;
+	UINT64 currentTick = SDL_GetPerformanceCounter();
+	m_DeltaTime = (currentTick - lastTick) / (FLOAT64) SDL_GetPerformanceFrequency();
 	lastTick = currentTick;
 }

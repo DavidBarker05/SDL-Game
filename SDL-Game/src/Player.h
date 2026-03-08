@@ -13,7 +13,7 @@ public:
 	Player(Game* pGame);
 
 	void Start();
-	void Tick(FLOAT32 deltaTime);
+	void Tick(FLOAT64 deltaTime);
 	void Render(SDL_Renderer* pRenderer);
 
 private:

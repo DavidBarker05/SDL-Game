@@ -16,44 +16,25 @@ void InputManager::HandleEvent(const SDL_Event& event)
 	}
 }
 
-Vector2 InputManager::GetMoveInput() { return m_MoveInput; }
+Vector2 InputManager::GetMoveInput()
+{
+	const UINT8* keys = SDL_GetKeyboardState(NULL);
+	UINT8 up = keys[SDL_SCANCODE_W] | keys[SDL_SCANCODE_UP];
+	UINT8 down = keys[SDL_SCANCODE_S] | keys[SDL_SCANCODE_DOWN];
+	UINT8 right = keys[SDL_SCANCODE_D] | keys[SDL_SCANCODE_RIGHT];
+	UINT8 left = keys[SDL_SCANCODE_A] | keys[SDL_SCANCODE_LEFT];
+	FLOAT32 y = up && !down ? -1.0f : (down && !up ? 1.0f : 0.0f);
+	FLOAT32 x = right && !left ? 1.0f : (left && !right ? -1.0f : 0.0f);
+	m_MoveInput.y = y;
+	m_MoveInput.x = x;
+	//m_MoveInput.Normalise();
+	return m_MoveInput;
+}
 
 void InputManager::DoKeyDown(UINT32 keyCode)
 {
 	switch (keyCode)
 	{
-		case SDLK_w:
-			if (m_MoveInput.y == 1) m_MoveInput.y = 0;
-			else m_MoveInput.y = -1;
-			break;
-		case SDLK_UP:
-			if (m_MoveInput.y == 1) m_MoveInput.y = 0;
-			else m_MoveInput.y = -1;
-			break;
-		case SDLK_s:
-			if (m_MoveInput.y == -1) m_MoveInput.y = 0;
-			else m_MoveInput.y = 1;
-			break;
-		case SDLK_DOWN:
-			if (m_MoveInput.y == -1) m_MoveInput.y = 0;
-			else m_MoveInput.y = 1;
-			break;
-		case SDLK_d:
-			if (m_MoveInput.x == -1) m_MoveInput.x = 0;
-			else m_MoveInput.x = 1;
-			break;
-		case SDLK_RIGHT:
-			if (m_MoveInput.x == -1) m_MoveInput.x = 0;
-			else m_MoveInput.x = 1;
-			break;
-		case SDLK_a:
-			if (m_MoveInput.x == 1) m_MoveInput.x = 0;
-			else m_MoveInput.x = -1;
-			break;
-		case SDLK_LEFT:
-			if (m_MoveInput.x == 1) m_MoveInput.x = 0;
-			else m_MoveInput.x = -1;
-			break;
 		default:
 			break;
 	}
@@ -63,38 +44,6 @@ void InputManager::DoKeyUp(UINT32 keyCode)
 {
 	switch (keyCode)
 	{
-		case SDLK_w:
-			if (m_MoveInput.y == -1) m_MoveInput.y = 0;
-			else if (m_MoveInput.y == 0) m_MoveInput.y = 1;
-			break;
-		case SDLK_UP:
-			if (m_MoveInput.y == -1) m_MoveInput.y = 0;
-			else if (m_MoveInput.y == 0) m_MoveInput.y = 1;
-			break;
-		case SDLK_s:
-			if (m_MoveInput.y == 1) m_MoveInput.y = 0;
-			else if (m_MoveInput.y == 0) m_MoveInput.y = -1;
-			break;
-		case SDLK_DOWN:
-			if (m_MoveInput.y == 1) m_MoveInput.y = 0;
-			else if (m_MoveInput.y == 0) m_MoveInput.y = -1;
-			break;
-		case SDLK_d:
-			if (m_MoveInput.x == 1) m_MoveInput.x = 0;
-			else if (m_MoveInput.x == 0) m_MoveInput.x = -1;
-			break;
-		case SDLK_RIGHT:
-			if (m_MoveInput.x == 1) m_MoveInput.x = 0;
-			else if (m_MoveInput.x == 0) m_MoveInput.y = -1;
-			break;
-		case SDLK_a:
-			if (m_MoveInput.x == -1) m_MoveInput.x = 0;
-			else if (m_MoveInput.x == 0) m_MoveInput.y = 1;
-			break;
-		case SDLK_LEFT:
-			if (m_MoveInput.x == -1) m_MoveInput.x = 0;
-			else if (m_MoveInput.x == 0) m_MoveInput.x = 1;
-			break;
 		default:
 			break;
 	}

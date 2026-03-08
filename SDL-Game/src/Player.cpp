@@ -3,6 +3,7 @@
 #include "EventManager.h"
 #include "GameRenderer.h"
 #include "InputManager.h"
+#include "SDL2/SDL_log.h"
 
 Player::Player(Game* pGame) : m_pGame(pGame), m_Position(), m_Velocity()
 {
@@ -12,8 +13,9 @@ void Player::Start()
 {
 }
 
-void Player::Tick(FLOAT32 deltaTime)
+void Player::Tick(FLOAT64 deltaTime)
 {
+	//SDL_Log("%f", deltaTime);
 	m_pGame->GetGameRenderer()->SetPlayer(this);
 	m_Velocity = m_pGame->GetEventManager()->GetInputManager()->GetMoveInput() * 50.0f;
 	m_Position += m_Velocity * deltaTime;

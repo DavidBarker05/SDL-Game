@@ -1,7 +1,7 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include "Core.h"
+#include "SDLTypes.h"
 
 class Scene;
 

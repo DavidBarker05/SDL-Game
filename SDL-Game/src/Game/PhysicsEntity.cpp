@@ -1,4 +1,5 @@
 #include "PhysicsEntity.h"
+#include <box2d/box2d.h>
 
 PhysicsEntity::PhysicsEntity(WORLD_ID worldId, bool bUseGravity, bool bIsKinematic, P_TEX2D pTexture, VEC2D position, VEC2D halfExtents) : Super(pTexture, position, halfExtents), m_pBodyDetails(new BodyDetails())
 {

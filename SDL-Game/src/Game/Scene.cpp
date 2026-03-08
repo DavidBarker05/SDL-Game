@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "InputListener.h"
 #include "PhysicsEntity.h"
+#include <box2d/box2d.h>
 
 Scene::Scene() : m_pWorldDetails(new WorldDetails())
 {

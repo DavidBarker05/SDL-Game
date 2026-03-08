@@ -2,6 +2,8 @@
 #define INPUTMANAGER_H
 
 #include "Core.h"
+#include "SDLTypes.h"
+#include "Box2DTypes.h"
 #include "EventListener.h"
 
 class InputManager : public EventListener

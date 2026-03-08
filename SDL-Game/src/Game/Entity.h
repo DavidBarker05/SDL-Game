@@ -2,6 +2,8 @@
 #define ENTITY_H
 
 #include "Core.h"
+#include "SDLTypes.h"
+#include "Box2DTypes.h"
 
 class Entity
 {

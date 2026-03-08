@@ -1,7 +1,9 @@
 #ifndef PHYSICSENTITY_H
 #define PHYSICSENTITY_H
 
-#include "DataTypes.h"
+#include "Core.h"
+#include "SDLTypes.h"
+#include "Box2DTypes.h"
 #include "Entity.h"
 
 typedef struct

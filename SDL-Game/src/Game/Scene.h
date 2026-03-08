@@ -2,6 +2,8 @@
 #define SCENE_H
 
 #include "Core.h"
+#include "SDLTypes.h"
+#include "Box2DTypes.h"
 #include <vector>
 #include "Entity.h"
 #include "InputManager.h"

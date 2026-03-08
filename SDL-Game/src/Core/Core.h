@@ -3,5 +3,6 @@
 
 #include "DataTypes.h"
 #include "Functions.h"
+#include "Logger.h"
 
 #endif // !CORE_H

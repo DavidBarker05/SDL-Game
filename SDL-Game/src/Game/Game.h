@@ -14,9 +14,6 @@ public:
 	bool Init();
 	void Start();
 
-	GameRenderer& GetGameRenderer();
-	EventManager& GetEventManager();
-
 private:
 	void Tick();
 

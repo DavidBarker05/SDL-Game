@@ -2,8 +2,8 @@
 #define GAME_H
 
 #include "DataTypes.h"
-#include "../Rendering/GameRenderer.h"
-#include "../Events/EventManager.h"
+#include "GameRenderer.h"
+#include "EventManager.h"
 
 class Game
 {

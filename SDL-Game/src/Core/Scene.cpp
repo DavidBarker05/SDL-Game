@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "Events/InputListener.h"
+#include "InputListener.h"
 
 Scene::Scene() { }
 

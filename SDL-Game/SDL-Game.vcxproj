@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DELAY_WINDOW;_WIN_64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(ProjectDir)src\Core;$(ProjectDir)src\Events;$(ProjectDir)src\Math;$(ProjectDir)src\Rendering</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -96,8 +96,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Core\Scene.cpp" />
+    <ClCompile Include="src\Core\Entity.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Events\InputManager.cpp" />
     <ClCompile Include="src\Rendering\GameRenderer.cpp" />
@@ -109,8 +109,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Events\InputListener.h" />
-    <ClInclude Include="src\Scene.h" />
-    <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Core\Scene.h" />
+    <ClInclude Include="src\Core\Entity.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Events\InputManager.h" />
     <ClInclude Include="src\Core\DataTypes.h" />

@@ -1,7 +1,7 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
-#include "../Core/DataTypes.h"
+#include "DataTypes.h"
 #include "InputManager.h"
 
 class Scene;

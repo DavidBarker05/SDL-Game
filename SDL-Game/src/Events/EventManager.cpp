@@ -1,6 +1,6 @@
 #include "EventManager.h"
 #include "SDL2/SDL.h"
-#include "../Scene.h"
+#include "Scene.h"
 
 bool EventManager::Init()
 {

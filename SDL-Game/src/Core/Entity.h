@@ -1,8 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Core/DataTypes.h"
-#include "Math/Vector2.h"
+#include "DataTypes.h"
+#include "Vector2.h"
 #include <SDL2/SDL_render.h>
 
 class Entity

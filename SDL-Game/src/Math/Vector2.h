@@ -1,7 +1,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include "../Core/DataTypes.h"
+#include "DataTypes.h"
 #include <utility>
 #include <stdexcept>
 

@@ -1,7 +1,7 @@
 #ifndef MINIMALMATH_H
 #define MINIMALMATH_H
 
-#include "../Core/DataTypes.h"
+#include "DataTypes.h"
 
 namespace Math
 {

@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Core/DataTypes.h"
-#include "Math/Vector2.h"
+#include "DataTypes.h"
+#include "Vector2.h"
 #include <SDL2/SDL_render.h>
 #include "Entity.h"
-#include "Events/InputListener.h"
+#include "InputListener.h"
 
 class Game;
 

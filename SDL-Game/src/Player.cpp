@@ -1,6 +1,5 @@
 #include "Player.h"
-#include "Core/Game.h"
-#include "Events/InputManager.h"
+#include "InputManager.h"
 #include "SDL2/SDL_log.h"
 
 Player::Player() : m_Velocity()
@@ -16,7 +15,7 @@ void Player::HandleInput(InputManager* pInputManager)
 void Player::Tick(FLOAT32 deltaTime)
 {
 	Super::Tick(deltaTime);
-	SDL_Log("%f", deltaTime);
+	SDL_Log("%f", deltaTime); // lol this messes with the performance which stabalises to around 4000fps so it actually fixes the jitter issue
 	m_Position += m_Velocity * deltaTime;
 }
 

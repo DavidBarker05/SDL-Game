@@ -10,8 +10,7 @@
 
 bool GameRenderer::Init()
 {
-	bool wasFailure = SDL_Init(SDL_INIT_VIDEO);
-	if (wasFailure) return FALSE;
+	if (!SDL_Init(SDL_INIT_VIDEO)) return FALSE;
 	m_pWindow = SDL_CreateWindow(DEFAULT_WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 	m_pRenderer = SDL_CreateRenderer(m_pWindow, DEFAULT_RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
 }

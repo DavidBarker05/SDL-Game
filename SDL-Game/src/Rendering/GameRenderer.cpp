@@ -26,7 +26,7 @@ void GameRenderer::Render()
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
 	SDL_RenderClear(m_pRenderer);
 	// Render everything below here
-	m_pScene->Render(m_pRenderer);
+	if (m_pScene) m_pScene->Render(m_pRenderer);
 	// Render everything above here
 	SDL_RenderPresent(m_pRenderer);
 }

@@ -14,8 +14,8 @@ PollStatus EventManager::PollEvents()
 	{
 		if (event.type == SDL_QUIT) return PollStatus::eQUIT;
 		m_InputManager.HandleEvent(event);
-		m_pScene->HandleInput(&m_InputManager);
-		m_pScene->HandleEvent(event);
+		if (m_pScene) m_pScene->HandleInput(&m_InputManager);
+		if (m_pScene) m_pScene->HandleEvent(event);
 	}
 	return PollStatus::eALL_EVENTS_POLLED;
 }

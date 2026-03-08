@@ -13,11 +13,11 @@ void Player::Start()
 {
 }
 
-void Player::Tick(FLOAT64 deltaTime)
+void Player::Tick(FLOAT32 deltaTime)
 {
-	//SDL_Log("%f", deltaTime);
-	m_pGame->GetGameRenderer()->SetPlayer(this);
-	m_Velocity = m_pGame->GetEventManager()->GetInputManager()->GetMoveInput() * 50.0f;
+	SDL_Log("%f", deltaTime);
+	m_pGame->GetGameRenderer().SetPlayer(this);
+	m_Velocity = m_pGame->GetEventManager().GetInputManager().GetMoveInput() * 50.0f;
 	m_Position += m_Velocity * deltaTime;
 }
 

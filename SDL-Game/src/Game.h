@@ -2,10 +2,8 @@
 #define GAME_H
 
 #include "DataTypes.h"
-#include <memory>
-
-class GameRenderer;
-class EventManager;
+#include "GameRenderer.h"
+#include "EventManager.h"
 
 class Game
 {
@@ -16,17 +14,18 @@ public:
 	void Init();
 	void Start();
 
-	GameRenderer* GetGameRenderer();
-	EventManager* GetEventManager();
+	GameRenderer& GetGameRenderer();
+	EventManager& GetEventManager();
 
 private:
 	void Tick();
-	void UpdateDeltaTime();
 
 	bool m_bGameIsRunning;
-	FLOAT64 m_DeltaTime;
+	FLOAT32 m_CurrentFrameTime;
+	FLOAT32 m_LastFrameTime;
+	FLOAT32 m_DeltaTime;
 
-	std::unique_ptr<GameRenderer> m_upGameRenderer;
-	std::unique_ptr<EventManager> m_upEventManager;
+	GameRenderer m_GameRenderer;
+	EventManager m_EventManager;
 };
 #endif // !GAME_H

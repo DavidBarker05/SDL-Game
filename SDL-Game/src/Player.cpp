@@ -1,8 +1,8 @@
 #include "Player.h"
-#include "Game.h"
-#include "EventManager.h"
-#include "GameRenderer.h"
-#include "InputManager.h"
+#include "Core/Game.h"
+#include "Events/EventManager.h"
+#include "Rendering/GameRenderer.h"
+#include "Events/InputManager.h"
 #include "SDL2/SDL_log.h"
 
 Player::Player(Game* pGame) : m_pGame(pGame), m_Position(), m_Velocity()

@@ -1,7 +1,7 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
-#include "DataTypes.h"
+#include "../Core/DataTypes.h"
 #include "InputManager.h"
 
 enum class PollStatus : UINT8

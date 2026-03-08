@@ -97,24 +97,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\InputManager.cpp" />
-    <ClCompile Include="src\GameRenderer.cpp" />
-    <ClCompile Include="src\EventManager.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Events\InputManager.cpp" />
+    <ClCompile Include="src\Rendering\GameRenderer.cpp" />
+    <ClCompile Include="src\Events\EventManager.cpp" />
+    <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\MinimalMath.cpp" />
-    <ClCompile Include="src\Vector2.cpp" />
+    <ClCompile Include="src\Math\MinimalMath.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\InputManager.h" />
-    <ClInclude Include="src\DataTypes.h" />
-    <ClInclude Include="src\EventListener.h" />
-    <ClInclude Include="src\GameRenderer.h" />
-    <ClInclude Include="src\EventManager.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\MinimalMath.h" />
-    <ClInclude Include="src\Vector2.h" />
+    <ClInclude Include="src\Events\InputManager.h" />
+    <ClInclude Include="src\Core\DataTypes.h" />
+    <ClInclude Include="src\Events\EventListener.h" />
+    <ClInclude Include="src\Rendering\GameRenderer.h" />
+    <ClInclude Include="src\Events\EventManager.h" />
+    <ClInclude Include="src\Core\Game.h" />
+    <ClInclude Include="src\Math\MinimalMath.h" />
+    <ClInclude Include="src\Math\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,9 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include "DataTypes.h"
+#include "../Core/DataTypes.h"
 #include "EventListener.h"
-#include "Vector2.h"
+#include "../Math/Vector2.h"
 
 class InputManager : public EventListener
 {

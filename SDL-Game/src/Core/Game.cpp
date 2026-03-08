@@ -1,8 +1,6 @@
 #include "Game.h"
-#include "GameRenderer.h"
-#include "EventManager.h"
 #include <SDL2/SDL.h>
-#include "Player.h"
+#include "../Player.h"
 
 Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0f), m_LastFrameTime(0.0f), m_DeltaTime(0.0f), m_GameRenderer(), m_EventManager() { }
 

@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "DataTypes.h"
-#include "Vector2.h"
+#include "Core/DataTypes.h"
+#include "Math/Vector2.h"
 #include <SDL2/SDL_render.h>
 
 class Game;

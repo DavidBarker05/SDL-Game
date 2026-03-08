@@ -1,6 +1,6 @@
 #include "GameRenderer.h"
 #include <SDL2/SDL.h>
-#include "Player.h"
+#include "../Player.h"
 
 #define DEFAULT_WINDOW_TITLE  "Title"
 #define DEFAULT_WINDOW_WIDTH  640

@@ -19,7 +19,7 @@ class PhysicsEntity : public Entity
 public:
 	typedef Entity Super;
 
-	PhysicsEntity(WORLD_ID worldId, bool bUseGravity = FALSE, bool bIsKinematic = FALSE , P_TEX2D pTexture = NULL, VEC2D position = VEC2D(0.0f, 0.0f), VEC2D halfExtents = VEC2D(0.0f, 0.0f));
+	PhysicsEntity(WORLD_ID worldId, bool bUseGravity = FALSE, bool bIsKinematic = FALSE, P_TEX2D pTexture = NULL, VEC2D position = VEC2D({ 0.0f, 0.0f }), VEC2D halfExtents = VEC2D({ 0.0f, 0.0f }));
 
 	virtual void TickPhysics(FLOAT32 fixedDeltaTime);
 	virtual void Tick(FLOAT32 deltaTime) override;

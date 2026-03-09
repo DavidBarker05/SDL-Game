@@ -1,9 +1,7 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
-#ifdef _MSC_VER
-
-#ifdef _X64
+#ifdef _M_X64
 
 #define NULL 0
 
@@ -34,8 +32,6 @@ typedef float FLOAT32;
 
 typedef double FLOAT64;
 
-#endif // _X64
-
-#endif // _MSC_VER
+#endif // _M_X64
 
 #endif // !DATATYPES_H

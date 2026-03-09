@@ -6,10 +6,10 @@
 Scene::Scene() : m_pWorldDetails(new WorldDetails())
 {
 	m_pWorldDetails->worldDef = b2DefaultWorldDef();
-	m_pWorldDetails->worldDef.gravity = VEC2D(0.0f, 10.0f);
+	m_pWorldDetails->worldDef.gravity = VEC2D({ 0.0f, 10.0f });
 	m_pWorldDetails->worldId = b2CreateWorld(&m_pWorldDetails->worldDef);
 
-	PhysicsEntity* entity = new PhysicsEntity(m_pWorldDetails->worldId, TRUE, TRUE, NULL, VEC2D(0.0f, 0.0f), VEC2D(25.0f, 25.0f));
+	PhysicsEntity* entity = new PhysicsEntity(m_pWorldDetails->worldId, TRUE, TRUE, NULL, VEC2D({ 0.0f, 0.0f }), VEC2D({ 25.0f, 25.0f }));
 	AddEntity(entity);
 }
 

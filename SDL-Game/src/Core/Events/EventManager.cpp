@@ -4,7 +4,9 @@
 
 bool EventManager::Init()
 {
-	return !SDL_Init(SDL_INIT_EVENTS);
+	if (SDL_Init(SDL_INIT_EVENTS)) return FALSE;
+	LOG_INFO("Initialised the event system");
+	return TRUE;
 }
 
 PollStatus EventManager::PollEvents()

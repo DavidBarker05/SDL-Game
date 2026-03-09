@@ -14,73 +14,25 @@ enum class LogLevel : UINT8
 	eTRACE
 };
 
-#define SET_LOG_LEVEL(level) Logger::Get().SetLevel(level)
+#define SET_LOG_LEVEL(level) Logger::SetLevel(level)
 
-#define LOG_TRACE(format, ...) Logger::Get().LogTrace(format, __VA_ARGS__)
+#define LOG_TRACE(format, ...) SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, format, __VA_ARGS__)
 
-#define LOG_INFO(format, ...) Logger::Get().LogInfo(format, __VA_ARGS__)
+#define LOG_INFO(format, ...) SDL_Log(format, __VA_ARGS__)
 
-#define LOG_WARN(format, ...) Logger::Get().LogWarn(format, __VA_ARGS__)
+#define LOG_WARN(format, ...) SDL_LogWarn(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __FILE__, __LINE__)
 
-#define LOG_ERROR(format, ...) Logger::Get().LogError(format, __VA_ARGS__)
+#define LOG_ERROR(format, ...) SDL_LogError(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 
-#define LOG_FATAL(format, ...) Logger::Get().LogFatal(format, __VA_ARGS__)
+#define LOG_FATAL(format, ...) SDL_LogCritical(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 
-class Logger
+// Basically a singleton to allow me to work with sdl logger and output to whatever file I want
+namespace Logger
 {
-public:
-	static void Init()
-	{
-		s_Logger = { };
-		s_Logger.m_CurrentLevel = LogLevel::eTRACE;
-	}
-
-	inline static Logger& Get() { return s_Logger; }
-
-	template <typename... Args>
-	void LogTrace(C_STRING format, Args... args)
-	{
-		if (m_CurrentLevel < LogLevel::eTRACE) return;
-		SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, format, args...);
-	}
-
-	template <typename... Args>
-	void LogInfo(C_STRING format, Args... args)
-	{
-		if (m_CurrentLevel < LogLevel::eINFO) return;
-		SDL_Log(format, args...);
-	}
-
-	template <typename... Args>
-	void LogWarn(C_STRING format, Args... args)
-	{
-		if (m_CurrentLevel < LogLevel::eWARN) return;
-		SDL_LogWarn(SDL_LOG_CATEGORY_TEST, format, args...);
-	}
-
-	template <typename... Args>
-	void LogError(C_STRING format, Args... args)
-	{
-		if (m_CurrentLevel < LogLevel::eERROR) return;
-		SDL_LogError(SDL_LOG_CATEGORY_TEST, format, args...);
-	}
-
-	template <typename... Args>
-	void LogFatal(C_STRING format, Args... args)
-	{
-		if (m_CurrentLevel < LogLevel::eFATAL) return;
-		SDL_LogCritical(SDL_LOG_CATEGORY_TEST, format, args...);
-	}
-
-	void SetLevel(LogLevel level)
-	{
-		m_CurrentLevel = level;
-	}
-
-private:
-	static Logger s_Logger;
-
-	LogLevel m_CurrentLevel;
-};
+	extern void Init();
 	
+	extern void SetLevel(LogLevel level);
+
+	extern void LogOverrideFunction(P_VOID userData, INT16 category, SDL_LogPriority priority, C_STRING message);
+}
 #endif // !LOGGER_H

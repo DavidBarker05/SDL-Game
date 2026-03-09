@@ -59,7 +59,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DELAY_WINDOW;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DELAY_WINDOW;_DEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(SolutionDir)vendor\box2d\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
@@ -67,7 +67,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;box2d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib;$(SolutionDir)vendor\box2d\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -80,7 +80,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(SolutionDir)vendor\box2d\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
@@ -88,7 +88,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;box2d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib;$(SolutionDir)vendor\box2d\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>

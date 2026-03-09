@@ -3,6 +3,10 @@
 #include "Player.h"
 #include "Scene.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4244)
+#endif // _MSC_VER
+
 Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0f), m_LastFrameTime(0.0f), m_DeltaTime(0.0f), m_FixedTickRate(0.02f), m_FixedDeltaTime(0.0f), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()

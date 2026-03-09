@@ -11,7 +11,7 @@
 #define GREEN "\33[0;92m"
 #define YELLOW "\33[0;33m"
 #define RED "\33[0;91m"
-#define INTENSE_RED "\33[0;31m"
+#define DEEPER_RED "\33[0;31m"
 
 static LogLevel currentLevel;
 
@@ -73,7 +73,7 @@ void Logger::LogOverrideFunction(P_VOID userData, INT16 category, SDL_LogPriorit
 		case SDL_LOG_PRIORITY_CRITICAL:
 			if (currentLevel < LogLevel::eFATAL) return;
 			type = "FATAL";
-			colour = INTENSE_RED;
+			colour = DEEPER_RED;
 			break;
 		default:
 			return;

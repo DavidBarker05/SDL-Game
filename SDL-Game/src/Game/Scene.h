@@ -2,8 +2,8 @@
 #define SCENE_H
 
 #include "Core.h"
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_render.h>
 #include <vector>
 #include "Entity.h"
 #include "InputManager.h"

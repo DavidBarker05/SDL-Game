@@ -61,17 +61,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DELAY_WINDOW;_DEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL3\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(SolutionDir)vendor\SDL2\lib\SDL2.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d  "$(SolutionDir)vendor\SDL3\lib\SDL3.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -82,17 +82,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL2\Include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL2\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\SDL3\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(SolutionDir)vendor\SDL2\lib\SDL2.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d  "$(SolutionDir)vendor\SDL3\lib\SDL3.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

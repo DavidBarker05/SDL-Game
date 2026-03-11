@@ -4,7 +4,7 @@
 #include "Core.h"
 #include "Entity.h"
 #include "InputListener.h"
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_render.h>
 
 class Game;
 

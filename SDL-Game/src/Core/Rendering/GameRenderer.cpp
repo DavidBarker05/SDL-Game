@@ -1,5 +1,5 @@
 #include "GameRenderer.h"
-#include <SDL2/SDL.h>
+#include <SDL3/SDL_init.h>
 #include "Scene.h"
 
 #define DEFAULT_WINDOW_TITLE  "Title"
@@ -14,17 +14,17 @@ extern "C"
 {
 	// Force game to use discrete graphics if they have integrated graphics
 	// I might switch to SDL3 since they apparently have an option to fix this we'll see
-	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
-	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+	//__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+	//__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 #endif // _MSC_VER
 
 
 bool GameRenderer::Init()
 {
-	if (SDL_Init(SDL_INIT_VIDEO)) return FALSE;
-	m_pWindow = SDL_CreateWindow(DEFAULT_WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
-	m_pRenderer = SDL_CreateRenderer(m_pWindow, DEFAULT_RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
+	if (!SDL_Init(SDL_INIT_VIDEO)) return FALSE;
+	m_pWindow = SDL_CreateWindow(DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_HIGH_PIXEL_DENSITY);
+	m_pRenderer = SDL_CreateRenderer(m_pWindow, NULL);
 	LOG_INFO("Initialised the game renderer");
 	return TRUE;
 }

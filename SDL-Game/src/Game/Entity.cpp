@@ -9,11 +9,11 @@ void Entity::Render(SDL_Renderer* pRenderer)
 	SDL_FRect r = { m_Position.x - m_HalfExtents.x, m_Position.y + m_HalfExtents.y, 2.0f * m_HalfExtents.x, 2.0f * m_HalfExtents.y };
 	if (m_pTexture)
 	{
-		SDL_RenderCopyF(pRenderer, m_pTexture, NULL, &r);
+		SDL_RenderTexture(pRenderer, m_pTexture, NULL, &r);
 	}
 	else
 	{
 		SDL_SetRenderDrawColor(pRenderer, 255, 0, 255, 255);
-		SDL_RenderFillRectF(pRenderer, &r);
+		SDL_RenderFillRect(pRenderer, &r);
 	}
 }

@@ -4,11 +4,11 @@ void InputManager::HandleEvent(const SDL_Event& event)
 {
 	switch (event.type)
 	{
-		case SDL_KEYDOWN:
-			DoKeyDown(event.key.keysym.sym);
+		case SDL_EVENT_KEY_DOWN:
+			DoKeyDown(event.key.key);
 			break;
-		case SDL_KEYUP:
-			DoKeyUp(event.key.keysym.sym);
+		case SDL_EVENT_KEY_UP:
+			DoKeyUp(event.key.key);
 			break;
 		default:
 			break;
@@ -17,7 +17,7 @@ void InputManager::HandleEvent(const SDL_Event& event)
 
 Vec2D InputManager::GetMoveInput()
 {
-	const UINT8* keys = SDL_GetKeyboardState(NULL);
+	const bool* keys = SDL_GetKeyboardState(NULL);
 	UINT8 up = keys[SDL_SCANCODE_W] | keys[SDL_SCANCODE_UP];
 	UINT8 down = keys[SDL_SCANCODE_S] | keys[SDL_SCANCODE_DOWN];
 	UINT8 right = keys[SDL_SCANCODE_D] | keys[SDL_SCANCODE_RIGHT];
@@ -29,7 +29,7 @@ Vec2D InputManager::GetMoveInput()
 	return m_MoveInput;
 }
 
-void InputManager::DoKeyDown(UINT32 keyCode)
+void InputManager::DoKeyDown(SDL_Keycode keyCode)
 {
 	switch (keyCode)
 	{
@@ -38,7 +38,7 @@ void InputManager::DoKeyDown(UINT32 keyCode)
 	}
 }
 
-void InputManager::DoKeyUp(UINT32 keyCode)
+void InputManager::DoKeyUp(SDL_Keycode keyCode)
 {
 	switch (keyCode)
 	{

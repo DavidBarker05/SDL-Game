@@ -1,5 +1,6 @@
 #include "Game.h"
-#include <SDL2/SDL.h>
+#include <SDL3/SDL_init.h>
+#include <SDL3/SDL_timer.h>
 #include "Player.h"
 #include "Scene.h"
 

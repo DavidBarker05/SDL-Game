@@ -2,7 +2,7 @@
 #define LOGGER_H
 
 #include "DataTypes.h"
-#include <SDL2/SDL_log.h>
+#include <SDL3/SDL_log.h>
 
 enum class LogLevel : UINT8
 {

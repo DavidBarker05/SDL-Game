@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #include "Core.h"
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_render.h>
 
 class Entity
 {

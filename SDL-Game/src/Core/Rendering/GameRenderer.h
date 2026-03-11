@@ -1,8 +1,8 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL_render.h>
+#include <SDL3/SDL_video.h>
+#include <SDL3/SDL_render.h>
 
 class Scene;
 

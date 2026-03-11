@@ -32,7 +32,7 @@ void Logger::Init()
 #else
 	currentLevel = LogLevel::eTRACE;
 #endif
-	SDL_LogSetOutputFunction((SDL_LogOutputFunction) LogOverrideFunction, (P_VOID) 0);
+	SDL_SetLogOutputFunction((SDL_LogOutputFunction) LogOverrideFunction, NULL);
 	LOG_INFO("Initialised the logging system");
 }
 

@@ -3,7 +3,7 @@
 
 #include "Core.h"
 #include "EventListener.h"
-#include <SDL2/SDL_events.h>
+#include <SDL3/SDL_events.h>
 
 class InputManager : public EventListener
 {
@@ -13,8 +13,8 @@ public:
 	Vec2D GetMoveInput();
 
 private:
-	void DoKeyDown(UINT32 keyCode);
-	void DoKeyUp(UINT32 keyCode);
+	void DoKeyDown(SDL_Keycode keyCode);
+	void DoKeyUp(SDL_Keycode keyCode);
 	Vec2D m_MoveInput;
 };
 #endif // !INPUTMANAGER_H

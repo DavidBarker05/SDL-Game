@@ -1,7 +1,7 @@
 #ifndef EVENTLISTENER_H
 #define EVENTLISTENER_H
 
-#include <SDL2/SDL_events.h>
+#include <SDL3/SDL_events.h>
 
 class EventListener
 {

@@ -1,6 +1,6 @@
 #include "InputManager.h"
 
-void InputManager::HandleEvent(const EVENT& event)
+void InputManager::HandleEvent(const SDL_Event& event)
 {
 	switch (event.type)
 	{
@@ -15,7 +15,7 @@ void InputManager::HandleEvent(const EVENT& event)
 	}
 }
 
-VEC2D InputManager::GetMoveInput()
+Vec2D InputManager::GetMoveInput()
 {
 	const UINT8* keys = SDL_GetKeyboardState(NULL);
 	UINT8 up = keys[SDL_SCANCODE_W] | keys[SDL_SCANCODE_UP];

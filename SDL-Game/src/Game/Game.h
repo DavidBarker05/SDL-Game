@@ -23,8 +23,6 @@ private:
 	FLOAT64 m_CurrentFrameTime;
 	FLOAT64 m_LastFrameTime;
 	FLOAT64 m_DeltaTime;
-	FLOAT64 m_FixedTickRate;
-	FLOAT64 m_FixedDeltaTime;
 
 	GameRenderer m_GameRenderer;
 	EventManager m_EventManager;

@@ -5,5 +5,6 @@
 #include "Functions.h"
 #include "Logger.h"
 #include "MinimalMath.h"
+#include "Vector2D.h"
 
 #endif // !CORE_H

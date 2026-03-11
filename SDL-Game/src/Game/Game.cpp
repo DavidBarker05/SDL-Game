@@ -7,7 +7,7 @@
 #pragma warning(disable: 4244)
 #endif // _MSC_VER
 
-Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0), m_LastFrameTime(0.0), m_DeltaTime(0.0), m_FixedTickRate(0.02f), m_FixedDeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0), m_LastFrameTime(0.0), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {
@@ -60,11 +60,6 @@ void Game::Tick()
 		m_bGameIsRunning = FALSE;
 		return;
 	}
-	while (m_FixedDeltaTime >= m_FixedTickRate)
-	{
-		pScene->TickPhysics(m_FixedTickRate);
-		m_FixedDeltaTime -= m_FixedTickRate;
-	}
 	pScene->Tick(m_DeltaTime);
 	m_GameRenderer.Render();
 	//SDL_Delay(1); // Delay by 1 for now so that the frame drops aren't as bad
@@ -76,6 +71,4 @@ void Game::UpdateDeltaTime()
 	m_CurrentFrameTime = SDL_GetPerformanceCounter();
 	m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64) SDL_GetPerformanceFrequency();
 	m_LastFrameTime = m_CurrentFrameTime;
-	if (m_DeltaTime > 0.25) m_DeltaTime = 0.25;
-	m_FixedDeltaTime += m_DeltaTime;
 }

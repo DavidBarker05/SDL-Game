@@ -2,10 +2,9 @@
 #define PLAYER_H
 
 #include "Core.h"
-#include "SDLTypes.h"
-#include "Box2DTypes.h"
 #include "Entity.h"
 #include "InputListener.h"
+#include <SDL2/SDL_render.h>
 
 class Game;
 
@@ -19,9 +18,9 @@ public:
 	virtual void HandleInput(InputManager* pInputManager) override;
 
 	virtual void Tick(FLOAT32 deltaTime) override;
-	virtual void Render(P_RENDERER pRenderer) override;
+	virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
-	VEC2D m_Velocity;
+	Vec2D m_Velocity;
 };
 #endif // !PLAYER_H

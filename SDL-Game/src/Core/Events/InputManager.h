@@ -2,20 +2,19 @@
 #define INPUTMANAGER_H
 
 #include "Core.h"
-#include "SDLTypes.h"
-#include "Box2DTypes.h"
 #include "EventListener.h"
+#include <SDL2/SDL_events.h>
 
 class InputManager : public EventListener
 {
 public:
-	virtual void HandleEvent(const EVENT& event) override;
+	virtual void HandleEvent(const SDL_Event& event) override;
 
-	VEC2D GetMoveInput();
+	Vec2D GetMoveInput();
 
 private:
 	void DoKeyDown(UINT32 keyCode);
 	void DoKeyUp(UINT32 keyCode);
-	VEC2D m_MoveInput;
+	Vec2D m_MoveInput;
 };
 #endif // !INPUTMANAGER_H

@@ -2,21 +2,20 @@
 #define ENTITY_H
 
 #include "Core.h"
-#include "SDLTypes.h"
-#include "Box2DTypes.h"
+#include <SDL2/SDL_render.h>
 
 class Entity
 {
 public:
-	Entity(P_TEX2D pTexture = NULL, VEC2D position = VEC2D({ 0.0f, 0.0f }), VEC2D halfExtents = VEC2D({ 0.0f, 0.0f }));
+	Entity(SDL_Texture* pTexture = NULL, Vec2D position = Vec2D(0.0f, 0.0f), Vec2D halfExtents = Vec2D(0.0f, 0.0f));
 
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(P_RENDERER pRenderer);
+	virtual void Render(SDL_Renderer* pRenderer);
 
 protected:
-	P_TEX2D m_pTexture;
+	SDL_Texture* m_pTexture;
 
-	VEC2D m_HalfExtents;
-	VEC2D m_Position;
+	Vec2D m_HalfExtents;
+	Vec2D m_Position;
 };
 #endif // !ENTITY_H

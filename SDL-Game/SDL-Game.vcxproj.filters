@@ -27,7 +27,7 @@
     <ClCompile Include="src\Game\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Events\InputManager.cpp">
+    <ClCompile Include="src\Core\Events\Input\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Rendering\GameRenderer.cpp">
@@ -42,9 +42,6 @@
     <ClCompile Include="src\Core\Math\MinimalMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\PhysicsEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -53,7 +50,7 @@
     <ClInclude Include="src\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Events\InputListener.h">
+    <ClInclude Include="src\Core\Events\Input\InputListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Game\Scene.h">
@@ -62,7 +59,7 @@
     <ClInclude Include="src\Game\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Events\InputManager.h">
+    <ClInclude Include="src\Core\Events\Input\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\DataTypes.h">
@@ -83,9 +80,6 @@
     <ClInclude Include="src\Core\Math\MinimalMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game\PhysicsEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -95,10 +89,10 @@
     <ClInclude Include="src\Core\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\SDLTypes.h">
+    <ClInclude Include="src\Core\Math\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Box2DTypes.h">
+    <ClInclude Include="src\Core\Rendering\Renderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,8 +7,9 @@
 #include <vector>
 #include "Entity.h"
 #include "InputManager.h"
+#include "Renderable.h"
 
-class Scene
+class Scene : public Renderable
 {
 public:
 	Scene();
@@ -16,7 +17,7 @@ public:
 	virtual void HandleInput(InputManager* pInputManager);
 	virtual void HandleEvent(const SDL_Event& event);
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(SDL_Renderer* pRenderer);
+	virtual void Render(SDL_Renderer* pRenderer) override;
 
 	virtual void AddEntity(Entity* pEntity);
 

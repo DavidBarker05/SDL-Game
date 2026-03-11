@@ -39,12 +39,47 @@ void GameRenderer::Render()
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
 	SDL_RenderClear(m_pRenderer);
 	// Render everything below here
-	if (m_pScene) m_pScene->Render(m_pRenderer);
+	std::vector<std::weak_ptr<Renderable>>::iterator it = m_wpRenderables.begin();
+	while (it != m_wpRenderables.end())
+	{
+		if (std::shared_ptr<Renderable> spRenderable = (*it).lock()) // It hasn't expired
+		{
+			spRenderable->Render(m_pRenderer);
+			++it;
+		}
+		else it = m_wpRenderables.erase(it); // It has expired so we shouldn't render it anymore
+	}
+	//if (m_pScene) m_pScene->Render(m_pRenderer);
 	// Render everything above here
 	SDL_RenderPresent(m_pRenderer);
 }
 
-void GameRenderer::SetScene(Scene* pScene)
+bool GameRenderer::DoesVectorContainRenderable(std::weak_ptr<Renderable> wpRenderable)
 {
-	m_pScene = pScene;
+	if (std::find_if(m_wpRenderables.begin(), m_wpRenderables.end(), [wpRenderable](std::weak_ptr<Renderable> wpVectorElement) { return wpRenderable.owner_before(wpVectorElement); }) == m_wpRenderables.end()) return FALSE;
+	else return TRUE;
+}
+
+void GameRenderer::AddRenderable(std::weak_ptr<Renderable> wpRenderable)
+{
+	if (!DoesVectorContainRenderable(wpRenderable)) m_wpRenderables.emplace_back(wpRenderable);
+	else LOG_ERROR("Renderable is already in the renderable vector");
+}
+
+void GameRenderer::AddRenderableAtIndex(std::weak_ptr<Renderable> wpRenderable, SIZE_T index)
+{
+	std::vector<std::weak_ptr<Renderable>>::iterator emplacePosition = m_wpRenderables.begin() + index;
+	if (m_wpRenderables.begin() > emplacePosition || m_wpRenderables.end() <= emplacePosition)
+	{
+		LOG_ERROR("Index %llu is out of bounds of the renderable vector", index);
+		return;
+	}
+	if (!DoesVectorContainRenderable(wpRenderable)) m_wpRenderables.emplace(emplacePosition, wpRenderable);
+	else LOG_ERROR("Renderable is already in the renderable vector");
+}
+
+void GameRenderer::RemoveRenderable(std::weak_ptr<Renderable> wpRenderable)
+{
+	// Yes this line is just to remove one element fml, it does remove all instances of an element tho just in case
+	m_wpRenderables.erase(std::remove_if(m_wpRenderables.begin(), m_wpRenderables.end(), [wpRenderable](std::weak_ptr<Renderable> wpVectorElement) { return wpRenderable.owner_before(wpVectorElement); }), m_wpRenderables.end());
 }

@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DELAY_WINDOW;_DEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Events\Input;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -82,7 +82,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Events\Input;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -100,7 +100,7 @@
     <ClCompile Include="src\Game\Scene.cpp" />
     <ClCompile Include="src\Game\Entity.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Core\Events\InputManager.cpp" />
+    <ClCompile Include="src\Core\Events\Input\InputManager.cpp" />
     <ClCompile Include="src\Core\Rendering\GameRenderer.cpp" />
     <ClCompile Include="src\Core\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -111,11 +111,12 @@
     <ClInclude Include="src\Core\Logger.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Functions.h" />
-    <ClInclude Include="src\Core\Events\InputListener.h" />
+    <ClInclude Include="src\Core\Events\Input\InputListener.h" />
+    <ClInclude Include="src\Core\Rendering\Renderable.h" />
     <ClInclude Include="src\Game\Scene.h" />
     <ClInclude Include="src\Game\Entity.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\Core\Events\InputManager.h" />
+    <ClInclude Include="src\Core\Events\Input\InputManager.h" />
     <ClInclude Include="src\Core\DataTypes.h" />
     <ClInclude Include="src\Core\Events\EventListener.h" />
     <ClInclude Include="src\Core\Rendering\GameRenderer.h" />

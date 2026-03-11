@@ -16,8 +16,10 @@ Game::~Game()
 	SDL_Quit();
 }
 
-Scene* pScene;
+//Scene* pScene;
 Player* pPlayer;
+
+std::shared_ptr<Scene> spScene;
 
 bool Game::Init()
 {
@@ -36,11 +38,13 @@ bool Game::Init()
 		LOG_FATAL("Failed to initialise the event system");
 		return false;
 	}
-	pScene = new Scene();
+	spScene = std::make_shared<Scene>();
+	//pScene = new Scene();
 	pPlayer = new Player();
-	pScene->AddEntity(pPlayer);
-	m_GameRenderer.SetScene(pScene);
-	m_EventManager.SetScene(pScene);
+	//pScene->AddEntity(pPlayer);
+	m_EventManager.SetScene(spScene.get());
+	spScene->AddEntity(pPlayer);
+	m_GameRenderer.AddRenderable((std::weak_ptr<Renderable>) spScene);
 	return true;
 }
 
@@ -60,7 +64,7 @@ void Game::Tick()
 		m_bGameIsRunning = FALSE;
 		return;
 	}
-	pScene->Tick(m_DeltaTime);
+	spScene->Tick(m_DeltaTime);
 	m_GameRenderer.Render();
 }
 

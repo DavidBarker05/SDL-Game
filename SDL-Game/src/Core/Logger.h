@@ -20,7 +20,7 @@ enum class LogLevel : UINT8
 
 #define LOG_INFO(format, ...) SDL_Log(format, __VA_ARGS__)
 
-#define LOG_WARN(format, ...) SDL_LogWarn(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __FILE__, __LINE__)
+#define LOG_WARN(format, ...) SDL_LogWarn(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 
 #define LOG_ERROR(format, ...) SDL_LogError(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 

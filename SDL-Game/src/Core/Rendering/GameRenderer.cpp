@@ -8,6 +8,18 @@
 
 #define DEFAULT_RENDERER_INDEX -1
 
+
+#ifdef _MSC_VER
+extern "C"
+{
+	// Force game to use discrete graphics if they have integrated graphics
+	// I might switch to SDL3 since they apparently have an option to fix this we'll see
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif // _MSC_VER
+
+
 bool GameRenderer::Init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO)) return FALSE;

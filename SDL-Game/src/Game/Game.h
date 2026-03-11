@@ -18,11 +18,11 @@ private:
 	void Tick();
 
 	bool m_bGameIsRunning;
-	FLOAT32 m_CurrentFrameTime;
-	FLOAT32 m_LastFrameTime;
-	FLOAT32 m_DeltaTime;
-	FLOAT32 m_FixedTickRate;
-	FLOAT32 m_FixedDeltaTime;
+	FLOAT64 m_CurrentFrameTime;
+	FLOAT64 m_LastFrameTime;
+	FLOAT64 m_DeltaTime;
+	FLOAT64 m_FixedTickRate;
+	FLOAT64 m_FixedDeltaTime;
 
 	GameRenderer m_GameRenderer;
 	EventManager m_EventManager;

@@ -37,7 +37,6 @@ void Scene::HandleEvent(EVENT event)
 
 void Scene::TickPhysics(FLOAT32 fixedDeltaTime)
 {
-	//SDL_Log("%f", fixedDeltaTime);
 	b2World_Step(m_pWorldDetails->worldId, fixedDeltaTime, 4);
 	for (Entity* pEntity : m_pEntities)
 	{

@@ -17,6 +17,8 @@ public:
 private:
 	void Tick();
 
+	void UpdateDeltaTime();
+
 	bool m_bGameIsRunning;
 	FLOAT64 m_CurrentFrameTime;
 	FLOAT64 m_LastFrameTime;

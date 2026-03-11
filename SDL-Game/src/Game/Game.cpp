@@ -53,10 +53,6 @@ void Game::Start()
 
 void Game::Tick()
 {
-	// Movement gets very weird when running full speed rn (7000fps) and drops to like 6000fps
-	m_CurrentFrameTime = SDL_GetPerformanceCounter();
-	m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64) SDL_GetPerformanceFrequency();
-	m_LastFrameTime = m_CurrentFrameTime;
 	if (m_DeltaTime > 0.25) m_DeltaTime = 0.25;
 	m_FixedDeltaTime += m_DeltaTime;
 	PollStatus status = m_EventManager.PollEvents();
@@ -73,4 +69,14 @@ void Game::Tick()
 	pScene->Tick(m_DeltaTime);
 	m_GameRenderer.Render();
 	//SDL_Delay(1); // Delay by 1 for now so that the frame drops aren't as bad
+}
+
+void Game::UpdateDeltaTime()
+{
+	// Movement gets very weird when running full speed rn (7000fps) and drops to like 6000fps
+	m_CurrentFrameTime = SDL_GetPerformanceCounter();
+	m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64) SDL_GetPerformanceFrequency();
+	m_LastFrameTime = m_CurrentFrameTime;
+	if (m_DeltaTime > 0.25) m_DeltaTime = 0.25;
+	m_FixedDeltaTime += m_DeltaTime;
 }

@@ -6,8 +6,6 @@
 #define DEFAULT_WINDOW_WIDTH  640
 #define DEFAULT_WINDOW_HEIGHT 480
 
-#define DEFAULT_RENDERER_INDEX -1
-
 
 #ifdef _MSC_VER
 extern "C"
@@ -23,6 +21,7 @@ extern "C"
 bool GameRenderer::Init()
 {
 	if (!SDL_Init(SDL_INIT_VIDEO)) return FALSE;
+	// Switched to SDL3 should see if laptop uses discrete graphics now or not
 	m_pWindow = SDL_CreateWindow(DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_HIGH_PIXEL_DENSITY);
 	m_pRenderer = SDL_CreateRenderer(m_pWindow, NULL);
 	LOG_INFO("Initialised the game renderer");

@@ -36,7 +36,6 @@ bool Game::Init()
 		LOG_FATAL("Failed to initialise the event system");
 		return false;
 	}
-	SDL_Init(SDL_INIT_JOYSTICK); // This apparently fixes the random stutters
 	pScene = new Scene();
 	pPlayer = new Player();
 	pScene->AddEntity(pPlayer);
@@ -63,7 +62,6 @@ void Game::Tick()
 	}
 	pScene->Tick(m_DeltaTime);
 	m_GameRenderer.Render();
-	//SDL_Delay(1); // Delay by 1 for now so that the frame drops aren't as bad
 }
 
 void Game::UpdateDeltaTime()

@@ -53,8 +53,7 @@ void Game::Start()
 
 void Game::Tick()
 {
-	if (m_DeltaTime > 0.25) m_DeltaTime = 0.25;
-	m_FixedDeltaTime += m_DeltaTime;
+	UpdateDeltaTime();
 	PollStatus status = m_EventManager.PollEvents();
 	if (status == PollStatus::eQUIT)
 	{

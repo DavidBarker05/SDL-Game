@@ -19,6 +19,15 @@ struct Vec2D
 		return *this;
 	}
 
+	inline bool operator==(const Vec2D& other) const { return x == other.x && y == other.y; }
+	inline bool operator!=(const Vec2D& other) const { return x != other.x && y != other.y; }
+
+	inline bool operator>(const Vec2D& other) const { return x > other.x && y > other.y; }
+	inline bool operator<(const Vec2D& other) const { return x < other.x && y < other.y; }
+
+	inline bool operator>=(const Vec2D& other) const { return x >= other.x && y >= other.y; }
+	inline bool operator<=(const Vec2D& other) const { return x <= other.x && y <= other.y; }
+
 	inline Vec2D operator+(const Vec2D& other) const { return Vec2D(x + other.x, y + other.y); }
 	inline Vec2D operator-(const Vec2D& other) const { return Vec2D(x - other.x, y + other.y); }
 

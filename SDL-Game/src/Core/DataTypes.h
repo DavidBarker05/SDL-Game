@@ -1,37 +1,36 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
-#ifdef _M_X64
+#include <cstddef>
+#include <cstdint>
 
 #define NULL 0
 
 #define FALSE 0
 #define TRUE 1
 
-typedef unsigned long long SIZE_T;
+using SIZE_T = std::size_t;
 
-typedef void* P_VOID;
+using PVOID = void*;
 
-typedef char CHAR8;
-typedef char* P_CHAR8;
-typedef const char* C_STRING;
+using CHAR8 = char;
+using PCHAR8 = char*;
+using CSTRING = const char*;
 
-typedef signed char INT8;
-typedef unsigned char UINT8;
+using INT8 = std::int8_t;
+using UINT8 = std::uint8_t;
 
-typedef short INT16;
-typedef unsigned short UINT16;
+using INT16 = std::int16_t;
+using UINT16 = std::uint16_t;
 
-typedef int INT32;
-typedef unsigned int UINT32;
+using INT32 = std::int32_t;
+using UINT32 = std::uint32_t;
 
-typedef long long INT64;
-typedef unsigned long long UINT64;
+using INT64 = std::int64_t;
+using UINT64 = std::uint64_t;
 
-typedef float FLOAT32;
+using FLOAT32 = float;
 
-typedef double FLOAT64;
-
-#endif // _M_X64
+using FLOAT64 = double;
 
 #endif // !DATATYPES_H

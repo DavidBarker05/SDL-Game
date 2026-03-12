@@ -33,6 +33,6 @@ namespace Logger
 	
 	extern void SetLevel(LogLevel level);
 
-	extern void LogOverrideFunction(P_VOID userData, INT16 category, SDL_LogPriority priority, C_STRING message);
+	extern void LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message);
 }
 #endif // !LOGGER_H

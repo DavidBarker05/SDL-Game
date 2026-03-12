@@ -15,6 +15,5 @@ public:
 private:
 	void DoKeyDown(SDL_Keycode keyCode);
 	void DoKeyUp(SDL_Keycode keyCode);
-	Vec2D m_MoveInput;
 };
 #endif // !INPUTMANAGER_H

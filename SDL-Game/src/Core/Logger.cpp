@@ -43,11 +43,11 @@ void Logger::SetLevel(LogLevel level)
 #endif // !LOCK_LOG_LEVEL
 }
 
-void Logger::LogOverrideFunction(P_VOID userData, INT16 category, SDL_LogPriority priority, C_STRING message)
+void Logger::LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message)
 {
 #if defined(_CONSOLE) || defined(_FILE)
-	C_STRING type;
-	C_STRING colour;
+	CSTRING type;
+	CSTRING colour;
 	switch (priority)
 	{
 		case SDL_LOG_PRIORITY_VERBOSE:

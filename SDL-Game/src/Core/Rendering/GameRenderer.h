@@ -6,7 +6,8 @@
 #include <SDL3/SDL_render.h>
 #include <vector>
 #include <memory>
-#include "Renderable.h"
+
+class Renderable;
 
 class GameRenderer
 {
@@ -20,6 +21,9 @@ public:
 	void AddRenderable(std::weak_ptr<Renderable> wpRenderable);
 	void AddRenderableAtIndex(std::weak_ptr<Renderable> wpRenderable, SIZE_T index);
 	void RemoveRenderable(std::weak_ptr<Renderable> wpRenderable);
+
+	void RenderRectangle(Vec2D center, Vec2D halfExtents, UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha);
+	void RenderTexture(SDL_Texture* pTexture, Vec2D center, Vec2D halfExtents);
 
 private:
 	SDL_GPUDevice* m_pGPUDevice;

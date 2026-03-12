@@ -2,15 +2,15 @@
 #define ENTITY_H
 
 #include "Core.h"
-#include <SDL3/SDL_render.h>
+#include "Renderable.h"
 
-class Entity
+class Entity : public Renderable
 {
 public:
 	Entity(SDL_Texture* pTexture = NULL, Vec2D position = Vec2D(0.0f, 0.0f), Vec2D halfExtents = Vec2D(0.0f, 0.0f));
 
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(SDL_Renderer* pRenderer);
+	virtual void Render(GameRenderer& gameRenderer) override;
 
 protected:
 	SDL_Texture* m_pTexture;

@@ -16,7 +16,7 @@ void Player::Tick(FLOAT32 deltaTime)
 	m_Position += m_Velocity * deltaTime;
 }
 
-void Player::Render(SDL_Renderer* pRenderer)
+void Player::Render(GameRenderer& gameRenderer)
 {
-	Super::Render(pRenderer);
+	Super::Render(gameRenderer);
 }

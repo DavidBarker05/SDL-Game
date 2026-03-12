@@ -4,16 +4,8 @@ Entity::Entity(SDL_Texture* pTexture, Vec2D position, Vec2D halfExtents) : m_pTe
 
 void Entity::Tick(FLOAT32 deltaTime) { }
 
-void Entity::Render(SDL_Renderer* pRenderer)
+void Entity::Render(GameRenderer& gameRenderer)
 {
-	SDL_FRect r = { m_Position.x - m_HalfExtents.x, m_Position.y + m_HalfExtents.y, 2.0f * m_HalfExtents.x, 2.0f * m_HalfExtents.y };
-	if (m_pTexture)
-	{
-		SDL_RenderTexture(pRenderer, m_pTexture, NULL, &r);
-	}
-	else
-	{
-		SDL_SetRenderDrawColor(pRenderer, 255, 0, 255, 255);
-		SDL_RenderFillRect(pRenderer, &r);
-	}
+	if (m_pTexture) gameRenderer.RenderTexture(m_pTexture, m_Position, m_HalfExtents);
+	else gameRenderer.RenderRectangle(m_Position, m_HalfExtents, 255, 0, 255, 255);
 }

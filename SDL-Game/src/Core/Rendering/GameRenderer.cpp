@@ -1,5 +1,6 @@
 #include "GameRenderer.h"
 #include <SDL3/SDL_init.h>
+#include "Renderable.h"
 
 #define DEFAULT_WINDOW_TITLE  "Title"
 #define DEFAULT_WINDOW_WIDTH  640
@@ -32,7 +33,7 @@ void GameRenderer::Render()
 	{
 		if (std::shared_ptr<Renderable> spRenderable = (*it).lock()) // It hasn't expired
 		{
-			spRenderable->Render(m_pRenderer);
+			spRenderable->Render(*this);
 			++it;
 		}
 		else it = m_wpRenderables.erase(it); // It has expired so we shouldn't render it anymore
@@ -70,4 +71,17 @@ void GameRenderer::RemoveRenderable(std::weak_ptr<Renderable> wpRenderable)
 {
 	// Yes this line is just to remove one element fml, it does remove all instances of an element tho just in case
 	m_wpRenderables.erase(std::remove_if(m_wpRenderables.begin(), m_wpRenderables.end(), [wpRenderable](std::weak_ptr<Renderable> wpVectorElement) { return wpRenderable.owner_before(wpVectorElement); }), m_wpRenderables.end());
+}
+
+void GameRenderer::RenderRectangle(Vec2D center, Vec2D halfExtents, UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha)
+{
+	SDL_FRect r = { center.x - halfExtents.x, center.y - halfExtents.y, halfExtents.x * 2.0f, halfExtents.y * 2.0f };
+	SDL_SetRenderDrawColor(m_pRenderer, red, green, blue, alpha);
+	SDL_RenderFillRect(m_pRenderer, &r);
+}
+
+void GameRenderer::RenderTexture(SDL_Texture* pTexture, Vec2D center, Vec2D halfExtents)
+{
+	SDL_FRect r = { center.x - halfExtents.x, center.y - halfExtents.y, halfExtents.x * 2.0f, halfExtents.y * 2.0f };
+	SDL_RenderTexture(m_pRenderer, pTexture, NULL, &r);
 }

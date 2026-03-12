@@ -36,11 +36,11 @@ void Scene::Tick(FLOAT32 deltaTime)
 	}
 }
 
-void Scene::Render(SDL_Renderer* pRenderer)
+void Scene::Render(GameRenderer& gameRenderer)
 {
 	for (Entity* pEntity : m_pEntities)
 	{
-		pEntity->Render(pRenderer);
+		pEntity->Render(gameRenderer);
 	}
 }
 

@@ -17,7 +17,7 @@ public:
 	virtual void HandleInput(InputManager* pInputManager);
 	virtual void HandleEvent(const SDL_Event& event);
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(SDL_Renderer* pRenderer) override;
+	virtual void Render(GameRenderer& gameRenderer) override;
 
 	virtual void AddEntity(Entity* pEntity);
 

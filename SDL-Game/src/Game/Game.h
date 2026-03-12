@@ -20,8 +20,8 @@ private:
 	void UpdateDeltaTime();
 
 	bool m_bGameIsRunning;
-	FLOAT64 m_CurrentFrameTime;
-	FLOAT64 m_LastFrameTime;
+	UINT64 m_CurrentFrameTime;
+	UINT64 m_LastFrameTime;
 	FLOAT64 m_DeltaTime;
 
 	GameRenderer m_GameRenderer;

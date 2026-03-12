@@ -8,7 +8,7 @@
 #pragma warning(disable: 4244)
 #endif // _MSC_VER
 
-Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0.0), m_LastFrameTime(0.0), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0), m_LastFrameTime(0), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {

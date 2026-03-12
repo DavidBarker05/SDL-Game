@@ -22,6 +22,7 @@ public:
 	void RemoveRenderable(std::weak_ptr<Renderable> wpRenderable);
 
 private:
+	SDL_GPUDevice* m_pGPUDevice;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 

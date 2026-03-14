@@ -18,7 +18,7 @@ public:
 	virtual void HandleInput(InputManager* pInputManager) override;
 
 	virtual void Tick(FLOAT32 deltaTime) override;
-	virtual void Render(GameRenderer& gameRenderer) override;
+	virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
 	Vec2D m_Velocity;

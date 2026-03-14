@@ -10,7 +10,7 @@ public:
 	Entity(SDL_Texture* pTexture = nullptr, Vec2D position = Vec2D(0.0f, 0.0f), Vec2D halfExtents = Vec2D(0.0f, 0.0f));
 
 	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(GameRenderer& gameRenderer) override;
+	virtual void Render(SDL_Renderer* pRenderer) override;
 
 protected:
 	SDL_Texture* m_pTexture;

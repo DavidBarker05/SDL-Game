@@ -4,11 +4,6 @@
 #include <cstddef>
 #include <cstdint>
 
-#define NULL 0
-
-#define FALSE 0
-#define TRUE 1
-
 using SIZE_T = std::size_t;
 
 using PVOID = void*;

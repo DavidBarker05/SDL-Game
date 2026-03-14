@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "InputManager.h"
 
-Player::Player() : Super(NULL, Vec2D(0.0f, 0.0f), Vec2D(25.0f, 25.0f)), m_Velocity()
+Player::Player() : Super(nullptr, Vec2D(0.0f, 0.0f), Vec2D(25.0f, 25.0f)), m_Velocity()
 {
 }
 

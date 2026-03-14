@@ -7,7 +7,7 @@
 class Entity : public Renderable
 {
 public:
-	Entity(SDL_Texture* pTexture = NULL, Vec2D position = Vec2D(0.0f, 0.0f), Vec2D halfExtents = Vec2D(0.0f, 0.0f));
+	Entity(SDL_Texture* pTexture = nullptr, Vec2D position = Vec2D(0.0f, 0.0f), Vec2D halfExtents = Vec2D(0.0f, 0.0f));
 
 	virtual void Tick(FLOAT32 deltaTime);
 	virtual void Render(GameRenderer& gameRenderer) override;

@@ -8,7 +8,7 @@
 #pragma warning(disable: 4244)
 #endif // _MSC_VER
 
-Game::Game() : m_bGameIsRunning(FALSE), m_CurrentFrameTime(0), m_LastFrameTime(0), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
+Game::Game() : m_bGameIsRunning(false), m_CurrentFrameTime(0), m_LastFrameTime(0), m_DeltaTime(0.0), m_GameRenderer(), m_EventManager() { }
 
 Game::~Game()
 {
@@ -28,20 +28,10 @@ bool Game::Init()
 #endif // _DELAY_WINDOW
 #define TEST
 	Logger::Init();
-	if (!m_GameRenderer.Init())
-	{
-		LOG_FATAL("Failed to initialise the game renderer");
-		return false;
-	}
-	if (!m_EventManager.Init())
-	{
-		LOG_FATAL("Failed to initialise the event system");
-		return false;
-	}
+	if (!m_GameRenderer.Init()) return false;
+	if (!m_EventManager.Init()) return false;
 	spScene = std::make_shared<Scene>();
-	//pScene = new Scene();
 	pPlayer = new Player();
-	//pScene->AddEntity(pPlayer);
 	m_EventManager.SetScene(spScene.get());
 	spScene->AddEntity(pPlayer);
 	m_GameRenderer.AddRenderable((std::weak_ptr<Renderable>) spScene);
@@ -51,7 +41,7 @@ bool Game::Init()
 
 void Game::Start()
 {
-	m_bGameIsRunning = TRUE;
+	m_bGameIsRunning = true;
 	while (m_bGameIsRunning) Tick();
 }
 
@@ -61,7 +51,7 @@ void Game::Tick()
 	PollStatus status = m_EventManager.PollEvents();
 	if (status == PollStatus::eQUIT)
 	{
-		m_bGameIsRunning = FALSE;
+		m_bGameIsRunning = false;
 		return;
 	}
 	spScene->Tick(m_DeltaTime);

@@ -17,7 +17,7 @@ void InputManager::HandleEvent(const SDL_Event& event)
 
 Vec2D InputManager::GetMoveInput()
 {
-	const bool* keys = SDL_GetKeyboardState(NULL);
+	const bool* keys = SDL_GetKeyboardState(nullptr);
 	bool up = keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP];
 	bool down = keys[SDL_SCANCODE_S] || keys[SDL_SCANCODE_DOWN];
 	bool right = keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT];

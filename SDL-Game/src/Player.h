@@ -3,19 +3,16 @@
 
 #include "Core.h"
 #include "Entity.h"
-#include "InputListener.h"
 #include <SDL3/SDL_render.h>
 
 class Game;
 
-class Player : public Entity, public InputListener
+class Player : public Entity
 {
 public:
 	typedef Entity Super;
 
 	Player();
-
-	virtual void HandleInput(InputManager* pInputManager) override;
 
 	virtual void Tick(FLOAT32 deltaTime) override;
 	virtual void Render(SDL_Renderer* pRenderer) override;

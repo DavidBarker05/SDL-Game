@@ -3,7 +3,6 @@
 
 #include "Core.h"
 #include "GameRenderer.h"
-#include "EventManager.h"
 
 class Game
 {
@@ -25,6 +24,5 @@ private:
 	FLOAT64 m_DeltaTime;
 
 	GameRenderer m_GameRenderer;
-	EventManager m_EventManager;
 };
 #endif // !GAME_H

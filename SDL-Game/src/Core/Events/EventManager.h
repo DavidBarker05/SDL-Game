@@ -2,30 +2,16 @@
 #define EVENTMANAGER_H
 
 #include "Core.h"
-#include "InputManager.h"
-
-class Scene;
-
-enum class PollStatus : UINT8
-{
-	eALL_EVENTS_POLLED,
-	eQUIT
-};
 
 class EventManager
 {
 public:
-	bool Init();
+	static constexpr UINT32 Quit = 0;
+	static constexpr UINT32 AllEventsPolled = 1;
 
-	PollStatus PollEvents();
+public:
+	static bool Init();
 
-	InputManager& GetInputManager();
-
-	void SetScene(Scene* pScene);
-
-private:
-	InputManager m_InputManager;
-
-	Scene* m_pScene;
+	static UINT32 PollEvents();
 };
 #endif // !EVENTMANAGER_H

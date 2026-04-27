@@ -1,15 +1,13 @@
 #include "InputManager.h"
 
-void InputManager::HandleEvent(const SDL_Event& event)
+void InputManager::HandleInput(const SDL_Event& event)
 {
 	switch (event.type)
 	{
 		case SDL_EVENT_KEY_DOWN:
 			DoKeyDown(event.key.key);
-			break;
 		case SDL_EVENT_KEY_UP:
 			DoKeyUp(event.key.key);
-			break;
 		default:
 			break;
 	}

@@ -53,9 +53,6 @@
     <ClInclude Include="src\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Events\Input\InputListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>

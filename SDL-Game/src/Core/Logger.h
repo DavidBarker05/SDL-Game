@@ -27,12 +27,14 @@ enum class LogLevel : UINT8
 #define LOG_FATAL(format, ...) SDL_LogCritical(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 
 // Basically a singleton to allow me to work with sdl logger and output to whatever file I want
-namespace Logger
+class Logger
 {
-	extern void Init();
-	
-	extern void SetLevel(LogLevel level);
+public:
+	static void Init();
 
-	extern void LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message);
-}
+	static void SetLevel(LogLevel level);
+
+private:
+	static void LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message);
+};
 #endif // !LOGGER_H

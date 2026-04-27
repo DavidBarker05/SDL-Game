@@ -4,4 +4,5 @@ int main()
 {
 	Game game;
 	if (game.Init()) game.Start();
+	game.Shutdown(); // Game has finished running
 }

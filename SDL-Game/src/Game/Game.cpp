@@ -9,14 +9,6 @@
 #pragma warning(disable: 4244)
 #endif // _MSC_VER
 
-Game::Game() : m_bGameIsRunning(false), m_CurrentFrameTime(0), m_LastFrameTime(0), m_DeltaTime(0.0), m_GameRenderer() { }
-
-Game::~Game()
-{
-	m_GameRenderer.Destroy();
-	SDL_Quit();
-}
-
 std::shared_ptr<Scene> spScene;
 
 bool Game::Init()
@@ -33,6 +25,12 @@ bool Game::Init()
 	return true;
 }
 
+void Game::Shutdown()
+{
+	m_GameRenderer.Destroy();
+	EventManager::Shutdown();
+	SDL_Quit();
+}
 
 void Game::Start()
 {

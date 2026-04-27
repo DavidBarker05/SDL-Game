@@ -11,6 +11,7 @@ public:
 
 public:
 	static bool Init();
+	static void Shutdown();
 
 	static UINT32 PollEvents();
 };

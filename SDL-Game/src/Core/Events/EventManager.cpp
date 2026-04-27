@@ -13,6 +13,11 @@ bool EventManager::Init()
 	return true;
 }
 
+void EventManager::Shutdown()
+{
+	// Nothing for now but might be needed later
+}
+
 UINT32 EventManager::PollEvents()
 {
 	SDL_Event event;

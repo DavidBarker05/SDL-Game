@@ -3,8 +3,8 @@
 #include <SDL3/SDL_timer.h>
 #include <memory>
 #include "Scene.h"
-#include "GameRenderer.h"
-#include "EventManager.h"
+#include "Renderer/Renderer.h"
+#include "Events/EventSystem.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4244)
@@ -19,16 +19,16 @@ bool Game::Init()
 #endif // _DELAY_WINDOW
 #define TEST
 	Logger::Init();
-	if (!GameRenderer::Init()) return false;
-	if (!EventManager::Init()) return false;
+	if (!Renderer::Init()) return false;
+	if (!EventSystem::Init()) return false;
 	spScene = std::make_shared<Scene>();
 	return true;
 }
 
 void Game::Shutdown()
 {
-	GameRenderer::Shutdown();
-	EventManager::Shutdown();
+	Renderer::Shutdown();
+	EventSystem::Shutdown();
 	SDL_Quit();
 }
 
@@ -41,14 +41,14 @@ void Game::Start()
 void Game::Tick()
 {
 	UpdateDeltaTime();
-	UINT32 status = EventManager::PollEvents();
-	if (status == EventManager::Quit)
+	UINT32 status = EventSystem::PollEvents();
+	if (status == EventSystem::Quit)
 	{
 		m_bGameIsRunning = false;
 		return;
 	}
 	spScene->Tick(m_DeltaTime);
-	GameRenderer::Render();
+	Renderer::Render();
 }
 
 void Game::UpdateDeltaTime()

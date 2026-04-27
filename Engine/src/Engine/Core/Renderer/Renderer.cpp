@@ -1,7 +1,7 @@
-#include "GameRenderer.h"
+#include "Renderer.h"
 #include <SDL3/SDL_init.h>
-#include "Logger.h"
-#include "Renderable.h"
+#include <SDL3/SDL_render.h>
+#include "Logging/Log.h"
 
 #define DEFAULT_WINDOW_TITLE  "Title"
 #define DEFAULT_WINDOW_WIDTH  640
@@ -11,7 +11,7 @@ static SDL_Window* s_pWindow = nullptr;
 static SDL_Renderer* s_pRenderer = nullptr;
 static SDL_GPUDevice* s_pGPUDevice = nullptr;
 
-bool GameRenderer::Init()
+bool Renderer::Init()
 {
 	if (!SDL_Init(SDL_INIT_VIDEO))
 	{
@@ -34,13 +34,13 @@ bool GameRenderer::Init()
 	return true;
 }
 
-void GameRenderer::Shutdown()
+void Renderer::Shutdown()
 {
 	SDL_DestroyRenderer(s_pRenderer);
 	SDL_DestroyWindow(s_pWindow);
 }
 
-void GameRenderer::Render()
+void Renderer::Render()
 {
 	SDL_SetRenderDrawColor(s_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
 	SDL_RenderClear(s_pRenderer);

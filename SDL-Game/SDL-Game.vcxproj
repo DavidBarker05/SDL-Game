@@ -46,14 +46,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)vendor\SDL2-2.30.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\SDL2-2.30.0\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)vendor\SDL3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)vendor\SDL3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)vendor\SDL2-2.30.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\SDL2-2.30.0\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)vendor\SDL3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)vendor\SDL3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -61,7 +61,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DELAY_WINDOW;_DEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Events\Input;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src;$(SolutionDir)Engine\src\Engine\Core;$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -82,7 +82,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_FILE;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src;$(ProjectDir)src\Core;$(ProjectDir)src\Core\Events;$(ProjectDir)src\Core\Events\Input;$(ProjectDir)src\Core\Math;$(ProjectDir)src\Core\Rendering;$(ProjectDir)src\Game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src;$(SolutionDir)Engine\src\Engine\Core;$(SolutionDir)vendor\SDL3\include;$(ProjectDir)src</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -96,35 +96,24 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Math\BoxCollider2D.cpp" />
-    <ClCompile Include="src\Core\Logger.cpp" />
     <ClCompile Include="src\Game\Scene.cpp" />
     <ClCompile Include="src\Game\Entity.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Core\Events\Input\InputManager.cpp" />
-    <ClCompile Include="src\Core\Rendering\GameRenderer.cpp" />
-    <ClCompile Include="src\Core\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Core\Math\MinimalMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Math\BoxCollider2D.h" />
-    <ClInclude Include="src\Core\Logger.h" />
-    <ClInclude Include="src\Core\Core.h" />
-    <ClInclude Include="src\Core\Functions.h" />
     <ClInclude Include="src\Core\Rendering\Renderable.h" />
     <ClInclude Include="src\Game\Scene.h" />
     <ClInclude Include="src\Game\Entity.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\Core\Events\Input\InputManager.h" />
-    <ClInclude Include="src\Core\DataTypes.h" />
     <ClInclude Include="src\Core\Events\EventListener.h" />
-    <ClInclude Include="src\Core\Rendering\GameRenderer.h" />
-    <ClInclude Include="src\Core\Events\EventManager.h" />
     <ClInclude Include="src\Game\Game.h" />
-    <ClInclude Include="src\Core\Math\MinimalMath.h" />
-    <ClInclude Include="src\Core\Math\Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{fbab0fbe-69cc-4dab-97b6-fdfcae28ca1e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

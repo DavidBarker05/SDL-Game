@@ -1,6 +1,6 @@
-#include "InputManager.h"
+#include "InputSystem.h"
 
-void InputManager::HandleInput(const SDL_Event& event)
+void InputSystem::HandleInput(const SDL_Event& event)
 {
 	switch (event.type)
 	{
@@ -13,7 +13,7 @@ void InputManager::HandleInput(const SDL_Event& event)
 	}
 }
 
-Vec2D InputManager::GetMoveInput()
+Vec2D InputSystem::GetMoveInput()
 {
 	const bool* keys = SDL_GetKeyboardState(nullptr);
 	bool up = keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP];
@@ -25,7 +25,7 @@ Vec2D InputManager::GetMoveInput()
 	return Vec2D(x, y);
 }
 
-void InputManager::DoKeyDown(SDL_Keycode keyCode)
+void InputSystem::DoKeyDown(SDL_Keycode keyCode)
 {
 	switch (keyCode)
 	{
@@ -34,7 +34,7 @@ void InputManager::DoKeyDown(SDL_Keycode keyCode)
 	}
 }
 
-void InputManager::DoKeyUp(SDL_Keycode keyCode)
+void InputSystem::DoKeyUp(SDL_Keycode keyCode)
 {
 	switch (keyCode)
 	{

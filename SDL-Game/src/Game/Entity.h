@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #include "Core.h"
-#include "Renderable.h"
+#include "Core/Rendering/Renderable.h"
 
 class Entity : public Renderable
 {

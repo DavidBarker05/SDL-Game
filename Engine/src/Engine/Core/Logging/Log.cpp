@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include "Log.h"
 #include <iostream>
 #include <iomanip>
 #include <ctime>
@@ -43,9 +43,8 @@ void Logger::SetLevel(LogLevel level)
 #endif // !LOCK_LOG_LEVEL
 }
 
-void Logger::LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message)
+void Logger::LogOverrideFunction(void* userData, INT16 category, SDL_LogPriority priority, CSTRING message)
 {
-#if defined(_CONSOLE) || defined(_FILE)
 	CSTRING type;
 	CSTRING colour;
 	switch (priority)
@@ -78,17 +77,7 @@ void Logger::LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority
 		default:
 			return;
 	}
-
 	std::time_t now = std::time(nullptr);
 	std::tm* localTime = std::localtime(&now);
-
-#ifdef _CONSOLE
 	std::cout << colour << type << ": [" << std::put_time(localTime, "%H:%M:%S") << "] " << message << DEFAULT_COLOUR << "\n\n"; // Ouput to console
-#endif // _CONSOLE
-
-#ifdef _FILE
-	// Output to file
-#endif // _FILE
-
-#endif // defined(_CONSOLE) || defined(_FILE)
 }

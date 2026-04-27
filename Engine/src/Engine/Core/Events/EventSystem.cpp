@@ -1,8 +1,9 @@
-#include "EventManager.h"
+#include "Events/EventSystem.h"
 #include <SDL3/SDL_init.h>
-#include "InputManager.h"
+#include "Logging/Log.h"
+#include "Input/InputSystem.h"
 
-bool EventManager::Init()
+bool EventSystem::Init()
 {
 	if (!SDL_Init(SDL_INIT_EVENTS))
 	{
@@ -13,18 +14,18 @@ bool EventManager::Init()
 	return true;
 }
 
-void EventManager::Shutdown()
+void EventSystem::Shutdown()
 {
 	// Nothing for now but might be needed later
 }
 
-UINT32 EventManager::PollEvents()
+UINT32 EventSystem::PollEvents()
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_EVENT_QUIT) return Quit;
-		InputManager::HandleInput(event);
+		InputSystem::HandleInput(event);
 	}
 	return AllEventsPolled;
 }

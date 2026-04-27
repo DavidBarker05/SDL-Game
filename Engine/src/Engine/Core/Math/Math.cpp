@@ -1,4 +1,5 @@
-#include "MinimalMath.h"
+#include "Math.h"
+
 #include <cmath> // Written here so that other files don't have to inclue cmath
 #include <stdexcept>
 
@@ -32,7 +33,7 @@ FLOAT32 Math::Ceil(FLOAT32 num) { return std::ceil(num); }
 
 FLOAT32 Math::Min(FLOAT32 num1, FLOAT32 num2) { return std::fmin(num1, num2); }
 
-INT32 Math::Min(INT32 num1, INT32 num2) {return std::fmin(num1, num2); }
+INT32 Math::Min(INT32 num1, INT32 num2) { return std::fmin(num1, num2); }
 
 FLOAT32 Math::Max(FLOAT32 num1, FLOAT32 num2) { return std::fmax(num1, num2); }
 

@@ -1,9 +1,8 @@
-#ifndef EVENTMANAGER_H
-#define EVENTMANAGER_H
+#pragma once
 
-#include "Core.h"
+#include "Types.h"
 
-class EventManager
+class EventSystem
 {
 public:
 	static constexpr UINT32 Quit = 0;
@@ -15,4 +14,3 @@ public:
 
 	static UINT32 PollEvents();
 };
-#endif // !EVENTMANAGER_H

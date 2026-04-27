@@ -1,7 +1,6 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
-#include "DataTypes.h"
+#include "Types.h"
 #include <SDL3/SDL_log.h>
 
 enum class LogLevel : UINT8
@@ -26,7 +25,6 @@ enum class LogLevel : UINT8
 
 #define LOG_FATAL(format, ...) SDL_LogCritical(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
 
-// Basically a singleton to allow me to work with sdl logger and output to whatever file I want
 class Logger
 {
 public:
@@ -35,6 +33,6 @@ public:
 	static void SetLevel(LogLevel level);
 
 private:
-	static void LogOverrideFunction(PVOID userData, INT16 category, SDL_LogPriority priority, CSTRING message);
+	static void LogOverrideFunction(void* userData, INT16 category, SDL_LogPriority priority, CSTRING message);
 };
-#endif // !LOGGER_H
+

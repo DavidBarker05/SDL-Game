@@ -5,7 +5,7 @@
 #include <SDL3/SDL_render.h>
 #include <vector>
 #include "Entity.h"
-#include "Renderable.h"
+#include "Core/Rendering/Renderable.h"
 
 class Scene : public Renderable
 {

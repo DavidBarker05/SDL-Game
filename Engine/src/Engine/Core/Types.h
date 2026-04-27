@@ -1,15 +1,10 @@
-#ifndef DATATYPES_H
-#define DATATYPES_H
+#pragma once
 
 #include <cstddef>
 #include <cstdint>
 
 using SIZE_T = std::size_t;
 
-using PVOID = void*;
-
-using CHAR8 = char;
-using PCHAR8 = char*;
 using CSTRING = const char*;
 
 using INT8 = std::int8_t;
@@ -27,5 +22,3 @@ using UINT64 = std::uint64_t;
 using FLOAT32 = float;
 
 using FLOAT64 = double;
-
-#endif // !DATATYPES_H

@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include "Core.h"
-#include "Entity.h"
+#include "Game/Entity.h"
 #include <SDL3/SDL_render.h>
 
 class Game;
@@ -18,6 +18,6 @@ public:
 	virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
-	Vec2D m_Velocity;
+	Vector2 m_Velocity;
 };
 #endif // !PLAYER_H

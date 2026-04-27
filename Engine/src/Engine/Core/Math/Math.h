@@ -1,7 +1,6 @@
-#ifndef MINIMALMATH_H
-#define MINIMALMATH_H
+#pragma once
 
-#include "DataTypes.h"
+#include "Types.h"
 
 namespace Math
 {
@@ -55,6 +54,3 @@ namespace Math
 	FLOAT32 ATan2Deg(FLOAT32 x, FLOAT32 y);
 	FLOAT32 ATan2Rad(FLOAT32 x, FLOAT32 y);
 }
-
-
-#endif // !MINIMALMATH_H

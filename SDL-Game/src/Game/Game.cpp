@@ -1,8 +1,9 @@
 #include "Game.h"
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
-#include "Player.h"
+#include <memory>
 #include "Scene.h"
+#include "GameRenderer.h"
 #include "EventManager.h"
 
 #ifdef _MSC_VER
@@ -18,16 +19,15 @@ bool Game::Init()
 #endif // _DELAY_WINDOW
 #define TEST
 	Logger::Init();
-	if (!m_GameRenderer.Init()) return false;
+	if (!GameRenderer::Init()) return false;
 	if (!EventManager::Init()) return false;
 	spScene = std::make_shared<Scene>();
-	m_GameRenderer.AddRenderable((std::weak_ptr<Renderable>) spScene);
 	return true;
 }
 
 void Game::Shutdown()
 {
-	m_GameRenderer.Destroy();
+	GameRenderer::Shutdown();
 	EventManager::Shutdown();
 	SDL_Quit();
 }
@@ -48,12 +48,11 @@ void Game::Tick()
 		return;
 	}
 	spScene->Tick(m_DeltaTime);
-	m_GameRenderer.Render();
+	GameRenderer::Render();
 }
 
 void Game::UpdateDeltaTime()
 {
-	// Movement gets very weird when running full speed rn (7000fps) and drops to like 6000fps
 	m_CurrentFrameTime = SDL_GetPerformanceCounter();
 	m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64) SDL_GetPerformanceFrequency();
 	m_LastFrameTime = m_CurrentFrameTime;

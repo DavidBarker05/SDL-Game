@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include "Core.h"
-#include "GameRenderer.h"
 
 class Game
 {
@@ -21,7 +20,5 @@ private:
 	UINT64 m_CurrentFrameTime = 0;
 	UINT64 m_LastFrameTime = 0;
 	FLOAT64 m_DeltaTime = 0;
-
-	GameRenderer m_GameRenderer;
 };
 #endif // !GAME_H

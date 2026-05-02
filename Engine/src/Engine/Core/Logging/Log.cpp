@@ -3,7 +3,6 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime> // Because displaying a decent time with chrono is a bitch
-#include <cpptrace/formatting.hpp>
 #include <cpptrace/basic.hpp>
 #include "Math/Math.h"
 

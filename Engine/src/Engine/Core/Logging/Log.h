@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Types.h"
-#include <SDL3/SDL_log.h>
 
-enum class LogLevel : UINT8
+enum class LogLevel : INT8
 {
-	eNONE,
 	eFATAL,
 	eERROR,
 	eWARN,
@@ -15,15 +13,15 @@ enum class LogLevel : UINT8
 
 #define SET_LOG_LEVEL(level) Logger::SetLevel(level)
 
-#define LOG_TRACE(format, ...) SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, format, __VA_ARGS__)
+#define LOG_TRACE(format, ...) Logger::Log(LogLevel::eTRACE, format, __VA_ARGS__)
 
-#define LOG_INFO(format, ...) SDL_Log(format, __VA_ARGS__)
+#define LOG_INFO(format, ...) Logger::Log(LogLevel::eINFO, format, __VA_ARGS__)
 
-#define LOG_WARN(format, ...) SDL_LogWarn(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
+#define LOG_WARN(format, ...) Logger::Log(LogLevel::eWARN, format, __VA_ARGS__)
 
-#define LOG_ERROR(format, ...) SDL_LogError(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
+#define LOG_ERROR(format, ...) Logger::Log(LogLevel::eERROR, format, __VA_ARGS__)
 
-#define LOG_FATAL(format, ...) SDL_LogCritical(SDL_LOG_CATEGORY_TEST, format "\n%s LINE %d", __VA_ARGS__, __FILE__, __LINE__)
+#define LOG_FATAL(format, ...) Logger::Log(LogLevel::eFATAL, format, __VA_ARGS__)
 
 class Logger
 {
@@ -32,7 +30,10 @@ public:
 
 	static void SetLevel(LogLevel level);
 
-private:
-	static void LogOverrideFunction(void* userData, INT16 category, SDL_LogPriority priority, CSTRING message);
+	static void EnableLogging();
+
+	static void DisableLogging();
+
+	static void Log(LogLevel logLevel, CSTRING format, ...);
 };
 

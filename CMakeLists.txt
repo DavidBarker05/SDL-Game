@@ -13,8 +13,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release-${CMA
 
 add_subdirectory(vendor/SDL3)
 add_subdirectory(Engine)
-add_subdirectory(SDL-Game)
+add_subdirectory(Game)
 
-set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SDL-Game)
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Game)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_target_properties(cpptrace-lib SDL_uclibc SDL3_test SDL3-shared PROPERTIES FOLDER "vendor")

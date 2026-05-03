@@ -1,1 +1,1 @@
-This is a game I am making in C++ with SDL. Right now I don't know what game I want to make exactly, but I am just learning things and writing the backend. Currently I am busy with uni assignments so this project is on break.
+This is a game I am making in C++ with SDL. Right now I don't know what game I want to make exactly, but I am just learning things and writing the backend. Currently I am busy with uni assignments so I work on and off on this project.

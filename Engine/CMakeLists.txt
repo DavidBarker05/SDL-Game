@@ -1,7 +1,7 @@
 add_subdirectory(vendor/Cpptrace)
 
-add_library(Engine
-	src/Engine/Core/Events/EventSystem.cpp
+set(ENGINE_SOURCES
+    src/Engine/Core/Events/EventSystem.cpp
 	src/Engine/Core/Events/EventSystem.h
 	src/Engine/Core/Input/InputSystem.cpp
 	src/Engine/Core/Input/InputSystem.h
@@ -16,6 +16,15 @@ add_library(Engine
 	src/Engine/Core/Functions.h
 	src/Engine/Core/Types.h
 )
+
+add_library(Engine ${ENGINE_SOURCES})
+
+set_target_properties(Engine PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug-${CMAKE_SYSTEM_PROCESSOR}/Engine
+    ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release-${CMAKE_SYSTEM_PROCESSOR}/Engine
+)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ENGINE_SOURCES})
 
 target_compile_definitions(Engine PRIVATE
     CPPTRACE_STATIC_DEFINE

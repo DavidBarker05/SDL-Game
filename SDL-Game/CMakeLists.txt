@@ -1,4 +1,4 @@
-add_executable(SDL-Game
+set(GAME_SOURCES
 	src/Core/Events/EventListener.h
 	src/Core/Rendering/Renderable.h
 	src/Game/Entity.cpp
@@ -11,6 +11,15 @@ add_executable(SDL-Game
 	src/Player.cpp
 	src/Player.h
 )
+
+add_executable(SDL-Game ${GAME_SOURCES})
+
+set_target_properties(SDL-Game PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug-${CMAKE_SYSTEM_PROCESSOR}/SDL-Game
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release-${CMAKE_SYSTEM_PROCESSOR}/SDL-Game
+)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GAME_SOURCES})
 
 target_include_directories(SDL-Game PRIVATE
     ../Engine/src

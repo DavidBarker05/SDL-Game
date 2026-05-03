@@ -17,17 +17,17 @@ add_library(Engine
 	src/Engine/Core/Types.h
 )
 
-target_include_directories(Engine PRIVATE
-	vendor/Cpptrace/include
-	../vendor/SDL3/include
-	src
-	src/Engine
-	src/Engine/Core
+target_compile_definitions(Engine PRIVATE
+    CPPTRACE_STATIC_DEFINE
+    _ENGINE
 )
 
-target_compile_definitions(Engine PRIVATE
-	CPPTRACE_STATIC_DEFINE
-	_ENGINE
+target_include_directories(Engine PRIVATE
+    vendor/Cpptrace/include
+    ../vendor/SDL3/include
+    src
+    src/Engine
+    src/Engine/Core
 )
 
 target_link_libraries(Engine PRIVATE cpptrace::cpptrace SDL3::SDL3)

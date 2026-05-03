@@ -13,7 +13,7 @@ add_executable(SDL-Game
 )
 
 target_include_directories(SDL-Game PRIVATE
-	../Engine/src
+    ../Engine/src
 	../Engine/src/Engine/Core
 	../vendor/SDL3/include
 	src
@@ -22,7 +22,7 @@ target_include_directories(SDL-Game PRIVATE
 target_link_libraries(SDL-Game PRIVATE Engine SDL3::SDL3)
 
 add_custom_command(TARGET SDL-Game POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-	$<TARGET_FILE:SDL3::SDL3>
-	$<TARGET_FILE_DIR:SDL-Game>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:SDL3::SDL3>
+    $<TARGET_FILE_DIR:SDL-Game>
 )

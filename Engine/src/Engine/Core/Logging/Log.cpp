@@ -19,9 +19,9 @@
 static INT8 s_LastLevel;
 static INT8 s_CurrentLevel;
 
+// This is my understanding of how SDL does theirs, but like it's a lot shorter idk if I'm doing this in an unoptimised way but oh well
 CSTRING FormatMessage(CSTRING format, va_list ap)
 {
-	// This is my understanding of how SDL does theirs, but like it's a lot shorter idk if I'm doing this in an unoptimised way but oh well
 	char buffer[256];
 	char* message = nullptr;
 	INT32 len = vsnprintf(buffer, sizeof(buffer), format, ap);
@@ -85,6 +85,8 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 	// TODO: Output to a file
 }
 
+// Function to override SDL's log function, that way, even if someone calls SDL_Log() then
+// it will still output exactly the same
 void LogOverrideFunction(void* userData, INT32 category, SDL_LogPriority priority, CSTRING message)
 {
 	LogLevel level;

@@ -3,6 +3,8 @@ add_subdirectory(vendor/Cpptrace)
 set(ENGINE_SOURCES
     src/Engine/Core/Events/EventSystem.cpp
 	src/Engine/Core/Events/EventSystem.h
+	src/Engine/Core/Files/FileSystem.cpp
+	src/Engine/Core/Files/FileSystem.h
 	src/Engine/Core/Input/InputSystem.cpp
 	src/Engine/Core/Input/InputSystem.h
 	src/Engine/Core/Logging/Log.cpp
@@ -37,6 +39,7 @@ target_include_directories(Engine PRIVATE
     src
     src/Engine
     src/Engine/Core
+	${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(Engine PRIVATE cpptrace::cpptrace SDL3::SDL3)

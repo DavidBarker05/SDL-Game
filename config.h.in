@@ -1,0 +1,7 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+#pragma once
+
+#define COMPANY_NAME "@COMPANY@"
+#define PRODUCT_NAME "@PRODUCT@"
+#endif

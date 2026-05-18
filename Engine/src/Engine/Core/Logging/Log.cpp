@@ -5,6 +5,8 @@
 #include <ctime> // Because displaying a decent time with chrono is a bitch
 #include <cpptrace/basic.hpp>
 #include "Math/Math.h"
+#include "Files/FileSystem.h"
+#include <sstream>
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4996) // Because MSVC won't let you compile if you use ctime stuff. Even tho this is a warning? Like wtf Microsoft?
@@ -16,8 +18,10 @@
 #define RED "\33[0;91m"
 #define DEEPER_RED "\33[0;31m"
 
+static bool s_bInitialised;
 static INT8 s_LastLevel;
 static INT8 s_CurrentLevel;
+static CSTRING s_LogFile = "\0";
 
 // This is my understanding of how SDL does theirs, but like it's a lot shorter idk if I'm doing this in an unoptimised way but oh well
 CSTRING FormatMessage(CSTRING format, va_list ap)
@@ -66,6 +70,7 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 		default:
 			return;
 	}
+	std::stringstream output;
 	std::time_t now = std::time(nullptr);
 	std::tm* pLocalTime = std::localtime(&now);
 	std::string stackMessage = bStackTrace ? "\n" : "";
@@ -81,8 +86,16 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 			break;
 		}
 	}
-	std::cout << colour << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message << stackMessage << DEFAULT_COLOUR << "\n\n"; // Ouput to console
-	// TODO: Output to a file
+	output << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message << stackMessage;
+	std::cout << colour << output.str() << DEFAULT_COLOUR << "\n\n";
+	if (!FileSystem::IsInitialized()) return;
+	if (strlen(s_LogFile) == 0)
+	{
+		s_LogFile = (CSTRING)alloca(FileSystem::PathMax());
+		FileSystem::Combine(FileSystem::PersistentDataPath(), "log_output.txt", const_cast<char*>(s_LogFile));
+	}
+	FileSystem::AppendLine(s_LogFile, output.str().c_str());
+	FileSystem::AppendLine(s_LogFile, "\n");
 }
 
 // Function to override SDL's log function, that way, even if someone calls SDL_Log() then
@@ -114,6 +127,11 @@ void LogOverrideFunction(void* userData, INT32 category, SDL_LogPriority priorit
 	LogMessage(level, message);
 }
 
+bool Logger::IsInitialized()
+{
+    return s_bInitialised;
+}
+
 void Logger::Init()
 {
 #ifdef LOG_LEVEL_TRACE
@@ -139,6 +157,7 @@ void Logger::Init()
 	s_CurrentLevel = (INT8)LogLevel::eTRACE;
 #endif
 	SDL_SetLogOutputFunction((SDL_LogOutputFunction) LogOverrideFunction, nullptr);
+	s_bInitialised = true;
 	LOG_INFO("Initialised the logging system");
 }
 
@@ -153,6 +172,7 @@ void Logger::SetLevel(LogLevel level)
 void Logger::EnableLogging()
 {
 #ifndef LOCK_LOG_LEVEL
+	if (s_CurrentLevel > 0) return;
 	s_CurrentLevel = Math::Max(0, s_LastLevel);
 	s_LastLevel = Math::Max(0, s_LastLevel);
 #endif // !LOCK_LOG_LEVEL
@@ -161,6 +181,7 @@ void Logger::EnableLogging()
 void Logger::DisableLogging()
 {
 #ifndef LOCK_LOG_LEVEL
+	if (s_CurrentLevel < 0) return;
 	s_LastLevel = s_CurrentLevel;
 	s_CurrentLevel = -1;
 #endif // !LOCK_LOG_LEVEL

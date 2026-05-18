@@ -27,6 +27,7 @@ target_include_directories(Game PRIVATE
 	../Engine/src/Engine/Core
 	../vendor/SDL3/include
 	src
+	${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(Game PRIVATE Engine SDL3::SDL3)

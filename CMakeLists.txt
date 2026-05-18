@@ -11,6 +11,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release-${CMA
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug-${CMAKE_SYSTEM_PROCESSOR}/vendor)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release-${CMAKE_SYSTEM_PROCESSOR}/vendor)
 
+file(STRINGS config.txt CONFIG_LINES)
+foreach(LINE ${CONFIG_LINES})
+    if(LINE MATCHES "^#" OR LINE STREQUAL "")
+        continue()
+    endif()
+    string(REGEX MATCH "^([^=]+)=(.*)$" _ "${LINE}")
+    set(${CMAKE_MATCH_1} "${CMAKE_MATCH_2}")
+endforeach()
+
+configure_file(config.h.in config.h)
+
 add_subdirectory(vendor/SDL3)
 add_subdirectory(Engine)
 add_subdirectory(Game)

@@ -19,6 +19,7 @@ bool Game::Init()
 #endif // _DELAY_WINDOW
 #define TEST
 	Logger::Init();
+	FileSystem::Init();
 	if (!Renderer::Init()) return false;
 	if (!EventSystem::Init()) return false;
 	spScene = std::make_shared<Scene>();

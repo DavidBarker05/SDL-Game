@@ -45,6 +45,7 @@ enum class LogLevel : INT8
 class Logger
 {
 public:
+	static bool IsInitialized();
 	// Initialise the logging system
 	static void Init();
 

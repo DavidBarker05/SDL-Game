@@ -1,0 +1,2 @@
+COMPANY=DefaultCompany
+PRODUCT=SDL_Game

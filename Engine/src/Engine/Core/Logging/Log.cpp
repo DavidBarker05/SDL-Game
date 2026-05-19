@@ -1,16 +1,17 @@
 #include "Log.h"
-#include <SDL3/SDL_log.h>
-#include <iostream>
-#include <iomanip>
-#include <ctime> // Because displaying a decent time with chrono is a bitch
-#include <cpptrace/basic.hpp>
-#include "Math/Math.h"
 #include "Files/FileSystem.h"
+#include "Math/Math.h"
+#include <SDL3/SDL_log.h>
+#include <cpptrace/basic.hpp>
+#include <ctime> // Because displaying a decent time with chrono is a bitch
+#include <iomanip>
+#include <iostream>
 #include <sstream>
 
 #ifdef _MSC_VER
-#pragma warning(disable : 4996) // Because MSVC won't let you compile if you use ctime stuff. Even tho this is a warning? Like wtf Microsoft?
-#endif // _MSC_VER
+#pragma warning(disable : 4996) // Because MSVC won't let you compile if you use ctime stuff. Even
+								// tho this is a warning? Like wtf Microsoft?
+#endif
 
 #define DEFAULT_COLOUR "\33[0;0m"
 #define GREEN "\33[0;92m"
@@ -21,9 +22,10 @@
 static bool s_bInitialised;
 static INT8 s_LastLevel;
 static INT8 s_CurrentLevel;
-static CSTRING s_LogFile = "\0";
+static STRING s_LogFile;
 
-// This is my understanding of how SDL does theirs, but like it's a lot shorter idk if I'm doing this in an unoptimised way but oh well
+// This is my understanding of how SDL does theirs, but like it's a lot shorter idk if I'm doing
+// this in an unoptimised way but oh well
 CSTRING FormatMessage(CSTRING format, va_list ap)
 {
 	char buffer[256];
@@ -44,31 +46,31 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 	bool bStackTrace = false;
 	switch (logLevel)
 	{
-		case LogLevel::eTRACE:
-			type = "TRACE";
-			colour = DEFAULT_COLOUR;
-			break;
-		case LogLevel::eINFO:
-			type = "INFO";
-			colour = GREEN;
-			break;
-		case LogLevel::eWARN:
-			type = "WARNING";
-			colour = YELLOW;
-			bStackTrace = true;
-			break;
-		case LogLevel::eERROR:
-			type = "ERROR";
-			colour = RED;
-			bStackTrace = true;
-			break;
-		case LogLevel::eFATAL:
-			type = "FATAL";
-			colour = DEEPER_RED;
-			bStackTrace = true;
-			break;
-		default:
-			return;
+	case LogLevel::eTRACE:
+		type = "TRACE";
+		colour = DEFAULT_COLOUR;
+		break;
+	case LogLevel::eINFO:
+		type = "INFO";
+		colour = GREEN;
+		break;
+	case LogLevel::eWARN:
+		type = "WARNING";
+		colour = YELLOW;
+		bStackTrace = true;
+		break;
+	case LogLevel::eERROR:
+		type = "ERROR";
+		colour = RED;
+		bStackTrace = true;
+		break;
+	case LogLevel::eFATAL:
+		type = "FATAL";
+		colour = DEEPER_RED;
+		bStackTrace = true;
+		break;
+	default:
+		return;
 	}
 	std::stringstream output;
 	std::time_t now = std::time(nullptr);
@@ -79,23 +81,28 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 		auto stackTrace = cpptrace::generate_trace(1); // 1 skips the current function
 		for (auto it = stackTrace.cbegin(); it < stackTrace.cend(); ++it)
 		{
-			if (it->symbol.substr(0, strlen("LogOverrideFunction")) == "LogOverrideFunction") continue; // If rename the function don't forget to update string
-			if (it->symbol.substr(0, strlen("SDL_")) == "SDL_") continue; // SDL better not change their naming convention
+			if (it->symbol.substr(0, strlen("LogOverrideFunction")) == "LogOverrideFunction")
+				continue; // If rename the function don't forget to update string
+			if (it->symbol.substr(0, strlen("SDL_")) == "SDL_")
+				continue; // SDL better not change their naming convention
 			stackMessage += it->filename.empty() ? it->symbol : it->filename;
 			if (it->line.has_value()) stackMessage += " LINE " + std::to_string(it->line.value());
 			break;
 		}
 	}
-	output << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message << stackMessage;
+	output << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message
+		   << stackMessage;
 	std::cout << colour << output.str() << DEFAULT_COLOUR << "\n\n";
 	if (!FileSystem::IsInitialized()) return;
-	if (strlen(s_LogFile) == 0)
+	if (s_LogFile.empty())
 	{
-		s_LogFile = (CSTRING)alloca(FileSystem::PathMax());
-		FileSystem::Combine(FileSystem::PersistentDataPath(), "log_output.txt", const_cast<char*>(s_LogFile));
+		FileSystem::Combine(FileSystem::PersistentDataPath(), "log_output.txt", s_LogFile);
+		std::stringstream dateStream;
+		dateStream << "Log Creation Date: " << std::put_time(pLocalTime, "%x") << "\n\n";
+		FileSystem::WriteFile(s_LogFile, dateStream.str());
 	}
-	FileSystem::AppendLine(s_LogFile, output.str().c_str());
-	FileSystem::AppendLine(s_LogFile, "\n");
+	FileSystem::AppendFile(s_LogFile, output.str());
+	FileSystem::AppendFile(s_LogFile, "\n\n");
 }
 
 // Function to override SDL's log function, that way, even if someone calls SDL_Log() then
@@ -105,37 +112,34 @@ void LogOverrideFunction(void* userData, INT32 category, SDL_LogPriority priorit
 	LogLevel level;
 	switch (priority)
 	{
-		case SDL_LOG_PRIORITY_VERBOSE:
-			level = LogLevel::eTRACE;
-			break;
-		case SDL_LOG_PRIORITY_INFO:
-			level = LogLevel::eINFO;
-			break;
-		case SDL_LOG_PRIORITY_WARN:
-			level = LogLevel::eWARN;
-			break;
-		case SDL_LOG_PRIORITY_ERROR:
-			level = LogLevel::eERROR;
-			break;
-		case SDL_LOG_PRIORITY_CRITICAL:
-			level = LogLevel::eFATAL;
-			break;
-		default:
-			return;
+	case SDL_LOG_PRIORITY_VERBOSE:
+		level = LogLevel::eTRACE;
+		break;
+	case SDL_LOG_PRIORITY_INFO:
+		level = LogLevel::eINFO;
+		break;
+	case SDL_LOG_PRIORITY_WARN:
+		level = LogLevel::eWARN;
+		break;
+	case SDL_LOG_PRIORITY_ERROR:
+		level = LogLevel::eERROR;
+		break;
+	case SDL_LOG_PRIORITY_CRITICAL:
+		level = LogLevel::eFATAL;
+		break;
+	default:
+		return;
 	}
 	if (s_CurrentLevel < (INT8)level) return;
 	LogMessage(level, message);
 }
 
-bool Logger::IsInitialized()
-{
-    return s_bInitialised;
-}
+bool Logger::IsInitialized() { return s_bInitialised; }
 
 void Logger::Init()
 {
 #ifdef LOG_LEVEL_TRACE
-	s_LastLevel = (INT8)LogLevel::eTRACE;	
+	s_LastLevel = (INT8)LogLevel::eTRACE;
 	s_CurrentLevel = (INT8)LogLevel::eTRACE;
 #elifdef LOG_LEVEL_INFO
 	s_LastLevel = (INT8)LogLevel::eINFO;
@@ -150,13 +154,13 @@ void Logger::Init()
 	s_LastLevel = (INT8)LogLevel::eFATAL;
 	s_CurrentLevel = (INT8)LogLevel::eFATAL;
 #elifdef LOG_LEVEL_NONE
-	s_LastLevel = -1;	
+	s_LastLevel = -1;
 	s_CurrentLevel = -1;
 #else
 	s_LastLevel = (INT8)LogLevel::eTRACE;
 	s_CurrentLevel = (INT8)LogLevel::eTRACE;
 #endif
-	SDL_SetLogOutputFunction((SDL_LogOutputFunction) LogOverrideFunction, nullptr);
+	SDL_SetLogOutputFunction((SDL_LogOutputFunction)LogOverrideFunction, nullptr);
 	s_bInitialised = true;
 	LOG_INFO("Initialised the logging system");
 }

@@ -12,6 +12,20 @@
 
 std::shared_ptr<Scene> spScene;
 
+bool Game::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
+{
+#ifdef _DELAY_WINDOW
+	SDL_Delay(200); // Delay the window for a few milliseconds so that it appears on top of vs console
+#endif // _DELAY_WINDOW
+#define TEST
+	Logger::Init();
+	FileSystem::Init();
+	if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
+	if (!EventSystem::Init()) return false;
+	spScene = std::make_shared<Scene>();
+	return true;
+}
+
 bool Game::Init()
 {
 #ifdef _DELAY_WINDOW

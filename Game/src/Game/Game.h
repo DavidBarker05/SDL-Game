@@ -6,9 +6,9 @@
 class Game
 {
 public:
-    bool Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
-    bool Init();
-    void Shutdown();
+	bool Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
+	bool Init();
+	void Shutdown();
 
 	void Start();
 

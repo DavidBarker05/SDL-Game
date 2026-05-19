@@ -1,7 +1,7 @@
 #include "Events/EventSystem.h"
-#include <SDL3/SDL_init.h>
-#include "Logging/Log.h"
 #include "Input/InputSystem.h"
+#include "Logging/Log.h"
+#include <SDL3/SDL_init.h>
 
 bool EventSystem::Init()
 {

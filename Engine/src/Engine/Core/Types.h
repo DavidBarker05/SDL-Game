@@ -2,10 +2,12 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <string>
 
 using SIZE_T = std::size_t;
 
 using CSTRING = const char*;
+using STRING = std::string;
 
 using INT8 = std::int8_t;
 using UINT8 = std::uint8_t;

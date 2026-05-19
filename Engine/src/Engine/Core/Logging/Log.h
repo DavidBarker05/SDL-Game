@@ -62,4 +62,3 @@ public:
 	// Log a message
 	static void Log(LogLevel logLevel, CSTRING format, ...);
 };
-

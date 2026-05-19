@@ -1,11 +1,8 @@
 #include "Scene.h"
 
-Scene::Scene()
-{
-	
-}
+Scene::Scene() {}
 
-//void Scene::HandleEvent(const SDL_Event& event)
+// void Scene::HandleEvent(const SDL_Event& event)
 //{
 //	for (Entity* pEntity : m_pEntities)
 //	{
@@ -14,7 +11,7 @@ Scene::Scene()
 //			pListener->HandleEvent(event);
 //		}
 //	}
-//}
+// }
 
 void Scene::Tick(FLOAT32 deltaTime)
 {
@@ -32,7 +29,4 @@ void Scene::Render(SDL_Renderer* pRenderer)
 	}
 }
 
-void Scene::AddEntity(Entity* pEntity)
-{
-	m_pEntities.emplace_back(pEntity);
-}
+void Scene::AddEntity(Entity* pEntity) { m_pEntities.emplace_back(pEntity); }

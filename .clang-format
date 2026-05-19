@@ -1,0 +1,15 @@
+---
+# This shit is beautiful. Daniel Jasper you are a legend I love you man
+Language: Cpp
+BasedOnStyle: LLVM
+UseTab: Always
+IndentWidth: 4
+TabWidth: 4
+PointerAlignment: Left
+BreakBeforeBraces: Allman
+AccessModifierOffset: -4
+IndentAccessModifiers: False
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: True
+ColumnLimit: 100

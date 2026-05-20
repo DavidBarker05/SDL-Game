@@ -19,7 +19,7 @@ typedef struct Vector2
 	}
 
 	inline bool operator==(const Vector2& other) const { return x == other.x && y == other.y; }
-	inline bool operator!=(const Vector2& other) const { return x != other.x && y != other.y; }
+	inline bool operator!=(const Vector2& other) const { return !(x == other.x && y == other.y); }
 
 	inline bool operator>(const Vector2& other) const { return x > other.x && y > other.y; }
 	inline bool operator<(const Vector2& other) const { return x < other.x && y < other.y; }
@@ -39,26 +39,26 @@ typedef struct Vector2
 	inline Vector2 operator*(FLOAT32 scale) const { return Vector2(x * scale, y * scale); }
 	inline Vector2 operator/(FLOAT32 scale) const { return Vector2(x / scale, y / scale); }
 
-	inline Vector2 operator+=(const Vector2& other)
+	inline Vector2& operator+=(const Vector2& other)
 	{
 		x += other.x;
 		y += other.y;
 		return *this;
 	}
-	inline Vector2 operator-=(const Vector2& other)
+	inline Vector2& operator-=(const Vector2& other)
 	{
 		x -= other.x;
 		y -= other.y;
 		return *this;
 	}
 
-	inline Vector2 operator*=(FLOAT32 scale)
+	inline Vector2& operator*=(FLOAT32 scale)
 	{
 		x *= scale;
 		y *= scale;
 		return *this;
 	}
-	inline Vector2 operator/=(FLOAT32 scale)
+	inline Vector2& operator/=(FLOAT32 scale)
 	{
 		x /= scale;
 		y /= scale;

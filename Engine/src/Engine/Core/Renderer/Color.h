@@ -45,7 +45,7 @@ typedef struct Color
 	Color(UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha) : r(red), g(green), b(blue), a(alpha) { }
 	Color(UINT8 value) : r(value), g(value), b(value), a(255ui8) { }
 	Color(const Color& other) : r(other.r), g(other.g), b(other.b), a(other.a) { }
-	Color(Color&& other) : r(other.r), g(other.g), b(other.b), a(other.a)
+	Color(Color&& other) noexcept : r(other.r), g(other.g), b(other.b), a(other.a)
 	{
 		other.r = 0ui8;
 		other.g = 0ui8;

@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene() {}
+Scene::Scene() { }
 
 // void Scene::HandleEvent(const SDL_Event& event)
 //{

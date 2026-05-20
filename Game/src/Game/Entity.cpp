@@ -1,11 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(SDL_Texture* pTexture, Vec2D position, Vec2D halfExtents)
-	: m_pTexture(pTexture), m_Position(position), m_HalfExtents(halfExtents)
+Entity::Entity(SDL_Texture* pTexture, Vec2D position, Vec2D halfExtents) :
+	m_pTexture(pTexture), m_Position(position), m_HalfExtents(halfExtents)
 {
 }
 
-void Entity::Tick(FLOAT32 deltaTime) {}
+void Entity::Tick(FLOAT32 deltaTime) { }
 
 void Entity::Render(SDL_Renderer* pRenderer)
 {

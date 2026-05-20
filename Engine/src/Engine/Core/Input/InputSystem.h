@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL3/SDL_events.h>
 #include "Math/Vector2D.h"
+#include <SDL3/SDL_events.h>
 
 class InputSystem
 {
@@ -14,4 +14,3 @@ private:
 	static void DoKeyDown(SDL_Keycode keyCode);
 	static void DoKeyUp(SDL_Keycode keyCode);
 };
-

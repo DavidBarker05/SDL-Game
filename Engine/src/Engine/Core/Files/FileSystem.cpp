@@ -5,8 +5,8 @@
 // I've noticed I've made my life much harder by not using c++17 but oh well
 // ig this gives me some practice
 #include "FileSystem.h"
-#include "Logging/Log.h"
 #include "config.h"
+#include "Logging/Log.h"
 #include <codecvt>
 #include <cstdlib>
 #include <fstream>
@@ -15,6 +15,7 @@
 #include <string>
 #include <sys/stat.h> // POSIX header but is included with basic functionality on Windows :)
 #include <sys/types.h>
+
 #if WINDOWS
 #include <ShlObj_core.h>
 #include <windows.h>
@@ -251,8 +252,8 @@ void FileSystem::Combine(STRING pathLeft, STRING pathRight, STRING& result)
 void FileSystem::GetFilePart(CSTRING path, char* buffer, SIZE_T bufferSize)
 {
 	CSTRING pLastSeparator = std::strrchr(path, SEPARATOR);
-	pLastSeparator ? std::strncpy(buffer, &path[pLastSeparator - path + 1], bufferSize)
-				   : std::strncpy(buffer, path, bufferSize);
+	pLastSeparator ? std::strncpy(buffer, &path[pLastSeparator - path + 1], bufferSize) :
+					 std::strncpy(buffer, path, bufferSize);
 }
 
 void FileSystem::GetFilePart(const STRING& path, char* buffer, SIZE_T bufferSize)
@@ -289,9 +290,9 @@ void FileSystem::GetFilePart(const STRING& path, STRING& result)
 void FileSystem::GetDirectory(CSTRING path, char* buffer, SIZE_T bufferSize)
 {
 	CSTRING pLastSeparator = std::strrchr(path, SEPARATOR);
-	SIZE_T count = pLastSeparator
-					   ? (pLastSeparator - path < bufferSize ? pLastSeparator - path : bufferSize)
-					   : bufferSize;
+	SIZE_T count = pLastSeparator ?
+					   (pLastSeparator - path < bufferSize ? pLastSeparator - path : bufferSize) :
+					   bufferSize;
 	std::strncpy(buffer, path, count);
 }
 

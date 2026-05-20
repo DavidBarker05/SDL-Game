@@ -1,11 +1,11 @@
 #include "Log.h"
 #include "Files/FileSystem.h"
 #include "Math/Math.h"
-#include <SDL3/SDL_log.h>
 #include <cpptrace/basic.hpp>
 #include <ctime> // Because displaying a decent time with chrono is a bitch
 #include <iomanip>
 #include <iostream>
+#include <SDL3/SDL_log.h>
 #include <sstream>
 
 #ifdef _MSC_VER
@@ -46,31 +46,31 @@ void LogMessage(LogLevel logLevel, CSTRING message)
 	bool bStackTrace = false;
 	switch (logLevel)
 	{
-	case LogLevel::eTRACE:
-		type = "TRACE";
-		colour = DEFAULT_COLOUR;
-		break;
-	case LogLevel::eINFO:
-		type = "INFO";
-		colour = GREEN;
-		break;
-	case LogLevel::eWARN:
-		type = "WARNING";
-		colour = YELLOW;
-		bStackTrace = true;
-		break;
-	case LogLevel::eERROR:
-		type = "ERROR";
-		colour = RED;
-		bStackTrace = true;
-		break;
-	case LogLevel::eFATAL:
-		type = "FATAL";
-		colour = DEEPER_RED;
-		bStackTrace = true;
-		break;
-	default:
-		return;
+		case LogLevel::eTRACE:
+			type = "TRACE";
+			colour = DEFAULT_COLOUR;
+			break;
+		case LogLevel::eINFO:
+			type = "INFO";
+			colour = GREEN;
+			break;
+		case LogLevel::eWARN:
+			type = "WARNING";
+			colour = YELLOW;
+			bStackTrace = true;
+			break;
+		case LogLevel::eERROR:
+			type = "ERROR";
+			colour = RED;
+			bStackTrace = true;
+			break;
+		case LogLevel::eFATAL:
+			type = "FATAL";
+			colour = DEEPER_RED;
+			bStackTrace = true;
+			break;
+		default:
+			return;
 	}
 	std::stringstream output;
 	std::time_t now = std::time(nullptr);
@@ -112,23 +112,23 @@ void LogOverrideFunction(void* userData, INT32 category, SDL_LogPriority priorit
 	LogLevel level;
 	switch (priority)
 	{
-	case SDL_LOG_PRIORITY_VERBOSE:
-		level = LogLevel::eTRACE;
-		break;
-	case SDL_LOG_PRIORITY_INFO:
-		level = LogLevel::eINFO;
-		break;
-	case SDL_LOG_PRIORITY_WARN:
-		level = LogLevel::eWARN;
-		break;
-	case SDL_LOG_PRIORITY_ERROR:
-		level = LogLevel::eERROR;
-		break;
-	case SDL_LOG_PRIORITY_CRITICAL:
-		level = LogLevel::eFATAL;
-		break;
-	default:
-		return;
+		case SDL_LOG_PRIORITY_VERBOSE:
+			level = LogLevel::eTRACE;
+			break;
+		case SDL_LOG_PRIORITY_INFO:
+			level = LogLevel::eINFO;
+			break;
+		case SDL_LOG_PRIORITY_WARN:
+			level = LogLevel::eWARN;
+			break;
+		case SDL_LOG_PRIORITY_ERROR:
+			level = LogLevel::eERROR;
+			break;
+		case SDL_LOG_PRIORITY_CRITICAL:
+			level = LogLevel::eFATAL;
+			break;
+		default:
+			return;
 	}
 	if (s_CurrentLevel < (INT8)level) return;
 	LogMessage(level, message);

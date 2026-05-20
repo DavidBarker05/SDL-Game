@@ -6,9 +6,9 @@ typedef struct Vector2
 {
 	FLOAT32 x, y;
 
-	Vector2() : x(0.0f), y(0.0f) {}
-	Vector2(FLOAT32 _x, FLOAT32 _y) : x(_x), y(_y) {}
-	Vector2(const Vector2& other) : x(other.x), y(other.y) {}
+	Vector2() : x(0.0f), y(0.0f) { }
+	Vector2(FLOAT32 _x, FLOAT32 _y) : x(_x), y(_y) { }
+	Vector2(const Vector2& other) : x(other.x), y(other.y) { }
 	Vector2(Vector2&& other) noexcept : x(other.x), y(other.y) { other.x = 0.0f, other.y = 0.0f; }
 
 	inline Vector2& operator=(const Vector2& other)

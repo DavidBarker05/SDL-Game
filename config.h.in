@@ -7,7 +7,9 @@
 #define PRODUCT_NAME "@PRODUCT_NAME@"
 
 #define EXECUTABLE_TITLE "@EXECUTABLE_TITLE@"
-#define WINDOW_WIDTH @WINDOW_WIDTH @
-#define WINDOW_HEIGHT @WINDOW_HEIGHT @
+// clang-format off
+#define WINDOW_WIDTH @WINDOW_WIDTH@
+#define WINDOW_HEIGHT @WINDOW_HEIGHT@
+// clang-format onn
 
 #endif

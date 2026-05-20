@@ -12,6 +12,7 @@ set(ENGINE_SOURCES
 	src/Engine/Core/Math/Math.cpp
 	src/Engine/Core/Math/Math.h
 	src/Engine/Core/Math/Vector2D.h
+	src/Engine/Core/Renderer/Color.h
 	src/Engine/Core/Renderer/Renderer.cpp
 	src/Engine/Core/Renderer/Renderer.h
 	src/Engine/Core/Core.h

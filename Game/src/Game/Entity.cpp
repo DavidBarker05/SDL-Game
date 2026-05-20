@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Renderer/Renderer.h"
 
 Entity::Entity(SDL_Texture* pTexture, Vec2D position, Vec2D halfExtents) :
 	m_pTexture(pTexture), m_Position(position), m_HalfExtents(halfExtents)

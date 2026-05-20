@@ -65,6 +65,10 @@ void Game::Tick()
 		return;
 	}
 	spScene->Tick(m_DeltaTime);
+	Vector2 position(100.0f, 100.0f);
+	Vector2 halfExtents(50.0f, 50.0f);
+	Color colour(255, 0, 255);
+	Renderer::DrawFilledRect(0, position, halfExtents, colour);
 	Renderer::Render();
 }
 

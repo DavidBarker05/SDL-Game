@@ -6,20 +6,20 @@
 class Game
 {
 public:
-	bool Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
-	bool Init();
-	void Shutdown();
+    bool Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
+    bool Init();
+    void Shutdown();
 
-	void Start();
+    void Start();
 
 private:
-	void Tick();
+    void Tick();
 
-	void UpdateDeltaTime();
+    void UpdateDeltaTime();
 
-	bool m_bGameIsRunning = false;
-	UINT64 m_CurrentFrameTime = 0;
-	UINT64 m_LastFrameTime = 0;
-	FLOAT64 m_DeltaTime = 0;
+    bool m_bGameIsRunning = false;
+    UINT64 m_CurrentFrameTime = 0;
+    UINT64 m_LastFrameTime = 0;
+    FLOAT64 m_DeltaTime = 0;
 };
 #endif // !GAME_H

@@ -10,14 +10,14 @@ class Game;
 class Player : public Entity
 {
 public:
-	typedef Entity Super;
+    typedef Entity Super;
 
-	Player();
+    Player();
 
-	virtual void Tick(FLOAT32 deltaTime) override;
-	virtual void Render(SDL_Renderer* pRenderer) override;
+    virtual void Tick(FLOAT32 deltaTime) override;
+    virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
-	Vector2 m_Velocity;
+    Vector2 m_Velocity;
 };
 #endif // !PLAYER_H

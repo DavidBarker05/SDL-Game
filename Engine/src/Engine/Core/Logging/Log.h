@@ -5,11 +5,11 @@
 // Different log levels/verbosities for the logging system
 enum class LogLevel : INT8
 {
-	eFATAL,
-	eERROR,
-	eWARN,
-	eINFO,
-	eTRACE
+    eFATAL,
+    eERROR,
+    eWARN,
+    eINFO,
+    eTRACE
 };
 
 // Set the current log level for the logger. The levels from highest to lowest
@@ -45,20 +45,20 @@ enum class LogLevel : INT8
 class Logger
 {
 public:
-	static bool IsInitialized();
-	// Initialise the logging system
-	static void Init();
+    static bool IsInitialized();
+    // Initialise the logging system
+    static void Init();
 
-	// Set the current log level for the logger. The levels from highest to lowest
-	// verbosity are: eTRACE, eINFO, eWARN, eERROR and eFATAL.
-	static void SetLevel(LogLevel level);
+    // Set the current log level for the logger. The levels from highest to lowest
+    // verbosity are: eTRACE, eINFO, eWARN, eERROR and eFATAL.
+    static void SetLevel(LogLevel level);
 
-	// Enable logging
-	static void EnableLogging();
+    // Enable logging
+    static void EnableLogging();
 
-	// Disable logging
-	static void DisableLogging();
+    // Disable logging
+    static void DisableLogging();
 
-	// Log a message
-	static void Log(LogLevel logLevel, CSTRING format, ...);
+    // Log a message
+    static void Log(LogLevel logLevel, CSTRING format, ...);
 };

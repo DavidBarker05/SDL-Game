@@ -6,11 +6,11 @@
 class InputSystem
 {
 public:
-	static void HandleInput(const SDL_Event& event);
+    static void HandleInput(const SDL_Event& event);
 
-	static Vector2 GetMoveInput();
+    static Vector2 GetMoveInput();
 
 private:
-	static void DoKeyDown(SDL_Keycode keyCode);
-	static void DoKeyUp(SDL_Keycode keyCode);
+    static void DoKeyDown(SDL_Keycode keyCode);
+    static void DoKeyUp(SDL_Keycode keyCode);
 };

@@ -6,8 +6,8 @@
 class EventListener
 {
 public:
-	virtual ~EventListener() = default;
+    virtual ~EventListener() = default;
 
-	virtual void HandleEvent(const SDL_Event& event) = 0;
+    virtual void HandleEvent(const SDL_Event& event) = 0;
 };
 #endif // !EVENTLISTENER_H

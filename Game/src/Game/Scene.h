@@ -10,15 +10,15 @@
 class Scene : public Renderable
 {
 public:
-	Scene();
+    Scene();
 
-	// virtual void HandleEvent(const SDL_Event& event);
-	virtual void Tick(FLOAT32 deltaTime);
-	virtual void Render(SDL_Renderer* pRenderer) override;
+    // virtual void HandleEvent(const SDL_Event& event);
+    virtual void Tick(FLOAT32 deltaTime);
+    virtual void Render(SDL_Renderer* pRenderer) override;
 
-	virtual void AddEntity(Entity* pEntity);
+    virtual void AddEntity(Entity* pEntity);
 
 private:
-	std::vector<Entity*> m_pEntities;
+    std::vector<Entity*> m_pEntities;
 };
 #endif // !SCENE_H

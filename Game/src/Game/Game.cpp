@@ -15,66 +15,66 @@ std::shared_ptr<Scene> spScene;
 bool Game::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
 {
 #ifdef _DELAY_WINDOW
-	SDL_Delay(
-		200); // Delay the window for a few milliseconds so that it appears on top of vs console
+    SDL_Delay(
+        200); // Delay the window for a few milliseconds so that it appears on top of vs console
 #endif // _DELAY_WINDOW
 #define TEST
-	Logger::Init();
-	FileSystem::Init();
-	if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
-	if (!EventSystem::Init()) return false;
-	spScene = std::make_shared<Scene>();
-	return true;
+    Logger::Init();
+    FileSystem::Init();
+    if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
+    if (!EventSystem::Init()) return false;
+    spScene = std::make_shared<Scene>();
+    return true;
 }
 
 bool Game::Init()
 {
 #ifdef _DELAY_WINDOW
-	SDL_Delay(
-		200); // Delay the window for a few milliseconds so that it appears on top of vs console
+    SDL_Delay(
+        200); // Delay the window for a few milliseconds so that it appears on top of vs console
 #endif // _DELAY_WINDOW
 #define TEST
-	Logger::Init();
-	FileSystem::Init();
-	if (!Renderer::Init()) return false;
-	if (!EventSystem::Init()) return false;
-	spScene = std::make_shared<Scene>();
-	return true;
+    Logger::Init();
+    FileSystem::Init();
+    if (!Renderer::Init()) return false;
+    if (!EventSystem::Init()) return false;
+    spScene = std::make_shared<Scene>();
+    return true;
 }
 
 void Game::Shutdown()
 {
-	Renderer::Shutdown();
-	EventSystem::Shutdown();
-	SDL_Quit();
+    Renderer::Shutdown();
+    EventSystem::Shutdown();
+    SDL_Quit();
 }
 
 void Game::Start()
 {
-	m_bGameIsRunning = true;
-	while (m_bGameIsRunning) Tick();
+    m_bGameIsRunning = true;
+    while (m_bGameIsRunning) Tick();
 }
 
 void Game::Tick()
 {
-	UpdateDeltaTime();
-	UINT32 status = EventSystem::PollEvents();
-	if (status == EventSystem::Quit)
-	{
-		m_bGameIsRunning = false;
-		return;
-	}
-	spScene->Tick(m_DeltaTime);
-	Vector2 position(100.0f, 100.0f);
-	Vector2 halfExtents(50.0f, 50.0f);
-	Color colour(255, 0, 255);
-	Renderer::DrawFilledRect(0, position, halfExtents, colour);
-	Renderer::Render();
+    UpdateDeltaTime();
+    UINT32 status = EventSystem::PollEvents();
+    if (status == EventSystem::Quit)
+    {
+        m_bGameIsRunning = false;
+        return;
+    }
+    spScene->Tick(m_DeltaTime);
+    Vector2 position(100.0f, 100.0f);
+    Vector2 halfExtents(50.0f, 50.0f);
+    Color colour(255, 0, 255);
+    Renderer::DrawFilledRect(0, position, halfExtents, colour);
+    Renderer::Render();
 }
 
 void Game::UpdateDeltaTime()
 {
-	m_CurrentFrameTime = SDL_GetPerformanceCounter();
-	m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64)SDL_GetPerformanceFrequency();
-	m_LastFrameTime = m_CurrentFrameTime;
+    m_CurrentFrameTime = SDL_GetPerformanceCounter();
+    m_DeltaTime = (m_CurrentFrameTime - m_LastFrameTime) / (FLOAT64)SDL_GetPerformanceFrequency();
+    m_LastFrameTime = m_CurrentFrameTime;
 }

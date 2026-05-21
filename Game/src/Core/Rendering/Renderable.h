@@ -6,8 +6,8 @@
 class Renderable
 {
 public:
-	~Renderable() = default;
+    ~Renderable() = default;
 
-	virtual void Render(SDL_Renderer* pRenderer) = 0;
+    virtual void Render(SDL_Renderer* pRenderer) = 0;
 };
 #endif // !RENDERABLE_H

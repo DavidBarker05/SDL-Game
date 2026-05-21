@@ -9,8 +9,10 @@
 #ifdef _MSC_VER
 #pragma warning(disable : 4244)
 #endif // _MSC_VER
+#include <Player.h>
 
 std::shared_ptr<Scene> spScene;
+Player* pPlayer;
 
 bool Game::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
 {
@@ -24,6 +26,8 @@ bool Game::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
     if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
     if (!EventSystem::Init()) return false;
     spScene = std::make_shared<Scene>();
+    pPlayer = new Player();
+    spScene->AddEntity(pPlayer);
     return true;
 }
 
@@ -65,10 +69,6 @@ void Game::Tick()
         return;
     }
     spScene->Tick(m_DeltaTime);
-    Vector2 position(100.0f, 100.0f);
-    Vector2 halfExtents(50.0f, 50.0f);
-    Color colour(255, 0, 255);
-    Renderer::DrawFilledRect(0, position, halfExtents, colour);
     Renderer::Render();
 }
 

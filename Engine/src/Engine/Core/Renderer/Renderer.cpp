@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Logging/Log.h"
+#include "RenderComponent/RenderComponent.h"
 #include <algorithm>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_render.h>
@@ -16,6 +17,8 @@ static SDL_GPUDevice* s_pGPUDevice = nullptr;
 #define RECT_ID 0u
 #define FILLED_RECT_ID 1u
 #define TEXTURE_ID 2u
+
+static std::vector<std::pair<RenderComponent*, bool>> s_RenderList;
 
 struct RenderBufferItem
 {
@@ -69,6 +72,19 @@ void Renderer::Shutdown()
     SDL_DestroyWindow(s_pWindow);
 }
 
+void Renderer::AddToRenderList(RenderComponent* renderComponent)
+{
+    s_RenderList.emplace_back(std::make_pair(renderComponent, true));
+}
+
+void Renderer::RemoveFromRenderList(RenderComponent* renderComponent)
+{
+    std::find_if(s_RenderList.begin(), s_RenderList.end(),
+                 [renderComponent](std::pair<RenderComponent*, bool> element)
+                 { return element.first == renderComponent; })
+        ->second = false;
+}
+
 void Renderer::DrawRect(UINT32 drawLayer, Vector2 position, Vector2 halfExtents, Color color)
 {
     s_ColourBuffer.emplace_back(color);
@@ -112,6 +128,10 @@ void Renderer::Render()
 {
     SDL_SetRenderDrawColor(s_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
     SDL_RenderClear(s_pRenderer);
+    for (std::pair<RenderComponent*, bool> element : s_RenderList)
+    {
+        if (element.second) element.first->Draw();
+    }
     SortRenderBuffer();
     // Render everything below here
     for (RenderBufferItem item : s_RenderBuffer)
@@ -134,5 +154,9 @@ void Renderer::Render()
     // Render everything above here
     s_RenderBuffer.clear();
     s_ColourBuffer.clear();
+    s_RenderList.erase(std::remove_if(s_RenderList.begin(), s_RenderList.end(),
+                                      [](std::pair<RenderComponent*, bool> element)
+                                      { return !element.second; }),
+                       s_RenderList.end());
     SDL_RenderPresent(s_pRenderer);
 }

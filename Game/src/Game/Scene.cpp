@@ -21,12 +21,4 @@ void Scene::Tick(FLOAT32 deltaTime)
     }
 }
 
-void Scene::Render(SDL_Renderer* pRenderer)
-{
-    for (Entity* pEntity : m_pEntities)
-    {
-        pEntity->Render(pRenderer);
-    }
-}
-
 void Scene::AddEntity(Entity* pEntity) { m_pEntities.emplace_back(pEntity); }

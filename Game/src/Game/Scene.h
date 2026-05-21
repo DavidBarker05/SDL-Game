@@ -2,19 +2,16 @@
 #define SCENE_H
 
 #include "Core.h"
-#include "Core/Rendering/Renderable.h"
 #include "Entity.h"
-#include <SDL3/SDL_render.h>
 #include <vector>
 
-class Scene : public Renderable
+class Scene
 {
 public:
     Scene();
 
     // virtual void HandleEvent(const SDL_Event& event);
     virtual void Tick(FLOAT32 deltaTime);
-    virtual void Render(SDL_Renderer* pRenderer) override;
 
     virtual void AddEntity(Entity* pEntity);
 

@@ -1,6 +1,5 @@
 set(GAME_SOURCES
 	src/Core/Events/EventListener.h
-	src/Core/Rendering/Renderable.h
 	src/Game/Entity.cpp
 	src/Game/Entity.h
 	src/Game/Game.cpp

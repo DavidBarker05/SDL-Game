@@ -4,12 +4,18 @@
 #include "Math/Vector2D.h"
 #include "Types.h"
 
+class RenderComponent;
+
 class Renderer
 {
 public:
     static bool Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
     static bool Init();
     static void Shutdown();
+
+public:
+    static void AddToRenderList(RenderComponent* renderComponent);
+    static void RemoveFromRenderList(RenderComponent* renderComponent);
 
 public:
     static void DrawRect(UINT32 drawLayer, Vector2 position, Vector2 halfExtents, Color color);

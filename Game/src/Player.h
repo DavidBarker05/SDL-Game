@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "Game/Entity.h"
+#include "Renderer/RenderComponent/FilledRectRenderComponent.h"
 #include <SDL3/SDL_render.h>
 
 class Game;
@@ -15,9 +16,9 @@ public:
     Player();
 
     virtual void Tick(FLOAT32 deltaTime) override;
-    virtual void Render(SDL_Renderer* pRenderer) override;
 
 private:
     Vector2 m_Velocity;
+    FilledRectRenderComponent m_RenderComponent;
 };
 #endif // !PLAYER_H

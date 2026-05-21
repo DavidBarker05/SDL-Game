@@ -5,6 +5,9 @@
 class FilledRectRenderComponent : public RenderComponent
 {
 public:
+    typedef RenderComponent Super;
+
+public:
     FilledRectRenderComponent(Vector2 const* ownerPosition, Vector2 centerOffset,
                               Vector2 halfExtents, Color color);
     FilledRectRenderComponent(UINT32 renderLayer, Vector2 const* ownerPosition,

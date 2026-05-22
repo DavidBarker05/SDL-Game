@@ -1,10 +1,14 @@
 #pragma once
 
-#include "../Renderer.h"
+#include "../Component/Component.h"
+#include "Renderer/Renderer.h"
 #include "Types.h"
 
-class RenderComponent
+class RenderComponent : public Component
 {
+public:
+    typedef Component Super;
+
 public:
     virtual void Draw() { };
 
@@ -13,12 +17,11 @@ public:
     void SetRenderLayer(UINT32 renderLayer);
 
 protected:
-    RenderComponent(Vector2 const* ownerPosition);
-    RenderComponent(UINT32 renderLayer, Vector2 const* ownerPosition);
+    RenderComponent();
+    RenderComponent(UINT32 renderLayer);
 
     virtual ~RenderComponent();
 
 protected:
     UINT32 m_RenderLayer;
-    Vector2 const* m_OwnerPosition;
 };

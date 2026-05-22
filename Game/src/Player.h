@@ -2,8 +2,8 @@
 #define PLAYER_H
 
 #include "Core.h"
-#include "Game/Entity.h"
-#include "Renderer/RenderComponent/FilledRectRenderComponent.h"
+#include "Entity.h"
+#include "FilledRectRenderComponent/FilledRectRenderComponent.h"
 #include <SDL3/SDL_render.h>
 
 class Game;

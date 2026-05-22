@@ -1,7 +1,5 @@
 set(GAME_SOURCES
 	src/Core/Events/EventListener.h
-	src/Game/Entity.cpp
-	src/Game/Entity.h
 	src/Game/Game.cpp
 	src/Game/Game.h
 	src/Game/Scene.cpp
@@ -22,7 +20,11 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GAME_SOURCES})
 
 target_include_directories(Game PRIVATE
     ../Engine/src
+	../Engine/src/Engine/Component
 	../Engine/src/Engine/Core
+	../Engine/src/Engine/Entity
+	../Engine/src/Engine/Object
+	../Engine/src/Engine/RenderComponent
 	../vendor/SDL3/include
 	src
 	${CMAKE_BINARY_DIR}

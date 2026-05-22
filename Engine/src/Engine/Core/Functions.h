@@ -1,7 +1,11 @@
 #pragma once
 
+#include "../Object/ObjectManager/ObjectManager.h"
+
 template<typename To, typename From>
-To* Cast(From* from)
+inline To* Cast(From* from)
 {
     return dynamic_cast<To*>(from);
 }
+
+inline bool IsValid(Object* pObject) { return ObjectManager::IsObjectValid(pObject); }

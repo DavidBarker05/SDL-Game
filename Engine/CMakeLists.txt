@@ -11,6 +11,7 @@ set(ENGINE_SOURCES
 	src/Engine/Core/Input/InputSystem.h
 	src/Engine/Core/Logging/Log.cpp
 	src/Engine/Core/Logging/Log.h
+	src/Engine/Core/Math/Bounds2D.h
 	src/Engine/Core/Math/Math.cpp
 	src/Engine/Core/Math/Math.h
 	src/Engine/Core/Math/Vector2D.h

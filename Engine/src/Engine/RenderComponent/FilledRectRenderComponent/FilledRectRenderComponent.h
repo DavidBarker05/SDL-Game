@@ -8,15 +8,13 @@ public:
     typedef RenderComponent Super;
 
 public:
-    FilledRectRenderComponent(Vector2 centerOffset, Vector2 halfExtents, Color color);
-    FilledRectRenderComponent(UINT32 renderLayer, Vector2 centerOffset, Vector2 halfExtents,
-                              Color color);
+    FilledRectRenderComponent(const Bounds2D& bounds, Color color);
+    FilledRectRenderComponent(UINT32 renderLayer, const Bounds2D& bounds, Color color);
 
 public:
     void Draw() override;
 
 private:
-    Vector2 m_CentreOffset;
-    Vector2 m_HalfExtents;
+    Bounds2D m_Bounds;
     Color m_Colour;
 };

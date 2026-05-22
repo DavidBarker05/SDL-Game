@@ -85,7 +85,8 @@ void Renderer::RemoveFromRenderList(RenderComponent* renderComponent)
         ->second = false;
 }
 
-void Renderer::DrawRect(UINT32 drawLayer, Vector2 position, Vector2 halfExtents, Color color)
+void Renderer::DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
+                        Color color)
 {
     s_ColourBuffer.emplace_back(color);
     SIZE_T colourIndex = s_ColourBuffer.size() - 1;
@@ -93,7 +94,8 @@ void Renderer::DrawRect(UINT32 drawLayer, Vector2 position, Vector2 halfExtents,
         RenderBufferItem {drawLayer, RECT_ID, position, halfExtents, colourIndex});
 }
 
-void Renderer::DrawFilledRect(UINT32 drawLayer, Vector2 position, Vector2 halfExtents, Color color)
+void Renderer::DrawFilledRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
+                              Color color)
 {
     s_ColourBuffer.emplace_back(color);
     SIZE_T colourIndex = s_ColourBuffer.size() - 1;

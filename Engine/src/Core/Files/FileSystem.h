@@ -6,7 +6,7 @@ class FileSystem
 {
 public:
     static bool IsInitialized();
-    static void Init();
+    static void Init(CSTRING companyName, CSTRING productName);
 
 public:
     // The max length of characters a path can be

@@ -5,7 +5,6 @@
 // I've noticed I've made my life much harder by not using c++17 but oh well
 // ig this gives me some practice
 #include "FileSystem.h"
-#include "config.h"
 #include "Logging/Log.h"
 #include <codecvt>
 #include <cstdlib>
@@ -65,7 +64,7 @@ static void FindExecutablePath()
     s_ExecutablePath = FileSystem::GetDirectory(TO_STRING(string_t(pathBuffer)));
 }
 
-static void FindPersistentDataPath()
+static void FindPersistentDataPath(CSTRING companyName, CSTRING productName)
 {
     char pathBuffer[PATH_MAX];
 #if WINDOWS
@@ -93,8 +92,8 @@ static void FindPersistentDataPath()
         FileSystem::Combine(pathBuffer, "AppData", pathBuffer);
         FileSystem::Combine(pathBuffer, "Local", pathBuffer);
     }
-    FileSystem::Combine(pathBuffer, COMPANY_NAME, pathBuffer);
-    FileSystem::Combine(pathBuffer, PRODUCT_NAME, pathBuffer);
+    FileSystem::Combine(pathBuffer, companyName, pathBuffer);
+    FileSystem::Combine(pathBuffer, productName, pathBuffer);
 #elif defined(__APPLE__)
     CSTRING home = std::getenv("HOME");
     FileSystem::Combine(home, "Library", pathBuffer);
@@ -118,7 +117,7 @@ static void FindPersistentDataPath()
     s_PersistentDataPath = pathBuffer;
 }
 
-static void FindTemporaryDataPath()
+static void FindTemporaryDataPath(CSTRING companyName, CSTRING productName)
 {
     char pathBuffer[PATH_MAX];
 #if WINDOWS
@@ -142,8 +141,8 @@ static void FindTemporaryDataPath()
         FileSystem::Combine(pathBuffer, "Local", pathBuffer);
     }
     FileSystem::Combine(pathBuffer, "Temp", pathBuffer);
-    FileSystem::Combine(pathBuffer, COMPANY_NAME, pathBuffer);
-    FileSystem::Combine(pathBuffer, PRODUCT_NAME, pathBuffer);
+    FileSystem::Combine(pathBuffer, companyName, pathBuffer);
+    FileSystem::Combine(pathBuffer, productName, pathBuffer);
 #elif defined(__APPLE__)
     CSTRING home = std::getenv("HOME");
     FileSystem::Combine(home, "Library", pathBuffer);
@@ -167,11 +166,11 @@ static void FindTemporaryDataPath()
     s_TemporaryDataPath = pathBuffer;
 }
 
-void FileSystem::Init()
+void FileSystem::Init(CSTRING companyName, CSTRING productName)
 {
     FindExecutablePath();
-    FindPersistentDataPath();
-    FindTemporaryDataPath();
+    FindPersistentDataPath(companyName, productName);
+    FindTemporaryDataPath(companyName, productName);
     if (Logger::IsInitialized()) LOG_INFO("Initialised the file system");
     s_bInitialised = true;
 }

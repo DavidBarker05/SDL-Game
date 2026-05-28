@@ -1,4 +1,5 @@
 #include "InputSystem.h"
+#include "Logging/Log.h"
 
 void InputSystem::HandleInput(const SDL_Event& event)
 {
@@ -6,8 +7,13 @@ void InputSystem::HandleInput(const SDL_Event& event)
     {
         case SDL_EVENT_KEY_DOWN:
             DoKeyDown(event.key.key);
+            break;
         case SDL_EVENT_KEY_UP:
             DoKeyUp(event.key.key);
+            break;
+        case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+            LOG_INFO("Joystick motion detected: %.3f", event.gaxis.value / 32767.0f);
+            break;
         default:
             break;
     }

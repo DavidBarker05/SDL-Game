@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Component/Component.h"
+#include "Engine/Component/Component.h" // For some reason I have to specify engine even tho I have it as an include directory?
 #include "Renderer/Renderer.h"
 #include "Types.h"
 

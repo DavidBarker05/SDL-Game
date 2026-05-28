@@ -1,27 +1,27 @@
 add_subdirectory(vendor/Cpptrace)
 
 set(ENGINE_SOURCES
+	src/Core/Events/EventSystem.cpp
+	src/Core/Events/EventSystem.h
+	src/Core/Files/FileSystem.cpp
+	src/Core/Files/FileSystem.h
+	src/Core/Input/InputSystem.cpp
+	src/Core/Input/InputSystem.h
+	src/Core/Logging/Log.cpp
+	src/Core/Logging/Log.h
+	src/Core/Math/Bounds2D.h
+	src/Core/Math/Math.cpp
+	src/Core/Math/Math.h
+	src/Core/Math/Vector2D.h
+	src/Core/Renderer/Color.h
+	src/Core/Renderer/Renderer.h
+	src/Core/Renderer/Renderer.cpp
+	src/Core/Renderer/Renderer.h
+	src/Core/Core.h
+	src/Core/Functions.h
+	src/Core/Types.h
 	src/Engine/Component/Component.cpp
 	src/Engine/Component/Component.h
-    src/Engine/Core/Events/EventSystem.cpp
-	src/Engine/Core/Events/EventSystem.h
-	src/Engine/Core/Files/FileSystem.cpp
-	src/Engine/Core/Files/FileSystem.h
-	src/Engine/Core/Input/InputSystem.cpp
-	src/Engine/Core/Input/InputSystem.h
-	src/Engine/Core/Logging/Log.cpp
-	src/Engine/Core/Logging/Log.h
-	src/Engine/Core/Math/Bounds2D.h
-	src/Engine/Core/Math/Math.cpp
-	src/Engine/Core/Math/Math.h
-	src/Engine/Core/Math/Vector2D.h
-	src/Engine/Core/Renderer/Color.h
-	src/Engine/Core/Renderer/Renderer.h
-	src/Engine/Core/Renderer/Renderer.cpp
-	src/Engine/Core/Renderer/Renderer.h
-	src/Engine/Core/Core.h
-	src/Engine/Core/Functions.h
-	src/Engine/Core/Types.h
 	src/Engine/Object/ObjectManager/ObjectManager.cpp
 	src/Engine/Object/ObjectManager/ObjectManager.h
 	src/Engine/Entity/Entity.cpp
@@ -53,8 +53,8 @@ target_include_directories(Engine PRIVATE
     vendor/Cpptrace/include
     ../vendor/SDL3/include
     src
+    src/Core
     src/Engine
-    src/Engine/Core
 	${CMAKE_BINARY_DIR}
 )
 

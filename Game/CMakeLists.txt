@@ -19,9 +19,9 @@ set_target_properties(Game PROPERTIES
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GAME_SOURCES})
 
 target_include_directories(Game PRIVATE
+	../Engine/src/Core
     ../Engine/src
 	../Engine/src/Engine/Component
-	../Engine/src/Engine/Core
 	../Engine/src/Engine/Entity
 	../Engine/src/Engine/Object
 	../Engine/src/Engine/RenderComponent

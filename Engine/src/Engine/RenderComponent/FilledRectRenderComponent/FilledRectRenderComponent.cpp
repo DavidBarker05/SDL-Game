@@ -1,5 +1,5 @@
 #include "FilledRectRenderComponent.h"
-#include "../Entity/Entity.h"
+#include "Entity/Entity.h"
 
 FilledRectRenderComponent::FilledRectRenderComponent(const Bounds2D& bounds, Color color) :
     Super(), m_Bounds(bounds), m_Colour(color)

@@ -1,8 +1,15 @@
 add_subdirectory(vendor/Cpptrace)
 
 set(ENGINE_SOURCES
+	src/Core/Events/CustomEvent.h
+	src/Core/Events/Event.h
 	src/Core/Events/EventSystem.cpp
 	src/Core/Events/EventSystem.h
+	src/Core/Events/GamepadManager.cpp
+	src/Core/Events/GamepadManager.h
+	src/Core/Events/InputCode.h
+	src/Core/Events/InputEvent.h
+	src/Core/Events/SDLCodeConverter.h
 	src/Core/Files/FileSystem.cpp
 	src/Core/Files/FileSystem.h
 	src/Core/Input/InputSystem.cpp

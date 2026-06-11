@@ -3,11 +3,13 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <string_view>
 
 using SIZE_T = std::size_t;
 
 using CSTRING = const char*;
 using STRING = std::string;
+using STRING_VIEW = std::string_view;
 
 using INT8 = std::int8_t;
 using UINT8 = std::uint8_t;

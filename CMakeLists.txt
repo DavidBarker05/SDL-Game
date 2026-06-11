@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.20)
 
 project(SDL-Game)
 
-# 14 is what I use in vs2022 but this might work with 11 it's hard to tell when all the functions I use were added
-set(CMAKE_CXX_STANDARD 14)
+# used to be 14, but I think sticking to it was making my life harder
+# c++17 let's me use std::filesystem, and std::string_view which makes
+# my file system shorter. It also allows me to use std::any which makes
+# the input system wrapper shorter
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug-${CMAKE_SYSTEM_PROCESSOR}/vendor)

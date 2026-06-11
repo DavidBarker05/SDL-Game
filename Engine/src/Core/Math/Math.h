@@ -4,12 +4,29 @@
 
 namespace Math
 {
+#if (defined(MATH_32) && !defined(MATH_64)) || (!defined(MATH_32) && !defined(MATH_32))
     constexpr FLOAT32 Pi = 3.1415927f;
-    constexpr FLOAT32 RadToDeg = (FLOAT32)180.0f / Pi;
+    constexpr FLOAT32 RadToDeg = 180.0f / Pi;
     constexpr FLOAT32 DegToRad = Pi / 180.0f;
+    constexpr FLOAT32 Epsilon = 1.192092896e-07f; // std::numeric_limits<float>::epsilon
+#elif (!defined(MATH_32) && defined(MATH_64))
+    constexpr FLOAT32 Pi = 3.141492653589793;
+    constexpr FLOAT32 RadToDeg = 180.0 / Pi;
+    constexpr FLOAT32 DegToRad = Pi / 180.0;
+    constexpr FLOAT32 Epsilon = 2.2204460492503131e-016; // std::numeric_limits<double>::epsilon
+#else
+    constexpr FLOAT32 Pi_32 = 3.1415927f;
+    constexpr FLOAT32 Pi_64 = 3.141492653589793;
+    constexpr FLOAT32 RadToDeg_32 = 180.0f / Pi_32;
+    constexpr FLOAT32 RadToDeg_64 = 180.0 / Pi_64;
+    constexpr FLOAT32 DegToRad_32 = Pi_32 / 180.0f;
+    constexpr FLOAT32 DegToRad_64 = Pi_64 / 180.0;
+    constexpr FLOAT32 Epsilon_32 = 1.192092896e-07f; // std::numeric_limits<float>::epsilon
+    constexpr FLOAT32 Epsilon_64 = 2.2204460492503131e-016; // std::numeric_limits<double>::epsilon
+#endif
 
     FLOAT32 Sqrt(FLOAT32 num);
-    FLOAT32 InvSqrt(FLOAT32 num);
+    FLOAT64 Sqrt(FLOAT64 num);
 
     FLOAT32 Pow(FLOAT32 base, FLOAT32 exponent);
     INT32 Pow(INT32 base, INT32 exponent);
@@ -19,13 +36,15 @@ namespace Math
 
     FLOAT32 Floor(FLOAT32 num);
     FLOAT32 Round(FLOAT32 num);
-    FLOAT32 Round(FLOAT32 num, INT32 decimalPlaces);
+    FLOAT32 Round(FLOAT32 num, UINT32 decimalPlaces);
     FLOAT32 Ceil(FLOAT32 num);
 
     FLOAT32 Min(FLOAT32 num1, FLOAT32 num2);
     INT32 Min(INT32 num1, INT32 num2);
+    SIZE_T Min(SIZE_T size1, SIZE_T size2);
     FLOAT32 Max(FLOAT32 num1, FLOAT32 num2);
     INT32 Max(INT32 num1, INT32 num2);
+    SIZE_T Max(SIZE_T size1, SIZE_T size2);
 
     FLOAT32 Clamp(FLOAT32 num, FLOAT32 _min, FLOAT32 _max);
     INT32 Clamp(INT32 num, INT32 _min, INT32 _max);

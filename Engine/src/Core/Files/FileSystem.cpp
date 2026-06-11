@@ -6,42 +6,24 @@
 // ig this gives me some practice
 #include "FileSystem.h"
 #include "Logging/Log.h"
+#include "Math/Math.h"
 #include <codecvt>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <sys/stat.h> // POSIX header but is included with basic functionality on Windows :)
-#include <sys/types.h>
 
 #if WINDOWS
 #include <ShlObj_core.h>
 #include <windows.h>
 #define PATH_MAX MAX_PATH
-#define SEPARATOR '\\'
-#define SEPARATOR_STR "\\"
 #if UNICODE
 #include <codecvt>
-#define buffer_t wchar_t
-#define string_t std::wstring
-#define FROM_STRING(string) std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(string)
-#define TO_STRING(wstring) std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(wstring)
-#else
-#define buffer_t char
-#define string_t STRING
-#define FROM_STRING(string) STRING(string)
-#define TO_STRING(string) string
 #endif
 #else // Linux, MacOS, etc.
 #include <limits.h>
 #include <unistd.h>
-#define SEPARATOR '/'
-#define SEPARATOR_STR "/"
-#define buffer_t char
-#define string_t STRING
-#define FROM_STRING(string) STRING(string)
-#define TO_STRING(string) string
 #endif
 
 static bool s_bInitialised = false;
@@ -54,19 +36,27 @@ bool FileSystem::IsInitialized() { return s_bInitialised; }
 
 static void FindExecutablePath()
 {
-    buffer_t pathBuffer[PATH_MAX];
+    char pathBuffer[PATH_MAX] = {};
 #if WINDOWS
-    GetModuleFileName(nullptr, pathBuffer, PATH_MAX);
+#if UNICODE
+    wchar_t wideBuffer[PATH_MAX];
+    GetModuleFileNameW(nullptr, wideBuffer, PATH_MAX);
+    std::wstring_convert<std::codecvt_utf8<wchar_t>>()
+        .to_bytes(wideBuffer)
+        .copy(pathBuffer, PATH_MAX);
+#else
+    GetModuleFileNameA(nullptr, pathBuffer, PATH_MAX);
+#endif // UNICODE
 #else
     ssize_t len = readlink("/proc/self/exe", pathBuffer, sizeof(pathBuffer) - 1);
     if (len != -1) pathBuffer[len] = '\0';
 #endif
-    s_ExecutablePath = FileSystem::GetDirectory(TO_STRING(string_t(pathBuffer)));
+    s_ExecutablePath = FileSystem::GetDirectory(pathBuffer);
 }
 
-static void FindPersistentDataPath(CSTRING companyName, CSTRING productName)
+static void FindPersistentDataPath(STRING_VIEW companyName, STRING_VIEW productName)
 {
-    char pathBuffer[PATH_MAX];
+    char pathBuffer[PATH_MAX] = {};
 #if WINDOWS
     PWSTR path = nullptr;
     HRESULT result = SHGetKnownFolderPath(FOLDERID_LocalAppDataLow, 0, nullptr, &path);
@@ -75,19 +65,18 @@ static void FindPersistentDataPath(CSTRING companyName, CSTRING productName)
         std::wcstombs(pathBuffer, path, PATH_MAX);
         CoTaskMemFree(path);
     }
-    if (strlen(pathBuffer) == 0) // Failed to get LocalLow
+    if (std::strlen(pathBuffer) == 0) // Failed to get LocalLow
     {
         CSTRING userPath = std::getenv("USERPROFILE");
-        if (strlen(userPath) > 0)
+        if (userPath && std::strlen(userPath) > 0)
         {
             FileSystem::Combine(userPath, "AppData", pathBuffer);
             FileSystem::Combine(pathBuffer, "LocalLow", pathBuffer);
         }
     }
-    if (strlen(pathBuffer) == 0) // Still failed to find
+    if (std::strlen(pathBuffer) == 0) // Still failed to find
     {
-        std::strcpy(pathBuffer, "C:");
-        FileSystem::Combine(pathBuffer, "Users", pathBuffer);
+        FileSystem::Combine("C:", "Users", pathBuffer);
         FileSystem::Combine(pathBuffer, "Default", pathBuffer);
         FileSystem::Combine(pathBuffer, "AppData", pathBuffer);
         FileSystem::Combine(pathBuffer, "Local", pathBuffer);
@@ -99,43 +88,37 @@ static void FindPersistentDataPath(CSTRING companyName, CSTRING productName)
     FileSystem::Combine(home, "Library", pathBuffer);
     FileSystem::Combine(pathBuffer, "Application Support", pathBuffer);
     FileSystem::Combine(pathBuffer, "com", pathBuffer);
-    std::strcpy(pathBuffer + strlen(pathBuffer), ".");
-    std::strcpy(pathBuffer + strlen(pathBuffer), COMPANY_NAME);
-    std::strcpy(pathBuffer + strlen(pathBuffer), ".");
-    std::strcpy(pathBuffer + strlen(pathBuffer), PRODUCT_NAME);
+    std::strcpy(pathBuffer + std::strlen(pathBuffer), ".");
+    std::strcpy(pathBuffer + std::strlen(pathBuffer), COMPANY_NAME);
+    std::strcpy(pathBuffer + std::strlen(pathBuffer), ".");
+    std::strcpy(pathBuffer + std::strlen(pathBuffer), PRODUCT_NAME);
 #else // Linux
-    CSTRING configHome = std::getenv("XDG_CONFIG_HOME");
-    std::strcpy(pathBuffer, configHome);
-    if (strlen(pathBuffer) == 0)
-    {
-        CSTRING home = std::getenv("HOME");
-        std::strcpy(pathBuffer, home);
-    }
-    FileSystem::Combine(pathBuffer, COMPANY_NAME, pathBuffer);
+    CSTRING home = std::getenv("XDG_CONFIG_HOME");
+    if (!home || std::strlen(home) == 0) home = std::getenv("HOME");
+    FileSystem::Combine(home, COMPANY_NAME, pathBuffer);
     FileSystem::Combine(pathBuffer, PRODUCT_NAME, pathBuffer);
 #endif
     s_PersistentDataPath = pathBuffer;
 }
 
-static void FindTemporaryDataPath(CSTRING companyName, CSTRING productName)
+static void FindTemporaryDataPath(STRING_VIEW companyName, STRING_VIEW productName)
 {
-    char pathBuffer[PATH_MAX];
+    char pathBuffer[PATH_MAX] = {};
 #if WINDOWS
     CSTRING localPath = std::getenv("LOCALAPPDATA");
     std::strcpy(pathBuffer, localPath);
-    if (strlen(pathBuffer) == 0) // Failed to get LocalLow
+    if (std::strlen(pathBuffer) == 0) // Failed to get LocalLow
     {
         CSTRING userPath = std::getenv("USERPROFILE");
-        if (strlen(userPath) > 0)
+        if (!userPath || std::strlen(userPath) > 0)
         {
             FileSystem::Combine(userPath, "AppData", pathBuffer);
             FileSystem::Combine(pathBuffer, "Local", pathBuffer);
         }
     }
-    if (strlen(pathBuffer) == 0) // Still failed to find
+    if (std::strlen(pathBuffer) == 0) // Still failed to find
     {
-        std::strcpy(pathBuffer, "C:");
-        FileSystem::Combine(pathBuffer, "Users", pathBuffer);
+        FileSystem::Combine("C:", "Users", pathBuffer);
         FileSystem::Combine(pathBuffer, "Default", pathBuffer);
         FileSystem::Combine(pathBuffer, "AppData", pathBuffer);
         FileSystem::Combine(pathBuffer, "Local", pathBuffer);
@@ -155,7 +138,7 @@ static void FindTemporaryDataPath(CSTRING companyName, CSTRING productName)
 #else // Linux
     CSTRING tmp = std::getenv("TMPDIR");
     std::strcpy(pathBuffer, tmp);
-    if (strlen(pathBuffer) == 0)
+    if (std::strlen(pathBuffer) == 0)
     {
         FileSystem::Combine("", "var", pathBuffer);
         FileSystem::Combine(pathBuffer, "tmp", pathBuffer);
@@ -166,7 +149,7 @@ static void FindTemporaryDataPath(CSTRING companyName, CSTRING productName)
     s_TemporaryDataPath = pathBuffer;
 }
 
-void FileSystem::Init(CSTRING companyName, CSTRING productName)
+void FileSystem::Init(STRING_VIEW companyName, STRING_VIEW productName)
 {
     FindExecutablePath();
     FindPersistentDataPath(companyName, productName);
@@ -183,262 +166,195 @@ CSTRING FileSystem::PersistentDataPath() { return s_PersistentDataPath.c_str(); 
 
 CSTRING FileSystem::TemporaryDataPath() { return s_TemporaryDataPath.c_str(); }
 
-void FileSystem::Combine(CSTRING pathLeft, CSTRING pathRight, char* buffer, SIZE_T bufferSize)
-{
-    std::strncpy(buffer, pathLeft, bufferSize);
-    std::strncpy(buffer + strlen(buffer), SEPARATOR_STR, bufferSize - strlen(buffer));
-    std::strncpy(buffer + strlen(buffer), pathRight, bufferSize - strlen(buffer));
-}
-
-void FileSystem::Combine(const STRING& pathLeft, CSTRING pathRight, char* buffer, SIZE_T bufferSize)
-{
-    Combine(pathLeft.c_str(), pathRight, buffer, bufferSize);
-}
-
-void FileSystem::Combine(CSTRING pathLeft, const STRING& pathRight, char* buffer, SIZE_T bufferSize)
-{
-    Combine(pathLeft, pathRight.c_str(), buffer, bufferSize);
-}
-
-void FileSystem::Combine(const STRING& pathLeft, const STRING& pathRight, char* buffer,
+void FileSystem::Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight, char* buffer,
                          SIZE_T bufferSize)
 {
-    Combine(pathLeft.c_str(), pathRight.c_str(), buffer, bufferSize);
+    std::filesystem::path left(pathLeft);
+    std::filesystem::path right(pathRight);
+    std::filesystem::path combined = left / right;
+    combined.string().copy(buffer, bufferSize);
 }
 
-STRING FileSystem::Combine(CSTRING pathLeft, CSTRING pathRight)
+STRING FileSystem::Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight)
 {
-    CSTRING buffer = (CSTRING)alloca(PATH_MAX);
-    Combine(pathLeft, pathRight, const_cast<char*>(buffer));
-    return STRING(buffer);
+    std::filesystem::path left(pathLeft);
+    std::filesystem::path right(pathRight);
+    std::filesystem::path combined = left / right;
+    return combined.string();
 }
 
-STRING FileSystem::Combine(const STRING& pathLeft, CSTRING pathRight)
-{
-    return Combine(pathLeft.c_str(), pathRight);
-}
-
-STRING FileSystem::Combine(CSTRING pathLeft, const STRING& pathRight)
-{
-    return Combine(pathLeft, pathRight.c_str());
-}
-
-STRING FileSystem::Combine(const STRING& pathLeft, const STRING& pathRight)
-{
-    return Combine(pathLeft.c_str(), pathRight.c_str());
-}
-
-void FileSystem::Combine(CSTRING pathLeft, CSTRING pathRight, STRING& result)
+void FileSystem::Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight, STRING& result)
 {
     result = Combine(pathLeft, pathRight);
 }
 
-void FileSystem::Combine(STRING pathLeft, CSTRING pathRight, STRING& result)
+void FileSystem::GetFilePart(STRING_VIEW path, char* buffer, SIZE_T bufferSize)
 {
-    result = Combine(pathLeft, pathRight);
-}
-
-void FileSystem::Combine(CSTRING pathLeft, STRING pathRight, STRING& result)
-{
-    result = Combine(pathLeft, pathRight);
-}
-
-void FileSystem::Combine(STRING pathLeft, STRING pathRight, STRING& result)
-{
-    result = Combine(pathLeft, pathRight);
-}
-
-void FileSystem::GetFilePart(CSTRING path, char* buffer, SIZE_T bufferSize)
-{
-    CSTRING pLastSeparator = std::strrchr(path, SEPARATOR);
-    pLastSeparator ? std::strncpy(buffer, &path[pLastSeparator - path + 1], bufferSize) :
-                     std::strncpy(buffer, path, bufferSize);
-}
-
-void FileSystem::GetFilePart(const STRING& path, char* buffer, SIZE_T bufferSize)
-{
-    GetFilePart(path.c_str(), buffer, bufferSize);
-}
-
-STRING FileSystem::GetFilePart(CSTRING path)
-{
-    STRING output(path);
-    output = output.substr(output.find_last_of(SEPARATOR_STR) + 1);
-    return output;
-}
-
-STRING FileSystem::GetFilePart(const STRING& path)
-{
-    STRING output(path);
-    output = output.substr(output.find_last_of(SEPARATOR_STR) + 1);
-    return output;
-}
-
-void FileSystem::GetFilePart(CSTRING path, STRING& result)
-{
-    result = path;
-    result = result.substr(result.find_last_of(SEPARATOR_STR) + 1);
-}
-
-void FileSystem::GetFilePart(const STRING& path, STRING& result)
-{
-    result = path;
-    result = result.substr(result.find_last_of(SEPARATOR_STR) + 1);
-}
-
-void FileSystem::GetDirectory(CSTRING path, char* buffer, SIZE_T bufferSize)
-{
-    CSTRING pLastSeparator = std::strrchr(path, SEPARATOR);
-    SIZE_T count = pLastSeparator ?
-                       (pLastSeparator - path < bufferSize ? pLastSeparator - path : bufferSize) :
-                       bufferSize;
-    std::strncpy(buffer, path, count);
-}
-
-void FileSystem::GetDirectory(const STRING& path, char* buffer, SIZE_T bufferSize)
-{
-    GetDirectory(path.c_str(), buffer, bufferSize);
-}
-
-STRING FileSystem::GetDirectory(CSTRING path)
-{
-    STRING output(path);
-    output = output.substr(0, output.find_last_of(SEPARATOR_STR));
-    return output;
-}
-
-STRING FileSystem::GetDirectory(const STRING& path)
-{
-    STRING output(path);
-    output = output.substr(0, output.find_last_of(SEPARATOR_STR));
-    return output;
-}
-
-void FileSystem::GetDirectory(CSTRING path, STRING& result) { result = GetDirectory(path); }
-
-void FileSystem::GetDirectory(const STRING& path, STRING& result) { result = GetDirectory(path); }
-
-bool FileSystem::FileExists(CSTRING file) { return std::ifstream(file).good(); }
-
-bool FileSystem::FileExists(const STRING& file) { return std::ifstream(file).good(); }
-
-bool FileSystem::DirectoryExists(CSTRING directory)
-{
-    struct stat info;
-    return (!stat(directory, &info)) && (info.st_mode & S_IFDIR);
-}
-
-bool FileSystem::DirectoryExists(const STRING& directory)
-{
-    return DirectoryExists(directory.c_str());
-}
-
-void FileSystem::MakeDirectory(CSTRING directory)
-{
-    // Sadly no universal way to do this pre c++17 :(
-#if WINDOWS
-    CreateDirectory(FROM_STRING(directory).c_str(), nullptr);
-#else
-    mkdir(directory, 0777);
-#endif
-}
-
-void FileSystem::MakeDirectory(const STRING& directory) { MakeDirectory(directory.c_str()); }
-
-bool FileSystem::ReadFile(CSTRING path, char* output, SIZE_T bufferSize)
-{
-    if (FILE* pFile = fopen(path, "r"))
+    try
     {
-        std::fread(output, sizeof(char), bufferSize, pFile);
-        fclose(pFile);
-        return true;
+        std::filesystem::path(path).filename().string().copy(buffer, bufferSize);
     }
-    return false;
-}
-
-bool FileSystem::ReadFile(CSTRING path, STRING& output)
-{
-    std::ifstream file(path);
-    if (file.is_open())
+    catch (const std::exception& e)
     {
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        output = buffer.str();
-        return true;
+        LOG_ERROR("%s", e.what());
     }
-    return false;
 }
 
-bool FileSystem::ReadFile(const STRING& path, char* output, SIZE_T bufferSize)
+STRING FileSystem::GetFilePart(STRING_VIEW path)
 {
-    return ReadFile(path.c_str(), output, bufferSize);
+    try
+    {
+        return std::filesystem::path(path).filename().string();
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+        return static_cast<STRING>(path);
+    }
 }
 
-bool FileSystem::ReadFile(const STRING& path, STRING& output)
+void FileSystem::GetFilePart(STRING_VIEW path, STRING& result)
 {
-    return ReadFile(path.c_str(), output);
+    try
+    {
+        result = std::filesystem::path(path).filename().string();
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
 }
 
-void FileSystem::WriteFile(CSTRING path, CSTRING contents)
+void FileSystem::GetDirectory(STRING_VIEW path, char* buffer, SIZE_T bufferSize)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::trunc); // Explicit truncation
-    file << contents;
+    try
+    {
+        std::filesystem::path(path).parent_path().string().copy(buffer, bufferSize);
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
 }
 
-void FileSystem::WriteFile(CSTRING path, const STRING& contents)
+STRING FileSystem::GetDirectory(STRING_VIEW path)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::trunc); // Explicit truncation
-    file << contents;
+    try
+    {
+        return std::filesystem::path(path).parent_path().string();
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+        return static_cast<STRING>(path);
+    }
 }
 
-void FileSystem::WriteFile(const STRING& path, CSTRING contents)
+void FileSystem::GetDirectory(STRING_VIEW path, STRING& result)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::trunc); // Explicit truncation
-    file << contents;
+    try
+    {
+        result = std::filesystem::path(path).parent_path().string();
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
 }
 
-void FileSystem::WriteFile(const STRING& path, const STRING& contents)
+bool FileSystem::Exists(STRING_VIEW path)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::trunc); // Explicit truncation
-    file << contents;
+    try
+    {
+        return std::filesystem::exists(std::filesystem::path(path));
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+        return false;
+    }
 }
 
-void FileSystem::AppendFile(CSTRING path, CSTRING contents)
+void FileSystem::Create(STRING_VIEW path)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::app);
-    file << contents;
+    try
+    {
+        std::filesystem::create_directories(std::filesystem::path(path));
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
 }
 
-void FileSystem::AppendFile(CSTRING path, const STRING& contents)
+bool FileSystem::ReadFile(STRING_VIEW path, char* output, SIZE_T bufferSize)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::app);
-    file << contents;
+    try
+    {
+        std::ifstream file(static_cast<STRING>(path));
+        if (file.is_open())
+        {
+            std::stringstream buffer;
+            buffer << file.rdbuf();
+            buffer.str().copy(output, bufferSize);
+            return true;
+        }
+        return false;
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+        return false;
+    }
 }
 
-void FileSystem::AppendFile(const STRING& path, CSTRING contents)
+bool FileSystem::ReadFile(STRING_VIEW path, STRING& output)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::app);
-    file << contents;
+    try
+    {
+        std::ifstream file(static_cast<STRING>(path));
+        if (file.is_open())
+        {
+            std::stringstream buffer;
+            buffer << file.rdbuf();
+            output = buffer.str();
+            return true;
+        }
+        return false;
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+        return false;
+    }
 }
 
-void FileSystem::AppendFile(const STRING& path, const STRING& contents)
+void FileSystem::WriteFile(STRING_VIEW path, STRING_VIEW contents)
 {
-    STRING dir = GetDirectory(path);
-    if (!DirectoryExists(dir)) MakeDirectory(dir);
-    std::ofstream file(path, std::ios::app);
-    file << contents;
+    try
+    {
+        STRING dir = GetDirectory(path);
+        if (!Exists(dir)) Create(dir);
+        std::ofstream file(static_cast<STRING>(path), std::ios::trunc); // Explicit truncation
+        file << contents;
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
+}
+
+void FileSystem::AppendFile(STRING_VIEW path, STRING_VIEW contents)
+{
+    try
+    {
+        STRING dir = GetDirectory(path);
+        if (!Exists(dir)) Create(dir);
+        std::ofstream file(static_cast<STRING>(path), std::ios::app);
+        file << contents;
+    }
+    catch (const std::exception& e)
+    {
+        LOG_ERROR("%s", e.what());
+    }
 }

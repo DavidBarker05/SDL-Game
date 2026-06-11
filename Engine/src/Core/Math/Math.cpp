@@ -9,7 +9,7 @@
 
 FLOAT32 Math::Sqrt(FLOAT32 num) { return std::sqrt(num); }
 
-FLOAT32 Math::InvSqrt(FLOAT32 num) { return 1.0f / std::sqrt(num); }
+FLOAT64 Math::Sqrt(FLOAT64 num) { return std::sqrt(num); }
 
 FLOAT32 Math::Pow(FLOAT32 base, FLOAT32 exponent) { return std::pow(base, exponent); }
 
@@ -23,7 +23,7 @@ FLOAT32 Math::Floor(FLOAT32 num) { return std::floor(num); }
 
 FLOAT32 Math::Round(FLOAT32 num) { return std::round(num); }
 
-FLOAT32 Math::Round(FLOAT32 num, INT32 decimalPlaces)
+FLOAT32 Math::Round(FLOAT32 num, UINT32 decimalPlaces)
 {
     INT32 decimalShift = Pow(10, decimalPlaces);
     return std::round(num * decimalShift) / (FLOAT32)decimalShift;
@@ -35,9 +35,13 @@ FLOAT32 Math::Min(FLOAT32 num1, FLOAT32 num2) { return std::fmin(num1, num2); }
 
 INT32 Math::Min(INT32 num1, INT32 num2) { return std::fmin(num1, num2); }
 
+SIZE_T Math::Min(SIZE_T size1, SIZE_T size2) { return size1 < size2 ? size1 : size2; }
+
 FLOAT32 Math::Max(FLOAT32 num1, FLOAT32 num2) { return std::fmax(num1, num2); }
 
 INT32 Math::Max(INT32 num1, INT32 num2) { return std::fmax(num1, num2); }
+
+SIZE_T Math::Max(SIZE_T size1, SIZE_T size2) { return size1 > size2 ? size1 : size2; }
 
 FLOAT32 Math::Clamp(FLOAT32 num, FLOAT32 _min, FLOAT32 _max)
 {

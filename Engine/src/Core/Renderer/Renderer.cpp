@@ -1,9 +1,12 @@
 #include "Renderer.h"
+#include "Functions.h"
 #include "Logging/Log.h"
 #include "RenderComponent/RenderComponent.h"
 #include <algorithm>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_render.h>
+#include <set>
+#include <unordered_set>
 #include <vector>
 
 #define DEFAULT_WINDOW_TITLE "Title"
@@ -18,7 +21,16 @@ static SDL_GPUDevice* s_pGPUDevice = nullptr;
 #define FILLED_RECT_ID 1u
 #define TEXTURE_ID 2u
 
-static std::vector<std::pair<RenderComponent*, bool>> s_RenderList;
+struct LayerCompare
+{
+    bool operator()(RenderComponent* l, RenderComponent* r) const
+    {
+        return l->GetRenderLayer() > r->GetRenderLayer();
+    }
+};
+
+static std::set<RenderComponent*, LayerCompare> s_RenderList;
+static std::unordered_set<RenderComponent*> s_DanglingList;
 
 struct RenderBufferItem
 {
@@ -74,15 +86,12 @@ void Renderer::Shutdown()
 
 void Renderer::AddToRenderList(RenderComponent* renderComponent)
 {
-    s_RenderList.emplace_back(std::make_pair(renderComponent, true));
+    if (renderComponent) s_RenderList.emplace(renderComponent);
 }
 
 void Renderer::RemoveFromRenderList(RenderComponent* renderComponent)
 {
-    std::find_if(s_RenderList.begin(), s_RenderList.end(),
-                 [renderComponent](std::pair<RenderComponent*, bool> element)
-                 { return element.first == renderComponent; })
-        ->second = false;
+    if (renderComponent) s_RenderList.erase(renderComponent);
 }
 
 void Renderer::DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
@@ -101,13 +110,6 @@ void Renderer::DrawFilledRect(UINT32 drawLayer, const Vector2& position, const V
     SIZE_T colourIndex = s_ColourBuffer.size() - 1;
     s_RenderBuffer.emplace_back(
         RenderBufferItem {drawLayer, FILLED_RECT_ID, position, halfExtents, colourIndex});
-}
-
-static void SortRenderBuffer()
-{
-    std::sort(s_RenderBuffer.begin(), s_RenderBuffer.end(),
-              [](const RenderBufferItem& left, const RenderBufferItem& right) -> bool
-              { return left.Layer < right.Layer; });
 }
 
 static void DoRect(Vector2 position, Vector2 halfExtents, Color colour)
@@ -130,11 +132,11 @@ void Renderer::Render()
 {
     SDL_SetRenderDrawColor(s_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
     SDL_RenderClear(s_pRenderer);
-    for (std::pair<RenderComponent*, bool> element : s_RenderList)
+    for (RenderComponent* element : s_RenderList)
     {
-        if (element.second) element.first->Draw();
+        if (IsValid(element)) element->Draw();
+        else s_DanglingList.emplace(element);
     }
-    SortRenderBuffer();
     // Render everything below here
     for (RenderBufferItem item : s_RenderBuffer)
     {
@@ -156,9 +158,10 @@ void Renderer::Render()
     // Render everything above here
     s_RenderBuffer.clear();
     s_ColourBuffer.clear();
-    s_RenderList.erase(std::remove_if(s_RenderList.begin(), s_RenderList.end(),
-                                      [](std::pair<RenderComponent*, bool> element)
-                                      { return !element.second; }),
-                       s_RenderList.end());
+    for (RenderComponent* dangling : s_DanglingList)
+    {
+        s_RenderList.erase(dangling);
+    }
+    s_DanglingList.clear();
     SDL_RenderPresent(s_pRenderer);
 }

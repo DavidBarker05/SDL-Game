@@ -2,8 +2,6 @@
 #define WINDOWS 1
 #endif
 
-// I've noticed I've made my life much harder by not using c++17 but oh well
-// ig this gives me some practice
 #include "FileSystem.h"
 #include "Logging/Log.h"
 #include "Math/Math.h"
@@ -18,9 +16,6 @@
 #include <ShlObj_core.h>
 #include <windows.h>
 #define PATH_MAX MAX_PATH
-#if UNICODE
-#include <codecvt>
-#endif
 #else // Linux, MacOS, etc.
 #include <limits.h>
 #include <unistd.h>
@@ -41,9 +36,7 @@ static void FindExecutablePath()
 #if UNICODE
     wchar_t wideBuffer[PATH_MAX];
     GetModuleFileNameW(nullptr, wideBuffer, PATH_MAX);
-    std::wstring_convert<std::codecvt_utf8<wchar_t>>()
-        .to_bytes(wideBuffer)
-        .copy(pathBuffer, PATH_MAX);
+    std::filesystem::path(wideBuffer).string().copy(pathBuffer, PATH_MAX);
 #else
     GetModuleFileNameA(nullptr, pathBuffer, PATH_MAX);
 #endif // UNICODE
@@ -140,7 +133,8 @@ static void FindTemporaryDataPath(STRING_VIEW companyName, STRING_VIEW productNa
     std::strcpy(pathBuffer, tmp);
     if (std::strlen(pathBuffer) == 0)
     {
-        FileSystem::Combine("", "var", pathBuffer);
+        FileSystem::Combine(std::filesystem::current_path().root_name().string(), "var",
+                            pathBuffer);
         FileSystem::Combine(pathBuffer, "tmp", pathBuffer);
     }
     FileSystem::Combine(pathBuffer, COMPANY_NAME, pathBuffer);

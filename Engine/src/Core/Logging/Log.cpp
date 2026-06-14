@@ -96,7 +96,7 @@ void LogMessage(LogLevel logLevel, CSTRING message)
     if (!FileSystem::IsInitialized()) return;
     if (s_LogFile.empty())
     {
-        FileSystem::Combine(FileSystem::PersistentDataPath(), "log_output.txt", s_LogFile);
+        FileSystem::Combine({FileSystem::PersistentDataPath(), "log_output.txt"}, s_LogFile);
         std::stringstream dateStream;
         dateStream << "Log Creation Date: " << std::put_time(pLocalTime, "%x") << "\n\n";
         FileSystem::WriteFile(s_LogFile, dateStream.str());

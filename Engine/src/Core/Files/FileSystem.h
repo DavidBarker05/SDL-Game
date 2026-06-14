@@ -16,23 +16,18 @@ public:
 public:
     // The directory the executable is in
     static CSTRING ExecutablePath();
-    // The directory for persistent data, same as Unity's
-    // Application.persistentDataPath
+    // The directory for persistent data, same as Unity's Application.persistentDataPath
     static CSTRING PersistentDataPath();
     // The directory for temporary data, same as Unity's Application.tempCachePath
     static CSTRING TemporaryDataPath();
 
 public:
-    // Combine two paths to create a longer path, same as C# Path.Combine(string,
-    // string)
-    static void Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight, char* buffer,
-                        SIZE_T bufferSize = PathMax());
-    // Combine two paths to create a longer path, same as C# Path.Combine(string,
-    // string)
-    static STRING Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight);
-    // Combine two paths to create a longer path, same as C# Path.Combine(string,
-    // string)
-    static void Combine(STRING_VIEW pathLeft, STRING_VIEW pathRight, STRING& result);
+    // Combine paths to create a longer path same ase C# Path.Combine()
+    static void Combine(PARAMS<STRING_VIEW> paths, char* buffer, SIZE_T bufferSize = PathMax());
+    // Combine paths to create a longer path same ase C# Path.Combine()
+    [[nodiscard]] static STRING Combine(PARAMS<STRING_VIEW> paths);
+    // Combine paths to create a longer path same ase C# Path.Combine()
+    static void Combine(PARAMS<STRING_VIEW> paths, STRING& output);
 
 public:
     // Gets the file part of the path, if no file and it doesn't end in a
@@ -41,7 +36,7 @@ public:
 
     // Gets the file part of the path, if no file and it doesn't end in a
     // separator then it returns the top directory
-    static STRING GetFilePart(STRING_VIEW path);
+    [[nodiscard]] static STRING GetFilePart(STRING_VIEW path);
 
     // Gets the file part of the path, if no file and it doesn't end in a
     // separator then it returns the top directory
@@ -51,7 +46,7 @@ public:
     static void GetDirectory(STRING_VIEW path, char* buffer, SIZE_T bufferSize = PathMax());
 
     // Gets the directory that the current file or directory is contained within
-    static STRING GetDirectory(STRING_VIEW path);
+    [[nodiscard]] static STRING GetDirectory(STRING_VIEW path);
 
     // Gets the directory that the current file or directory is contained within
     static void GetDirectory(STRING_VIEW path, STRING& result);

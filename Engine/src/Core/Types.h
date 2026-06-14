@@ -2,8 +2,10 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <initializer_list>
 #include <string>
 #include <string_view>
+
 
 using SIZE_T = std::size_t;
 
@@ -26,3 +28,6 @@ using UINT64 = std::uint64_t;
 using FLOAT32 = float;
 
 using FLOAT64 = double;
+
+template<typename T>
+using PARAMS = std::initializer_list<T>;

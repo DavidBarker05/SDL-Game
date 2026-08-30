@@ -6,16 +6,15 @@
 
 class Component;
 
-class Entity : public Object
+class Entity final : public Object
 {
 public:
     typedef Object Super;
 
     Entity();
-    virtual ~Entity() { }
 
 public:
-    virtual void Tick(FLOAT32 deltaTime) override { }
+    void Tick(FLOAT32 deltaTime) override { }
 
 public:
     void AddComponent(Component* pComponent);

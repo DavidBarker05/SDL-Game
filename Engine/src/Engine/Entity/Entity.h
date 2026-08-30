@@ -1,14 +1,12 @@
 #pragma once
 
 #include "../Object/Object.h"
-#include "../Tickable.h"
 #include "Core.h"
 #include <vector>
 
 class Component;
 
-class Entity : public Object,
-               public Tickable
+class Entity : public Object
 {
 public:
     typedef Object Super;

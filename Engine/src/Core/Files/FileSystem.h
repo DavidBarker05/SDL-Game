@@ -12,9 +12,9 @@ public:
 public:
     // The directory the executable is in
     static CSTRING ExecutablePath();
-    // The directory for persistent data, same as Unity's Application.persistentDataPath
+    // The directory for persistent data
     static CSTRING PersistentDataPath();
-    // The directory for temporary data, same as Unity's Application.tempCachePath
+    // The directory for temporary data
     static CSTRING TemporaryDataPath();
 
 public:

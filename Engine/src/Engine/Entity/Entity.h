@@ -12,7 +12,7 @@ class Entity final : public Object
 public:
     typedef Object Super;
 
-    template<typename T, std::enable_if_t<std::is_base_of_v<T, Component>, int> = 0>
+    template<typename T, std::enable_if_t<std::is_base_of_v<Component, T>, int> = 0>
     std::shared_ptr<T> AddComponent()
     {
         std::shared_ptr<T> spComponent = std::make_shared<T>();

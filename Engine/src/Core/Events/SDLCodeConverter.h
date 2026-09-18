@@ -191,8 +191,7 @@ inline SDL_GamepadButton ConvertToSDLGamepadButton(GamepadCode gamepadCode)
     }
 }
 
-inline GamepadCode
-ConvertFromSDLGamepadButtonEvent(const SDL_GamepadButtonEvent& gamepadButtonEvent)
+inline GamepadCode ConvertFromSDLGamepadButtonEvent(const SDL_GamepadButtonEvent& gamepadButtonEvent)
 {
     return ConvertFromSDLGamepadButton((SDL_GamepadButton)gamepadButtonEvent.button);
 }

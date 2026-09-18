@@ -5,8 +5,9 @@
 class Game
 {
 public:
-    bool Init(CSTRING companyName, CSTRING productName);
-    bool Init(CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
+    bool Init(CSTRING executablePath, CSTRING companyName, CSTRING productName);
+    bool Init(CSTRING executablePath, CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth,
+              UINT32 windowHeight);
     void Shutdown();
 
     void Start();

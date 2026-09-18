@@ -2,6 +2,7 @@
 
 class Object;
 
+// Might get rid of this
 class ObjectManager
 {
 public:

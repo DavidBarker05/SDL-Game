@@ -81,6 +81,7 @@ void LogMessage(LogLevel logLevel, CSTRING message)
         auto stackTrace = cpptrace::generate_trace(1); // 1 skips the current function
         for (auto it = stackTrace.cbegin(); it < stackTrace.cend(); ++it)
         {
+            if (it->symbol.substr(0, strlen("Log")) == "Log") continue;
             if (it->symbol.substr(0, strlen("LogOverrideFunction")) == "LogOverrideFunction")
                 continue; // If rename the function don't forget to update string
             if (it->symbol.substr(0, strlen("SDL_")) == "SDL_")

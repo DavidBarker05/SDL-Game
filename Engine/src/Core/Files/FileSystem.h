@@ -7,11 +7,7 @@ class FileSystem
 {
 public:
     static bool IsInitialized();
-    static void Init(STRING_VIEW companyName, STRING_VIEW productName);
-
-public:
-    // The max length of characters a path can be
-    static SIZE_T PathMax();
+    static void Init(STRING_VIEW executablePath, STRING_VIEW companyName, STRING_VIEW productName);
 
 public:
     // The directory the executable is in
@@ -23,8 +19,6 @@ public:
 
 public:
     // Combine paths to create a longer path same ase C# Path.Combine()
-    static void Combine(PARAMS<STRING_VIEW> paths, char* buffer, SIZE_T bufferSize = PathMax());
-    // Combine paths to create a longer path same ase C# Path.Combine()
     [[nodiscard]] static STRING Combine(PARAMS<STRING_VIEW> paths);
     // Combine paths to create a longer path same ase C# Path.Combine()
     static void Combine(PARAMS<STRING_VIEW> paths, STRING& output);
@@ -32,18 +26,11 @@ public:
 public:
     // Gets the file part of the path, if no file and it doesn't end in a
     // separator then it returns the top directory
-    static void GetFilePart(STRING_VIEW path, char* buffer, SIZE_T bufferSize = PathMax());
-
-    // Gets the file part of the path, if no file and it doesn't end in a
-    // separator then it returns the top directory
     [[nodiscard]] static STRING GetFilePart(STRING_VIEW path);
 
     // Gets the file part of the path, if no file and it doesn't end in a
     // separator then it returns the top directory
     static void GetFilePart(STRING_VIEW path, STRING& result);
-
-    // Gets the directory that the current file or directory is contained within
-    static void GetDirectory(STRING_VIEW path, char* buffer, SIZE_T bufferSize = PathMax());
 
     // Gets the directory that the current file or directory is contained within
     [[nodiscard]] static STRING GetDirectory(STRING_VIEW path);
@@ -59,8 +46,6 @@ public:
     static void Create(STRING_VIEW path);
 
 public:
-    // Read data from a file, returns true if the file exists
-    static bool ReadFile(STRING_VIEW path, char* output, SIZE_T bufferSize);
     // Read data from a file, returns true if the file exists
     static bool ReadFile(STRING_VIEW path, STRING& output);
 

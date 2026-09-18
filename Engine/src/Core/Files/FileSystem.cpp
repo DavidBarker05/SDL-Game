@@ -10,12 +10,6 @@
 #include <sstream>
 #include <string>
 
-#if WINDOWS
-#include <ShlObj_core.h>
-#include <windows.h>
-#define PATH_MAX MAX_PATH
-#endif
-
 static bool s_bInitialised = false;
 
 static STRING s_ExecutablePath;
@@ -24,48 +18,26 @@ static STRING s_TemporaryDataPath;
 
 bool FileSystem::IsInitialized() { return s_bInitialised; }
 
-static void FindExecutablePath()
-{
-#if WINDOWS
-#if UNICODE
-    wchar_t pathBuffer[PATH_MAX] = {};
-#else
-    char pathBuffer[PATH_MAX] = {};
-#endif
-    GetModuleFileName(nullptr, pathBuffer, PATH_MAX);
-    s_ExecutablePath = std::filesystem::path(pathBuffer).parent_path().string();
-#else
-    s_ExecutablePath = std::filesystem::read_symlink("/proc/self/exe").parent_path().string();
-#endif
-}
-
 static void FindPersistentDataPath(STRING_VIEW companyName, STRING_VIEW productName)
 {
 #if WINDOWS
-    PWSTR path = nullptr;
-    HRESULT result = SHGetKnownFolderPath(FOLDERID_LocalAppDataLow, 0, nullptr, &path);
-    if (SUCCEEDED(result))
+    CSTRING localPath = std::getenv("LOCALAPPDATA");
+    if (localPath && std::strlen(localPath) != 0)
     {
-        FileSystem::Combine({std::filesystem::path(path).string(), companyName, productName},
-                            s_PersistentDataPath);
-        CoTaskMemFree(path);
+        FileSystem::Combine({localPath, companyName, productName}, s_PersistentDataPath);
         return;
     }
     CSTRING userPath = std::getenv("USERPROFILE");
     if (userPath && std::strlen(userPath) > 0)
     {
-        FileSystem::Combine({userPath, "AppData", "LocalLow", companyName, productName},
-                            s_PersistentDataPath);
+        FileSystem::Combine({userPath, "AppData", "Local", companyName, productName}, s_PersistentDataPath);
         return;
     }
-    FileSystem::Combine({"C:", "Users", "Default", "AppData", "Local", companyName, productName},
-                        s_PersistentDataPath);
-
+    FileSystem::Combine({"C:", "Users", "Default", "AppData", "Local", companyName, productName}, s_PersistentDataPath);
 #elif defined(__APPLE__)
     CSTRING home = std::getenv("HOME");
-    s_PersistentDataPath = FileSystem::Combine({home, "Library", "Application Support", "com"}) +
-                           "." + static_cast<STRING>(companyName) + "." +
-                           static_cast<STRING>(productName);
+    s_PersistentDataPath = FileSystem::Combine({home, "Library", "Application Support", "com"}) + "." +
+                           static_cast<STRING>(companyName) + "." + static_cast<STRING>(productName);
 #else // Linux
     CSTRING home = std::getenv("XDG_CONFIG_HOME");
     if (!home || std::strlen(home) == 0) home = std::getenv("HOME");
@@ -85,13 +57,11 @@ static void FindTemporaryDataPath(STRING_VIEW companyName, STRING_VIEW productNa
     CSTRING userPath = std::getenv("USERPROFILE");
     if (userPath && std::strlen(userPath) > 0)
     {
-        FileSystem::Combine({userPath, "AppData", "Local", "Temp", companyName, productName},
-                            s_TemporaryDataPath);
+        FileSystem::Combine({userPath, "AppData", "Local", "Temp", companyName, productName}, s_TemporaryDataPath);
         return;
     }
-    FileSystem::Combine(
-        {"C:", "Users", "Default", "AppData", "Local", "Temp", companyName, productName},
-        s_TemporaryDataPath);
+    FileSystem::Combine({"C:", "Users", "Default", "AppData", "Local", "Temp", companyName, productName},
+                        s_TemporaryDataPath);
 #elif defined(__APPLE__)
     CSTRING home = std::getenv("HOME");
     s_TemporaryDataPath = FileSystem::Combine({home, "Library", "Caches", "com"}) + "." +
@@ -103,40 +73,25 @@ static void FindTemporaryDataPath(STRING_VIEW companyName, STRING_VIEW productNa
         FileSystem::Combine({tmp, companyName, productName}, s_TemporaryDataPath);
         return;
     }
-    FileSystem::Combine({std::filesystem::current_path().root_name().string(), "var", "tmp",
-                         companyName, productName},
+    FileSystem::Combine({std::filesystem::current_path().root_name().string(), "var", "tmp", companyName, productName},
                         s_TemporaryDataPath);
 #endif
 }
 
-void FileSystem::Init(STRING_VIEW companyName, STRING_VIEW productName)
+void FileSystem::Init(STRING_VIEW executablePath, STRING_VIEW companyName, STRING_VIEW productName)
 {
-    FindExecutablePath();
+    s_ExecutablePath = executablePath;
     FindPersistentDataPath(companyName, productName);
     FindTemporaryDataPath(companyName, productName);
     if (Logger::IsInitialized()) LOG_INFO("Initialised the file system");
     s_bInitialised = true;
 }
 
-SIZE_T FileSystem::PathMax() { return PATH_MAX; }
-
 CSTRING FileSystem::ExecutablePath() { return s_ExecutablePath.c_str(); }
 
 CSTRING FileSystem::PersistentDataPath() { return s_PersistentDataPath.c_str(); }
 
 CSTRING FileSystem::TemporaryDataPath() { return s_TemporaryDataPath.c_str(); }
-
-void FileSystem::Combine(PARAMS<STRING_VIEW> paths, char* buffer, SIZE_T bufferSize)
-{
-    if (!paths.size())
-    {
-        LOG_ERROR("No paths to combine");
-        return;
-    }
-    std::filesystem::path path;
-    for (auto it = paths.begin(); it != paths.end(); ++it) path.append(*it);
-    path.string().copy(buffer, bufferSize);
-}
 
 STRING FileSystem::Combine(PARAMS<STRING_VIEW> paths)
 {
@@ -162,18 +117,6 @@ void FileSystem::Combine(PARAMS<STRING_VIEW> paths, STRING& output)
     output = path.string();
 }
 
-void FileSystem::GetFilePart(STRING_VIEW path, char* buffer, SIZE_T bufferSize)
-{
-    try
-    {
-        std::filesystem::path(path).filename().string().copy(buffer, bufferSize);
-    }
-    catch (const std::exception& e)
-    {
-        LOG_ERROR("%s", e.what());
-    }
-}
-
 STRING FileSystem::GetFilePart(STRING_VIEW path)
 {
     try
@@ -192,18 +135,6 @@ void FileSystem::GetFilePart(STRING_VIEW path, STRING& result)
     try
     {
         result = std::filesystem::path(path).filename().string();
-    }
-    catch (const std::exception& e)
-    {
-        LOG_ERROR("%s", e.what());
-    }
-}
-
-void FileSystem::GetDirectory(STRING_VIEW path, char* buffer, SIZE_T bufferSize)
-{
-    try
-    {
-        std::filesystem::path(path).parent_path().string().copy(buffer, bufferSize);
     }
     catch (const std::exception& e)
     {
@@ -258,27 +189,6 @@ void FileSystem::Create(STRING_VIEW path)
     catch (const std::exception& e)
     {
         LOG_ERROR("%s", e.what());
-    }
-}
-
-bool FileSystem::ReadFile(STRING_VIEW path, char* output, SIZE_T bufferSize)
-{
-    try
-    {
-        std::ifstream file(static_cast<STRING>(path));
-        if (file.is_open())
-        {
-            std::stringstream buffer;
-            buffer << file.rdbuf();
-            buffer.str().copy(output, bufferSize);
-            return true;
-        }
-        return false;
-    }
-    catch (const std::exception& e)
-    {
-        LOG_ERROR("%s", e.what());
-        return false;
     }
 }
 

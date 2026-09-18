@@ -140,19 +140,19 @@ void Logger::Init()
 #ifdef LOG_LEVEL_TRACE
     s_LastLevel = (INT8)LogLevel::eTRACE;
     s_CurrentLevel = (INT8)LogLevel::eTRACE;
-#elifdef LOG_LEVEL_INFO
+#elif defined(LOG_LEVEL_INFO)
     s_LastLevel = (INT8)LogLevel::eINFO;
     s_CurrentLevel = (INT8)LogLevel::eINFO;
-#elifdef LOG_LEVEL_WARN
+#elif defined(LOG_LEVEL_WARN)
     s_LastLevel = (INT8)LogLevel::eWARN;
     s_CurrentLevel = (INT8)LogLevel::eWARN;
-#elifdef LOG_LEVEL_ERROR
+#elif defined(LOG_LEVEL_ERROR)
     s_LastLevel = (INT8)LogLevel::eERROR;
     s_CurrentLevel = (INT8)LogLevel::eERROR;
-#elifdef LOG_LEVEL_FATAL
+#elif defined(LOG_LEVEL_FATAL)
     s_LastLevel = (INT8)LogLevel::eFATAL;
     s_CurrentLevel = (INT8)LogLevel::eFATAL;
-#elifdef LOG_LEVEL_NONE
+#elif defined(LOG_LEVEL_NONE)
     s_LastLevel = -1;
     s_CurrentLevel = -1;
 #else

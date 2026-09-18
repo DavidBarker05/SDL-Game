@@ -19,10 +19,8 @@ public:
     static void RemoveFromRenderList(RenderComponent* renderComponent);
 
 public:
-    static void DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
-                         Color color);
-    static void DrawFilledRect(UINT32 drawLayer, const Vector2& position,
-                               const Vector2& halfExtents, Color color);
+    static void DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents, Color color);
+    static void DrawFilledRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents, Color color);
 
 public:
     static void Render();

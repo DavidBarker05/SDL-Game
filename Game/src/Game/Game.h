@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include "Core.h"
 
@@ -7,8 +6,7 @@ class Game
 {
 public:
     bool Init(CSTRING companyName, CSTRING productName);
-    bool Init(CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth,
-              UINT32 windowHeight);
+    bool Init(CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth, UINT32 windowHeight);
     void Shutdown();
 
     void Start();
@@ -23,4 +21,3 @@ private:
     UINT64 m_LastFrameTime = 0;
     FLOAT64 m_DeltaTime = 0;
 };
-#endif // !GAME_H

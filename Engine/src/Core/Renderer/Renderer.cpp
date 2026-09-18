@@ -23,10 +23,7 @@ static SDL_GPUDevice* s_pGPUDevice = nullptr;
 
 struct LayerCompare
 {
-    bool operator()(RenderComponent* l, RenderComponent* r) const
-    {
-        return l->GetRenderLayer() > r->GetRenderLayer();
-    }
+    bool operator()(RenderComponent* l, RenderComponent* r) const { return l->GetRenderLayer() > r->GetRenderLayer(); }
 };
 
 static std::set<RenderComponent*, LayerCompare> s_RenderList;
@@ -55,8 +52,7 @@ bool Renderer::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
         LOG_FATAL("%s", SDL_GetError());
         return false;
     }
-    if (!(s_pWindow =
-              SDL_CreateWindow(title, windowWidth, windowHeight, SDL_WINDOW_HIGH_PIXEL_DENSITY)))
+    if (!(s_pWindow = SDL_CreateWindow(title, windowWidth, windowHeight, SDL_WINDOW_HIGH_PIXEL_DENSITY)))
     {
         LOG_FATAL("%s", SDL_GetError());
         return false;
@@ -73,10 +69,7 @@ bool Renderer::Init(CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
     return true;
 }
 
-bool Renderer::Init()
-{
-    return Init(DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
-}
+bool Renderer::Init() { return Init(DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT); }
 
 void Renderer::Shutdown()
 {
@@ -94,36 +87,30 @@ void Renderer::RemoveFromRenderList(RenderComponent* renderComponent)
     if (renderComponent) s_RenderList.erase(renderComponent);
 }
 
-void Renderer::DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
-                        Color color)
+void Renderer::DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents, Color color)
 {
     s_ColourBuffer.emplace_back(color);
     SIZE_T colourIndex = s_ColourBuffer.size() - 1;
-    s_RenderBuffer.emplace_back(
-        RenderBufferItem {drawLayer, RECT_ID, position, halfExtents, colourIndex});
+    s_RenderBuffer.emplace_back(RenderBufferItem {drawLayer, RECT_ID, position, halfExtents, colourIndex});
 }
 
-void Renderer::DrawFilledRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents,
-                              Color color)
+void Renderer::DrawFilledRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents, Color color)
 {
     s_ColourBuffer.emplace_back(color);
     SIZE_T colourIndex = s_ColourBuffer.size() - 1;
-    s_RenderBuffer.emplace_back(
-        RenderBufferItem {drawLayer, FILLED_RECT_ID, position, halfExtents, colourIndex});
+    s_RenderBuffer.emplace_back(RenderBufferItem {drawLayer, FILLED_RECT_ID, position, halfExtents, colourIndex});
 }
 
 static void DoRect(Vector2 position, Vector2 halfExtents, Color colour)
 {
-    SDL_FRect r = {position.x - halfExtents.x, position.y - halfExtents.y, halfExtents.x * 2.0f,
-                   halfExtents.y * 2.0f};
+    SDL_FRect r = {position.x - halfExtents.x, position.y - halfExtents.y, halfExtents.x * 2.0f, halfExtents.y * 2.0f};
     SDL_SetRenderDrawColor(s_pRenderer, colour.r, colour.g, colour.b, colour.a);
     SDL_RenderRect(s_pRenderer, &r);
 }
 
 static void DoFilledRect(Vector2 position, Vector2 halfExtents, Color colour)
 {
-    SDL_FRect r = {position.x - halfExtents.x, position.y - halfExtents.y, halfExtents.x * 2.0f,
-                   halfExtents.y * 2.0f};
+    SDL_FRect r = {position.x - halfExtents.x, position.y - halfExtents.y, halfExtents.x * 2.0f, halfExtents.y * 2.0f};
     SDL_SetRenderDrawColor(s_pRenderer, colour.r, colour.g, colour.b, colour.a);
     SDL_RenderFillRect(s_pRenderer, &r);
 }

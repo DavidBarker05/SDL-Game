@@ -14,10 +14,7 @@ typedef struct Bounds2D
     Vector2 HalfExtents;
 
     Bounds2D() : Centre(), HalfExtents() { }
-    Bounds2D(const Vector2& center, const Vector2& halfExtents) :
-        Centre(center), HalfExtents(halfExtents)
-    {
-    }
+    Bounds2D(const Vector2& center, const Vector2& halfExtents) : Centre(center), HalfExtents(halfExtents) { }
     Bounds2D(const Bounds2D& other) : Centre(other.Centre), HalfExtents(other.HalfExtents) { }
     Bounds2D(Bounds2D&& other) noexcept : Centre(other.Centre), HalfExtents(other.HalfExtents)
     {

@@ -1,7 +1,7 @@
 #include "Game.h"
+#include "Engine/Entity/Entity.h"
 #include "Events/EventSystem.h"
 #include "Renderer/Renderer.h"
-#include "Scene.h"
 #include <memory>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
@@ -9,41 +9,34 @@
 #ifdef _MSC_VER
 #pragma warning(disable : 4244)
 #endif // _MSC_VER
-#include <Player.h>
 
-std::shared_ptr<Scene> spScene;
-Player* pPlayer;
+std::shared_ptr<Entity> spScene;
 
 bool Game::Init(CSTRING companyName, CSTRING productName)
 {
 #ifdef _DELAY_WINDOW
-    SDL_Delay(
-        200); // Delay the window for a few milliseconds so that it appears on top of vs console
+    SDL_Delay(200); // Delay the window for a few milliseconds so that it appears on top of vs console
 #endif // _DELAY_WINDOW
 #define TEST
     Logger::Init();
     FileSystem::Init(companyName, productName);
     if (!Renderer::Init()) return false;
     if (!EventSystem::Init()) return false;
-    spScene = std::make_shared<Scene>();
+    spScene = std::make_shared<Entity>();
     return true;
 }
 
-bool Game::Init(CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth,
-                UINT32 windowHeight)
+bool Game::Init(CSTRING companyName, CSTRING productName, CSTRING title, UINT32 windowWidth, UINT32 windowHeight)
 {
 #ifdef _DELAY_WINDOW
-    SDL_Delay(
-        200); // Delay the window for a few milliseconds so that it appears on top of vs console
+    SDL_Delay(200); // Delay the window for a few milliseconds so that it appears on top of vs console
 #endif // _DELAY_WINDOW
 #define TEST
     Logger::Init();
     FileSystem::Init(companyName, productName);
     if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
     if (!EventSystem::Init()) return false;
-    spScene = std::make_shared<Scene>();
-    pPlayer = new Player();
-    spScene->AddEntity(pPlayer);
+    spScene = std::make_shared<Entity>();
     return true;
 }
 
@@ -69,7 +62,7 @@ void Game::Tick()
         m_bGameIsRunning = false;
         return;
     }
-    spScene->Tick(m_DeltaTime);
+    // spScene->Tick(m_DeltaTime);
     Renderer::Render();
 }
 

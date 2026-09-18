@@ -14,7 +14,4 @@ void ObjectManager::RemoveObject(Object* pObject)
     if (pObject) s_Objects.erase(pObject);
 }
 
-bool ObjectManager::IsObjectValid(Object* pObject)
-{
-    return pObject && s_Objects.find(pObject) != s_Objects.end();
-}
+bool ObjectManager::IsObjectValid(Object* pObject) { return pObject && s_Objects.find(pObject) != s_Objects.end(); }

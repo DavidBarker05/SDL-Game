@@ -6,14 +6,12 @@ FilledRectRenderComponent::FilledRectRenderComponent(const Bounds2D& bounds, Col
 {
 }
 
-FilledRectRenderComponent::FilledRectRenderComponent(UINT32 renderLayer, const Bounds2D& bounds,
-                                                     Color color) :
+FilledRectRenderComponent::FilledRectRenderComponent(UINT32 renderLayer, const Bounds2D& bounds, Color color) :
     Super(renderLayer), m_Bounds(bounds), m_Colour(color)
 {
 }
 
 void FilledRectRenderComponent::Draw()
 {
-    Renderer::DrawFilledRect(m_RenderLayer, Owner()->GetPosition() + m_Bounds.Centre,
-                             m_Bounds.HalfExtents, m_Colour);
+    Renderer::DrawFilledRect(m_RenderLayer, Owner()->GetPosition() + m_Bounds.Centre, m_Bounds.HalfExtents, m_Colour);
 }

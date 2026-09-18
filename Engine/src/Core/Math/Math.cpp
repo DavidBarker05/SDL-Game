@@ -45,8 +45,7 @@ SIZE_T Math::Max(SIZE_T size1, SIZE_T size2) { return size1 > size2 ? size1 : si
 
 FLOAT32 Math::Clamp(FLOAT32 num, FLOAT32 _min, FLOAT32 _max)
 {
-    if (_min > _max)
-        throw new std::invalid_argument("The minimum value should be less than the maximum value");
+    if (_min > _max) throw new std::invalid_argument("The minimum value should be less than the maximum value");
     if (num < _min) return _min;
     else if (num > _max) return _max;
     else return num;
@@ -54,8 +53,7 @@ FLOAT32 Math::Clamp(FLOAT32 num, FLOAT32 _min, FLOAT32 _max)
 
 INT32 Math::Clamp(INT32 num, INT32 _min, INT32 _max)
 {
-    if (_min > _max)
-        throw new std::invalid_argument("The minimum value should be less than the maximum value");
+    if (_min > _max) throw new std::invalid_argument("The minimum value should be less than the maximum value");
     if (num < _min) return _min;
     else if (num > _max) return _max;
     else return num;
@@ -68,10 +66,7 @@ FLOAT32 Math::Clamp01(FLOAT32 num)
     else return num;
 }
 
-FLOAT32 Math::Lerp(FLOAT32 num1, FLOAT32 num2, FLOAT32 alpha)
-{
-    return num1 * (1 - alpha) + num2 * alpha;
-}
+FLOAT32 Math::Lerp(FLOAT32 num1, FLOAT32 num2, FLOAT32 alpha) { return num1 * (1 - alpha) + num2 * alpha; }
 
 FLOAT32 Math::SinDeg(FLOAT32 angleDeg) { return std::sin(angleDeg * DegToRad); }
 

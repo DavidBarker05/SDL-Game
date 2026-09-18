@@ -90,8 +90,7 @@ void LogMessage(LogLevel logLevel, CSTRING message)
             break;
         }
     }
-    output << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message
-           << stackMessage;
+    output << type << ": [" << std::put_time(pLocalTime, "%H:%M:%S") << "] " << message << stackMessage;
     std::cout << colour << output.str() << DEFAULT_COLOUR << "\n\n";
     if (!FileSystem::IsInitialized()) return;
     if (s_LogFile.empty())

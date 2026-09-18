@@ -2,11 +2,7 @@ set(GAME_SOURCES
 	src/Core/Events/EventListener.h
 	src/Game/Game.cpp
 	src/Game/Game.h
-	src/Game/Scene.cpp
-	src/Game/Scene.h
 	src/Main.cpp
-	src/Player.cpp
-	src/Player.h
 )
 
 add_executable(Game ${GAME_SOURCES})

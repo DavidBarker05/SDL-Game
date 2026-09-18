@@ -39,7 +39,6 @@ set(ENGINE_SOURCES
 	src/Engine/RenderComponent/FilledRectRenderComponent/FilledRectRenderComponent.h
 	src/Engine/RenderComponent/RenderComponent.cpp
 	src/Engine/RenderComponent/RenderComponent.h
-	src/Engine/Tickable.h
 )
 
 add_library(Engine ${ENGINE_SOURCES})

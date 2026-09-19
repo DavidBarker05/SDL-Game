@@ -10,19 +10,11 @@ public:
     typedef Component Super;
 
 public:
-    RenderComponent() { }
-
-    virtual RenderComponent& Init()
-    {
-        Renderer::AddToRenderList(std::static_pointer_cast<RenderComponent>(shared_from_this()));
-        return *this;
-    }
+    virtual void OnCreate() override;
+    virtual void OnDestroy() override;
 
     virtual void Draw() { };
 
-    void Destroy();
-
-public:
     UINT32 GetRenderLayer() const { return m_RenderLayer; }
     RenderComponent& SetRenderLayer(UINT32 renderLayer)
     {

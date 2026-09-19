@@ -4,9 +4,9 @@
 
 class Object : public std::enable_shared_from_this<Object>
 {
-    friend class ObjectSystem;
+public:
+    virtual void OnCreate() { }
 
-protected:
     virtual void OnDestroy() { }
 };
 
@@ -16,7 +16,9 @@ public:
     template<typename T, std::enable_if_t<std::is_base_of_v<Object, T>, int> = 0>
     static std::shared_ptr<T> Create()
     {
-        return std::make_shared<T>();
+        std::shared_ptr<T> spObject = std::make_shared<T>();
+        spObject->OnCreate();
+        return spObject;
     }
 
     template<typename T, std::enable_if_t<std::is_base_of_v<Object, T>, int> = 0>

@@ -9,7 +9,18 @@ class Component;
 
 class Entity final : public Object
 {
+    friend class Component;
+
 public:
+    template<typename T, std::enable_if_t<std::is_base_of_v<Component, T>, int> = 0>
+    std::shared_ptr<T> CreateComponent()
+    {
+        std::shared_ptr<T> spComponent = ObjectSystem::Create<T>();
+        m_Components.emplace_back(spComponent);
+        return spComponent;
+    }
+
+private:
     void AddComponent(std::shared_ptr<Component> spComponent);
 
     void RemoveComponent(std::shared_ptr<Component> spComponent);

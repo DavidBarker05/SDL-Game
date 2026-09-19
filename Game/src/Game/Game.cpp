@@ -42,10 +42,10 @@ void Game::Start()
     m_bGameIsRunning = true;
     auto spScene = ObjectSystem::Create<Entity>();
     auto spPlayer = ObjectSystem::Create<Entity>();
-    auto spRenderComponent = ObjectSystem::Create<FilledRectRenderComponent>();
+    auto spRenderComponent = spPlayer->CreateComponent<FilledRectRenderComponent>();
+    spRenderComponent->SetupAttachment(spPlayer);
     spRenderComponent->SetBounds(Bounds2D({0.0f, 0.0f}, {50.0f, 50.0f}));
     spRenderComponent->SetColor(Color(255, 255, 255));
-    spRenderComponent->Attach(spPlayer);
     while (m_bGameIsRunning) Tick();
 }
 

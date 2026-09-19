@@ -1,6 +1,8 @@
 #include "Component.h"
 #include "../Entity/Entity.h"
 
+void Component::SetupAttachment(std::shared_ptr<Entity> spOwner) { }
+
 void Component::Attach(std::shared_ptr<Entity> spOwner)
 {
     if (!spOwner) return;

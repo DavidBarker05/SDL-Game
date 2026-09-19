@@ -1,11 +1,15 @@
 #pragma once
 
-#include "../Engine/Object/ObjectManager/ObjectManager.h"
+#include <memory>
 
 template<typename To, typename From>
-inline To* Cast(From* from)
+To* Cast(From* pFrom)
 {
-    return dynamic_cast<To*>(from);
+    return dynamic_cast<To*>(pFrom);
 }
 
-inline bool IsValid(Object* pObject) { return ObjectManager::IsObjectValid(pObject); }
+template<typename To, typename From>
+std::shared_ptr<To> Cast(std::shared_ptr<From> spFrom)
+{
+    return std::static_pointer_cast<To>(spFrom);
+}

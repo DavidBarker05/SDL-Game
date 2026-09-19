@@ -1,20 +1,20 @@
 #pragma once
 
 #include "../Object/Object.h"
+#include "Core.h"
 
 class Entity;
 
 class Component : public Object
 {
 public:
-    typedef Object Super;
-
     Component();
+    virtual ~Component() = default;
 
 public:
-    void Attach(Entity* pOwner);
-    Entity* Owner();
+    virtual void Attach(std::shared_ptr<Entity> spOwner);
+    std::shared_ptr<Entity> Owner();
 
 private:
-    Entity* m_pOwner;
+    std::shared_ptr<Entity> m_spOwner;
 };

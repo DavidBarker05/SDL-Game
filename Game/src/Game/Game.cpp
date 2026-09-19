@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Engine/Entity/Entity.h"
+#include "Engine/RenderComponent/FilledRectRenderComponent/FilledRectRenderComponent.h"
 #include "Events/EventSystem.h"
 #include "Renderer/Renderer.h"
 #include <memory>
@@ -10,15 +11,12 @@
 #pragma warning(disable : 4244)
 #endif // _MSC_VER
 
-std::shared_ptr<Entity> spScene;
-
 bool Game::Init(CSTRING executablePath, CSTRING companyName, CSTRING productName)
 {
     Logger::Init();
     FileSystem::Init(executablePath, companyName, productName);
     if (!Renderer::Init()) return false;
     if (!EventSystem::Init()) return false;
-    // spScene = std::make_shared<Entity>();
     return true;
 }
 
@@ -29,7 +27,6 @@ bool Game::Init(CSTRING executablePath, CSTRING companyName, CSTRING productName
     FileSystem::Init(executablePath, companyName, productName);
     if (!Renderer::Init(title, windowWidth, windowHeight)) return false;
     if (!EventSystem::Init()) return false;
-    // spScene = std::make_shared<Entity>();
     return true;
 }
 
@@ -43,6 +40,13 @@ void Game::Shutdown()
 void Game::Start()
 {
     m_bGameIsRunning = true;
+    auto spScene = ObjectSystem::Create<Entity>();
+    auto spPlayer = ObjectSystem::Create<Entity>();
+    auto spRenderComponent = ObjectSystem::Create<FilledRectRenderComponent>();
+    spRenderComponent->Init();
+    spRenderComponent->SetBounds(Bounds2D({0.0f, 0.0f}, {50.0f, 50.0f}));
+    spRenderComponent->SetColor(Color(255, 255, 255));
+    spRenderComponent->Attach(spPlayer);
     while (m_bGameIsRunning) Tick();
 }
 
@@ -55,7 +59,6 @@ void Game::Tick()
         m_bGameIsRunning = false;
         return;
     }
-    // spScene->Tick(m_DeltaTime);
     Renderer::Render();
 }
 

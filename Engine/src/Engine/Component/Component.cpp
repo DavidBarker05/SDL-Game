@@ -1,13 +1,14 @@
 #include "Component.h"
 #include "../Entity/Entity.h"
 
-Component::Component() : Super(), m_pOwner(nullptr) { }
+Component::Component() : m_spOwner(nullptr) { }
 
-void Component::Attach(Entity* pOwner)
+void Component::Attach(std::shared_ptr<Entity> spOwner)
 {
-    if (IsValid(m_pOwner)) m_pOwner->RemoveComponent(this);
-    m_pOwner = pOwner;
-    if (IsValid(m_pOwner)) m_pOwner->AddComponent(this);
+    if (!spOwner) return;
+    if (m_spOwner) m_spOwner->RemoveComponent(Cast<Component>(shared_from_this()));
+    m_spOwner = spOwner;
+    m_spOwner->AddComponent(Cast<Component>(shared_from_this()));
 }
 
-Entity* Component::Owner() { return m_pOwner; }
+std::shared_ptr<Entity> Component::Owner() { return m_spOwner; }

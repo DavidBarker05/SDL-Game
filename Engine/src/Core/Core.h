@@ -7,3 +7,5 @@
 #include "Math/Math.h"
 #include "Math/Vector2D.h"
 #include "Types.h"
+#include <memory>
+

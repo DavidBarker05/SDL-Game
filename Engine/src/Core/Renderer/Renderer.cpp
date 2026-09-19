@@ -1,8 +1,8 @@
 #include "Renderer.h"
-#include "Functions.h"
 #include "Logging/Log.h"
 #include "RenderComponent/RenderComponent.h"
 #include <algorithm>
+#include <memory>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_render.h>
 #include <set>
@@ -23,11 +23,16 @@ static SDL_GPUDevice* s_pGPUDevice = nullptr;
 
 struct LayerCompare
 {
-    bool operator()(RenderComponent* l, RenderComponent* r) const { return l->GetRenderLayer() > r->GetRenderLayer(); }
+    bool operator()(std::weak_ptr<RenderComponent> wpL, std::weak_ptr<RenderComponent> wpR) const
+    {
+        if (std::shared_ptr<RenderComponent> spL = wpL.lock(); std::shared_ptr<RenderComponent> spR = wpR.lock())
+            return spL->GetRenderLayer() > spR->GetRenderLayer();
+        else return static_cast<bool>(wpL.expired());
+    }
 };
 
-static std::set<RenderComponent*, LayerCompare> s_RenderList;
-static std::unordered_set<RenderComponent*> s_DanglingList;
+static std::set<std::weak_ptr<RenderComponent>, LayerCompare> s_RenderList;
+static std::vector<std::weak_ptr<RenderComponent>> s_DanglingRenderers;
 
 struct RenderBufferItem
 {
@@ -77,14 +82,14 @@ void Renderer::Shutdown()
     SDL_DestroyWindow(s_pWindow);
 }
 
-void Renderer::AddToRenderList(RenderComponent* renderComponent)
+void Renderer::AddToRenderList(std::shared_ptr<RenderComponent> spRenderComponent)
 {
-    if (renderComponent) s_RenderList.emplace(renderComponent);
+    s_RenderList.emplace(spRenderComponent);
 }
 
-void Renderer::RemoveFromRenderList(RenderComponent* renderComponent)
+void Renderer::RemoveFromRenderList(std::shared_ptr<RenderComponent> spRenderComponent)
 {
-    if (renderComponent) s_RenderList.erase(renderComponent);
+    s_RenderList.emplace(spRenderComponent);
 }
 
 void Renderer::DrawRect(UINT32 drawLayer, const Vector2& position, const Vector2& halfExtents, Color color)
@@ -119,10 +124,10 @@ void Renderer::Render()
 {
     SDL_SetRenderDrawColor(s_pRenderer, 0, 0, 0, 255); // Flush the screen with black background
     SDL_RenderClear(s_pRenderer);
-    for (RenderComponent* element : s_RenderList)
+    for (std::weak_ptr<RenderComponent> wpRenderComponent : s_RenderList)
     {
-        if (IsValid(element)) element->Draw();
-        else s_DanglingList.emplace(element);
+        if (std::shared_ptr<RenderComponent> spRenderComponent = wpRenderComponent.lock()) spRenderComponent->Draw();
+        else s_DanglingRenderers.emplace_back(wpRenderComponent);
     }
     // Render everything below here
     for (RenderBufferItem item : s_RenderBuffer)
@@ -145,10 +150,10 @@ void Renderer::Render()
     // Render everything above here
     s_RenderBuffer.clear();
     s_ColourBuffer.clear();
-    for (RenderComponent* dangling : s_DanglingList)
+    for (std::weak_ptr<RenderComponent> wpDanglingRenderComponent : s_DanglingRenderers)
     {
-        s_RenderList.erase(dangling);
+        s_RenderList.erase(wpDanglingRenderComponent);
     }
-    s_DanglingList.clear();
+    s_DanglingRenderers.clear();
     SDL_RenderPresent(s_pRenderer);
 }

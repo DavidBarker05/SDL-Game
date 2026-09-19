@@ -29,11 +29,8 @@ set(ENGINE_SOURCES
 	src/Core/Types.h
 	src/Engine/Component/Component.cpp
 	src/Engine/Component/Component.h
-	src/Engine/Object/ObjectManager/ObjectManager.cpp
-	src/Engine/Object/ObjectManager/ObjectManager.h
 	src/Engine/Entity/Entity.cpp
 	src/Engine/Entity/Entity.h
-	src/Engine/Object/Object.cpp
 	src/Engine/Object/Object.h
 	src/Engine/RenderComponent/FilledRectRenderComponent/FilledRectRenderComponent.cpp
 	src/Engine/RenderComponent/FilledRectRenderComponent/FilledRectRenderComponent.h

@@ -8,13 +8,9 @@ class Entity;
 class Component : public Object
 {
 public:
-    Component();
-    virtual ~Component() = default;
-
-public:
     virtual void Attach(std::shared_ptr<Entity> spOwner);
-    std::shared_ptr<Entity> Owner();
+    std::weak_ptr<Entity> Owner() { return m_wpOwner; }
 
 private:
-    std::shared_ptr<Entity> m_spOwner;
+    std::weak_ptr<Entity> m_wpOwner;
 };

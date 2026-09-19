@@ -41,26 +41,15 @@ typedef struct Color
     };
 
     Color() : r(0), g(0), b(0), a(255) { }
+    Color(const Color&) = default;
+    Color(Color&&) noexcept = default;
+
     Color(UINT8 red, UINT8 green, UINT8 blue) : r(red), g(green), b(blue), a(255) { }
     Color(UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha) : r(red), g(green), b(blue), a(alpha) { }
     Color(UINT8 value) : r(value), g(value), b(value), a(255) { }
-    Color(const Color& other) : r(other.r), g(other.g), b(other.b), a(other.a) { }
-    Color(Color&& other) noexcept : r(other.r), g(other.g), b(other.b), a(other.a)
-    {
-        other.r = 0;
-        other.g = 0;
-        other.b = 0;
-        other.a = 0;
-    }
 
-    inline Color& operator=(const Color& other)
-    {
-        r = other.r;
-        g = other.g;
-        b = other.b;
-        a = other.a;
-        return *this;
-    }
+    inline Color& operator=(const Color&) = default;
+    inline Color& operator=(Color&&) noexcept = default;
 
     inline Color& operator=(const UINT8 value)
     {
@@ -71,16 +60,13 @@ typedef struct Color
         return *this;
     }
 
-    inline bool operator==(const Color& other) const
-    {
-        return r == other.r && g == other.g && b == other.b && a == other.a;
-    }
-    inline bool operator!=(const Color& other) const
+    inline bool operator==(Color other) const { return r == other.r && g == other.g && b == other.b && a == other.a; }
+    inline bool operator!=(Color other) const
     {
         return !(r == other.r && g == other.g && b == other.b && a == other.a);
     }
 
-    inline Color operator+(const Color& other)
+    inline Color operator+(Color other)
     {
         UINT8 _r = other.r > 255 - r ? 255 : r + other.r;
         UINT8 _g = other.g > 255 - g ? 255 : g + other.g;
@@ -88,7 +74,7 @@ typedef struct Color
         UINT8 _a = other.a > 255 - a ? 255 : a + other.a;
         return Color(_r, _g, _b, _a);
     }
-    inline Color operator-(const Color& other)
+    inline Color operator-(Color other)
     {
         UINT8 _r = r < other.r ? 0 : r - other.r;
         UINT8 _g = g < other.g ? 0 : g - other.g;
@@ -97,7 +83,7 @@ typedef struct Color
         return Color(_r, _g, _b, _a);
     }
 
-    inline Color& operator+=(const Color& other)
+    inline Color& operator+=(Color other)
     {
         r = other.r > 255 - r ? 255 : r + other.r;
         g = other.g > 255 - g ? 255 : g + other.g;
@@ -105,7 +91,7 @@ typedef struct Color
         a = other.a > 255 - a ? 255 : a + other.a;
         return *this;
     }
-    inline Color& operator-=(const Color& other)
+    inline Color& operator-=(Color other)
     {
         r = r < other.r ? 0 : r - other.r;
         g = g < other.g ? 0 : g - other.g;
